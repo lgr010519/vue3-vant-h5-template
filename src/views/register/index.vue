@@ -100,6 +100,7 @@
           block
           type="primary"
           native-type="submit"
+          style="border-radius: 6px 6px 6px 6px;"
         >
           确认注册
         </van-button>

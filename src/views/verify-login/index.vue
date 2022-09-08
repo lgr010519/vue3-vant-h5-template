@@ -52,6 +52,7 @@
         <van-button
           block
           type="primary"
+          style="border-radius: 6px 6px 6px 6px;"
           native-type="submit"
         >
           登录
