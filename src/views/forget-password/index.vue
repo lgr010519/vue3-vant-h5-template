@@ -59,8 +59,9 @@ const user = reactive({
   phone:'',
   password:''
 })
+const onSubmit = ()=>{
 
-onSubmit
+}
 </script>
 
 <style lang="less" scoped>
