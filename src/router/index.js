@@ -35,13 +35,19 @@ const router = createRouter({
       // 密码登录
       path: '/login',
       name: 'login',
-      component: () => import('../views/login/index.vue')
+      component: () => import('../views/password-login/index.vue')
     },
     {
       // 验证码登录
       path: '/verify',
       name: 'verify',
-      component: () => import('../views/verify/index.vue')
+      component: () => import('../views/verify-login/index.vue')
+    },
+    {
+      // 忘记密码/修改密码
+      path: '/forget',
+      name: 'forget',
+      component: () => import('../views/forget-password/index.vue')
     }
   ]
 })
