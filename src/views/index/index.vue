@@ -12,7 +12,6 @@
     </div>
     <div class="index_bottom">
       <van-tabbar
-        v-model="activeTabBar"
         :border="true"
         :route="true"
         inactive-color=""
@@ -53,11 +52,7 @@
   </div>
 </template>
 
-<script setup>
-  import { ref } from 'vue'
-
-  const activeTabBar = ref('')
-</script>
+<script setup></script>
 
 <style lang="scss" scoped>
   .index {
@@ -89,6 +84,7 @@
     }
     &_main {
       grid-area: index_main;
+      overflow: auto;
     }
     &_bottom {
       grid-row: index_bottom;

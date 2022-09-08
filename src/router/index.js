@@ -22,6 +22,10 @@ const router = createRouter({
       ]
     },
     {
+      path: '/jzxx',
+      component: () => import('@/views/jzxx/index.vue')
+    },
+    {
       // 注册
       path: '/register',
       name: 'register',
@@ -38,7 +42,7 @@ const router = createRouter({
       path: '/verify',
       name: 'verify',
       component: () => import('../views/verify/index.vue')
-    },
+    }
   ]
 })
 
