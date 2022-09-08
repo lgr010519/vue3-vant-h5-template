@@ -31,18 +31,22 @@
           left-icon="lock"
           placeholder="请输入验证码"
           :rules="[{ required: true, message: '请输入验证码' }]"
+          class="tw-h-[50px]"
         >
           <template #button>
             <van-button
-              size="mini"
+              size="small"
               type="default"
-              style="border:none;color: #3189FF;"
+              style="border:none;color: #3189FF;font-size: 13px;"
             >发送验证码</van-button>
           </template>
         </van-field>
       </van-cell-group>
       <div class="forget tw-w-[100%] tw-h-[18px] tw-mt-[16px] tw-mr-[14px]">
-        <span style="margin-right:36px">忘记密码</span>
+        <span
+          style="margin-right:40px;font-size: 13px;"
+          @click="forget"
+        >忘记密码</span>
       </div>
       <div style="margin: 16px;">
         <van-button
@@ -84,6 +88,9 @@ const register = () => {
 }
 const onSubmit = () => {
   console.log(123);
+}
+const forget = () => {
+  router.push({ path: '/forget'})
 }
 </script>
 

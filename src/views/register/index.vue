@@ -1,21 +1,7 @@
 <template>
   <div class="tw-w-[100%]">
     <!-- < 用户注册 -->
-    <div class="tw-flex tw-w-[100%] tw-h-[43px] tw-border-b-[1px] tw-border-[#E0E0E0] tw-items-center">
-      <div class="tw-w-[100%] tw-h-[19px] tw-flex tw-items-center">
-        <!-- 图片 -->
-        <div
-          class="tw-w-[16px] tw-h-[16px] tw-ml-[14px]"
-          @click="back"
-        ><img
-            src="../../assets/images/login/icon_left.png"
-            alt=""
-          ></div>
-        <!-- 用户注册 -->
-        <div class="tw-ml-[14px] tw-h-[19px] tw-text-[#4A4A4A] tw-text-[19px] tw-font-medium tw-leading-[19px]"><span>用户注册</span></div>
-      </div>
-    </div>
-
+    <title-vue title="用户注册"></title-vue>
     <!-- 注册表单 -->
     <van-form @submit="onSubmit">
       <van-cell-group inset>
@@ -123,6 +109,7 @@
 </template>
 
 <script setup>
+import titleVue from '@/components/title.vue';
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router';
 const user = reactive({
