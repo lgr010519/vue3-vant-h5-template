@@ -1,9 +1,21 @@
 <!-- 首页 -->
 <template>
   <div class="home">
+    <img
+      class="home_bg1"
+      src="@/assets/images/home/bg1.png"
+      alt="" />
+    <img
+      class="home_bg2"
+      src="@/assets/images/home/bg2.png"
+      alt="" />
     <div
       class="home_item"
-      :style="`background-image: url(${imgBlue});  box-shadow: 4px 4px 8px 0px #C7DFFF`">
+      :style="{
+        backgroundImage: `url(${imgBlue})`,
+        boxShadow: '4px 4px 8px 0px #C7DFFF'
+      }"
+      @click="onSelectItem('/jzxx')">
       <p
         class="home_item_text"
         style="color: #0047a7">
@@ -17,8 +29,10 @@
     <div
       class="home_item"
       :style="{
-        backgroundImage: `url(${imgYellow})`
-      }">
+        backgroundImage: `url(${imgYellow})`,
+        boxShadow: '4px 4px 8px 0px rgba(253,208,169,0.33)'
+      }"
+      @click="onSelectItem('/rmjy')">
       <p
         class="home_item_text"
         style="color: #c35a00">
@@ -32,8 +46,10 @@
     <div
       class="home_item"
       :style="{
-        backgroundImage: `url(${imgGreen})`
-      }">
+        backgroundImage: `url(${imgGreen})`,
+        boxShadow: '4px 4px 8px 0px #C8E8E8'
+      }"
+      @click="onSelectItem('/wdsq')">
       <p
         class="home_item_text"
         style="color: #007b7b">
@@ -47,8 +63,10 @@
     <div
       class="home_item"
       :style="{
-        backgroundImage: `url(${imgPink})`
-      }">
+        backgroundImage: `url(${imgPink})`,
+        boxShadow: '4px 4px 8px 0px #EBCAD0'
+      }"
+      @click="onSelectItem('/wdsx')">
       <p
         class="home_item_text"
         style="color: #a85463">
@@ -67,11 +85,41 @@
   import imgYellow from '@/assets/images/home/img_yellow.png'
   import imgGreen from '@/assets/images/home/img_green.png'
   import imgPink from '@/assets/images/home/img_pink.png'
+  import { useRouter } from 'vue-router'
+
+  const router = useRouter()
+
+  /**
+   * 选择某一个 item
+   * @param {*} path
+   */
+  const onSelectItem = function (path) {
+    router.push({
+      path
+    })
+  }
 </script>
 
 <style lang="scss" scoped>
   .home {
+    position: relative;
+    height: 100%;
+    overflow: auto;
     padding: 20px 15px;
+    &_bg1 {
+      position: absolute;
+      top: calc(20px + 2 * 100px + 2 * 7px + 13px);
+      right: 0;
+      width: 270px;
+      height: 296px;
+    }
+    &_bg2 {
+      position: absolute;
+      top: 44px;
+      left: 0;
+      width: 112px;
+      height: 128px;
+    }
     &_item {
       display: flex;
       align-items: center;
@@ -81,11 +129,14 @@
       padding: 0 40px 0 34px;
       border-radius: 16px;
       background-repeat: no-repeat;
+      background-size: 100% 100px;
       &_text {
         font-size: 19px;
         font-weight: bold;
       }
       &_img {
+        width: 52px;
+        height: 52px;
       }
     }
   }

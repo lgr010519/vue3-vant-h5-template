@@ -22,6 +22,10 @@ const router = createRouter({
       ]
     },
     {
+      path: '/jzxx',
+      component: () => import('@/views/jzxx/index.vue')
+    },
+    {
       // 注册
       path: '/register',
       name: 'register',
@@ -44,7 +48,7 @@ const router = createRouter({
       path: '/forget',
       name: 'forget',
       component: () => import('../views/forget-password/index.vue')
-    },
+    }
   ]
 })
 
