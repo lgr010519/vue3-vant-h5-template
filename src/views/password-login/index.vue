@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-w-[100%] tw-h-[100%]">
+  <div class="tw-w-[100%] tw-h-[100%] tw-overflow-auto">
     <div class="tw-w-[65px] tw-h-[60px] tw-mt-[70px] tw-mx-auto">
       <img
         src="../../assets/images/login/logo.png"
@@ -60,12 +60,11 @@
           >验证码登录</span
         >
       </div>
-
-      <div
-        class="tw-w-[100%] tw-h-[18px] tw-mx-auto tw-text-center tw-text-[13px] tw-mt-[138px] tw-text-[#666666] tw-leading-[13px]">
-        <span @click="register">用户注册</span>
-      </div>
     </van-form>
+    <div
+      class="tw-h-[18px] tw-mx-auto tw-text-center tw-text-[13px] tw-mt-[138px] tw-text-[#666666] tw-leading-[13px] tw-pb-[50px]">
+      <span @click="register">用户注册</span>
+    </div>
   </div>
 </template>
 
@@ -84,7 +83,7 @@
     router.push({ path: '/register' })
   }
   const onSubmit = () => {
-    console.log(321)
+    router.push('/index')
   }
   const forget = () => {
     router.push({ path: '/forget' })

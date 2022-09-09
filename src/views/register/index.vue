@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-w-[100%]">
+  <div class="tw-w-[100%] tw-h-[100%] tw-overflow-auto">
     <!-- < 用户注册 -->
     <nav-bar title="用户注册"></nav-bar>
     <!-- 注册表单 -->
@@ -89,7 +89,8 @@
           show-word-limit />
       </van-cell-group>
 
-      <div class="tw-mx-auto tw-w-[347px] tw-h-[44px] tw-mt-[170px]">
+      <div
+        class="tw-mx-auto tw-w-[347px] tw-h-[44px] tw-mt-[170px] tw-pb-[80px]">
         <van-button
           block
           type="primary"
@@ -105,6 +106,8 @@
 <script setup>
   import NavBar from '@/components/nav-bar.vue'
   import { reactive, ref } from 'vue'
+  import { useRouter } from 'vue-router'
+  const router = useRouter()
   const user = reactive({
     name: '', // 姓名
     sex: '', // 性别
@@ -136,6 +139,7 @@
   //提交表单
   const onSubmit = () => {
     user.text = spaceValue.value + '/' + message.value
+    router.push('/index')
   }
 </script>
 
