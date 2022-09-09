@@ -21,7 +21,7 @@
           placeholder="请输入身份证号"
           :rules="[{ required: true, message: '请输入身份证号' }]"></van-field>
         <van-field
-        label-width="65px"
+          label-width="65px"
           v-model="user.phone"
           name="phone"
           label="手机号"
@@ -29,18 +29,19 @@
           :rules="[{ required: true, message: '请输入手机号' }]">
         </van-field>
         <van-field
+          class="password"
           label-width="65px"
           v-model="user.password"
           type="password"
           name="password"
           label="新密码"
-          placeholder="请输入新密码，至少6位数，包含数字和字母"
+          placeholder="请输入新密码,至少6位数,包含数字和字母"
           :rules="[{ required: true, message: '请输入新密码，至少6位数，包含数字和字母' }]">
         </van-field>
       </van-cell-group>
       <div class="tw-mt-[350px] tw-w-[347px] tw-h-[44px] tw-mx-auto tw-text-[16px] tw-font-medium">
         <van-button
-          style="border-radius: 6px 6px 6px 6px;"
+          style="border-radius: 6px 6px 6px 6px"
           block
           type="primary"
           native-type="submit">
@@ -64,5 +65,8 @@ console.log(12321)
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
+  .password::-webkit-input-placeholder{
+    font-size: 22px;
+  }
 </style>

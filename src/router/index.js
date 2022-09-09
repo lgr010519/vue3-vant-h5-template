@@ -27,6 +27,14 @@ const router = createRouter({
       component: () => import('@/views/jzxx/index.vue')
     },
     {
+      path: '/rmjy',
+      component: () => import('@/views/rmjy/index.vue')
+    },
+    {
+      path: '/wdsx',
+      component: () => import('@/views/wdsx/index.vue')
+    },
+    {
       // 注册
       path: '/register',
       name: 'register',
