@@ -21,7 +21,8 @@
           label=""
           placeholder="请输入手机号"
           left-icon="phone"
-          :rules="[{ required: true, message: '请输入手机号' }]">
+          :rules="[{ required: true, message: '请输入手机号' }]"
+          class="tw-h-[60px]">
         </van-field>
         <van-field
           v-model="user.password"
@@ -31,7 +32,7 @@
           left-icon="lock"
           placeholder="请输入密码"
           :rules="[{ required: true, message: '请输入密码' }]"
-          class="tw-h-[50px]">
+          class="tw-h-[60px]">
         </van-field>
       </van-cell-group>
       <div class="forget tw-w-[100%] tw-h-[18px] tw-mt-[16px] tw-mr-[14px]">
@@ -70,18 +71,17 @@
 
 <script setup>
   import { reactive } from 'vue'
-  import { useRouter, useRoute } from 'vue-router'
+  import { useRouter } from 'vue-router'
   const router = useRouter()
-  const route = useRoute()
   const user = reactive({
     username: '',
     password: ''
   })
   const verify = () => {
-    router.push({ path: '/verify', query: { from: route.path } })
+    router.push({ path: '/verify' })
   }
   const register = () => {
-    router.push({ path: '/register', query: { from: route.path } })
+    router.push({ path: '/register' })
   }
   const onSubmit = () => {
     console.log(321)
