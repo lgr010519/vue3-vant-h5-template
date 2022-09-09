@@ -1,6 +1,6 @@
 <template>
   <div
-    class="tw-flex tw-w-[100%] tw-h-[43px] tw-border-b-[1px] tw-border-[#E0E0E0] tw-items-center">
+    class="tw-flex tw-w-[100%] tw-h-[45px] tw-border-b-[1px] tw-border-[#E0E0E0] tw-items-center">
     <div class="tw-w-[100%] tw-h-[19px] tw-flex tw-items-center">
       <!-- 图片 -->
       <div
@@ -19,6 +19,7 @@
 </template>
 
 <script setup>
+  import { defineProps } from 'vue'
   import { useRouter } from 'vue-router'
   const props = defineProps(['title'])
   const router = useRouter()
