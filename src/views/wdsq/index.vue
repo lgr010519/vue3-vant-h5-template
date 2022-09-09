@@ -2,17 +2,50 @@
   <nav-bar title="系统二维码"></nav-bar>
   <div class="appeal">
     <div class="appeal_part">
-      <img
-        class="tw-w-[20px] tw-h-[20px]"
-        src="@/assets/images/wdsq/icon_warn.png"
-        alt="" />
-      <p class="">深圳生态环境群众诉求服务平台反映问题说明</p>
+      <div class="tw-flex">
+        <img
+          class="tw-w-[20px] tw-h-[20px] tw-mt-[3px]"
+          src="@/assets/images/wdsq/icon_warn.png"
+          alt="" />
+        <p class="tw-text-[17px] tw-text-[#0062E5] tw-font-medium tw-ml-[14px]">
+          深圳生态环境群众诉求服务平台反映问题说明
+        </p>
+      </div>
     </div>
-    <div class="appeal_part"></div>
-    <div class="appeal_part"></div>
+    <div class="appeal_part">
+      <div class="tw-flex">
+        <img
+          class="tw-w-[20px] tw-h-[20px] tw-mt-[3px]"
+          src="@/assets/images/wdsq/icon_address.png"
+          alt="" />
+        <p class="tw-text-[17px] tw-text-[#4A4A4A] tw-font-medium tw-ml-[14px]">
+          深圳生态环境群众诉求服务平台反映问题说明
+        </p>
+      </div>
+    </div>
+    <div class="appeal_part">
+      <div class="tw-flex">
+        <img
+          class="tw-w-[20px] tw-h-[20px] tw-mt-[3px]"
+          src="@/assets/images/wdsq/icon_reflect.png"
+          alt="" />
+        <p class="tw-text-[17px] tw-text-[#4A4A4A] tw-font-medium tw-ml-[14px]">在线反映诉求</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup></script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+  .appeal {
+    padding: 22px 14px;
+    &_part {
+      padding: 12px 20px;
+      margin-bottom: 20px;
+      background: #ffffff;
+      box-shadow: 0px 0px 13px 1px rgba(0, 0, 0, 0.03);
+      border-radius: 6px;
+    }
+  }
+</style>
