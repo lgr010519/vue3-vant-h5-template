@@ -58,14 +58,9 @@
   .index {
     width: 100%;
     height: 100%;
-    display: grid;
-    grid-template-rows: 45px 1fr 50px;
-    grid-template-areas:
-      'index_top'
-      'index_main'
-      'index_bottom';
+    display: flex;
+    flex-direction: column;
     &_top {
-      grid-area: index_top;
       height: 45px;
       display: flex;
       align-items: center;
@@ -79,15 +74,18 @@
       &_title {
         color: #0084bd;
         font-size: 16px;
-        font-weight: bold;
+        font-weight: 600;
       }
     }
     &_main {
-      grid-area: index_main;
+      flex: 1;
       overflow: auto;
+      background: url('@/assets/images/index/bg1.png') no-repeat right bottom,
+        url('@/assets/images/index/bg2.png') no-repeat 0 44px;
     }
     &_bottom {
-      grid-row: index_bottom;
+      flex: none;
+      border-top: 1px solid #e0e0e0;
     }
   }
 </style>

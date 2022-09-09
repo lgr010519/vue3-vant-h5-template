@@ -1,14 +1,6 @@
 <!-- 首页 -->
 <template>
   <div class="home">
-    <img
-      class="home_bg1"
-      src="@/assets/images/home/bg1.png"
-      alt="" />
-    <img
-      class="home_bg2"
-      src="@/assets/images/home/bg2.png"
-      alt="" />
     <div
       class="home_item"
       :style="{
@@ -102,24 +94,7 @@
 
 <style lang="scss" scoped>
   .home {
-    position: relative;
-    height: 100%;
-    overflow: auto;
     padding: 20px 15px;
-    &_bg1 {
-      position: absolute;
-      top: calc(20px + 2 * 100px + 2 * 7px + 13px);
-      right: 0;
-      width: 270px;
-      height: 296px;
-    }
-    &_bg2 {
-      position: absolute;
-      top: 44px;
-      left: 0;
-      width: 112px;
-      height: 128px;
-    }
     &_item {
       display: flex;
       align-items: center;
@@ -132,7 +107,7 @@
       background-size: 100% 100px;
       &_text {
         font-size: 19px;
-        font-weight: bold;
+        font-weight: 600;
       }
       &_img {
         width: 52px;
