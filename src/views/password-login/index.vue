@@ -16,6 +16,7 @@
       class="tw-mt-[58px]">
       <van-cell-group inset>
         <van-field
+          style="background-color: #f9f9f9"
           v-model="user.username"
           name="password"
           label=""
@@ -25,6 +26,7 @@
           class="tw-h-[60px]">
         </van-field>
         <van-field
+          style="background-color: #f9f9f9"
           v-model="user.password"
           type="password"
           name="password"

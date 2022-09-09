@@ -15,7 +15,7 @@
           style="margin: 0">
           <!-- 意见建议名称 -->
           <van-field
-            style="padding: 0; height: 30px"
+            style="padding: 0; height: 30px; background-color: #f9f9f9"
             v-model="form.name"
             name="用户名"
             label="意见建议名称"
@@ -28,7 +28,12 @@
         </div>
         <div>
           <van-field
-            style="padding: 0; border: 1px solid #e0e0e0; margin-top: 12px"
+            style="
+              padding: 0;
+              border: 1px solid #e0e0e0;
+              margin-top: 12px;
+              background-color: #f9f9f9;
+            "
             v-model="form.message"
             rows="4"
             autosize
@@ -41,7 +46,7 @@
           <span>附件说明</span>
         </div>
         <van-field
-          style="padding: 0; margin-top: 12px"
+          style="padding: 0; margin-top: 12px; background-color: #f9f9f9"
           name="uploader"
           label="">
           <template #input>

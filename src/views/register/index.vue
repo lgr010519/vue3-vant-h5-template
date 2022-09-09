@@ -7,6 +7,7 @@
       <van-cell-group inset>
         <!-- 姓名 -->
         <van-field
+          style="background-color: #f9f9f9"
           v-model="user.name"
           name="name"
           label="姓名"
@@ -16,6 +17,7 @@
           ]"></van-field>
         <!-- 性别 -->
         <van-field
+          style="background-color: #f9f9f9"
           name="sex"
           label="性别">
           <template #input>
@@ -30,6 +32,7 @@
         </van-field>
         <!-- 身份证号 -->
         <van-field
+          style="background-color: #f9f9f9"
           v-model="user.cardId"
           name="cardId"
           label="身份证号"
@@ -37,6 +40,7 @@
           :rules="[{ required: true, message: '请正确输入您的身份证号' }]" />
         <!-- 手机号 -->
         <van-field
+          style="background-color: #f9f9f9"
           v-model="user.phone"
           name="phone"
           label="手机号"
@@ -45,6 +49,7 @@
         </van-field>
         <!-- 验证码 -->
         <van-field
+          style="background-color: #f9f9f9"
           v-model="user.verifycode"
           label=""
           left-icon="lock"
@@ -54,13 +59,14 @@
             <van-button
               size="mini"
               type="default"
-              style="border: none; color: #3189ff"
+              style="border: none; color: #3189ff; background-color: #f9f9f9"
               >发送验证码</van-button
             >
           </template>
         </van-field>
         <!-- 选择区域 -->
         <van-field
+          style="background-color: #f9f9f9"
           v-model="spaceValue"
           is-link
           readonly
@@ -80,6 +86,7 @@
         </van-popup>
         <!-- 详细地址 -->
         <van-field
+          style="background-color: #f9f9f9"
           v-model="message"
           rows="2"
           autosize
