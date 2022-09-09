@@ -35,6 +35,18 @@ const router = createRouter({
       component: () => import('@/views/wdsq/index.vue')
     },
     {
+      path: '/wdsq/service-note',
+      component: () => import('@/views/wdsq/service-note/index.vue')
+    },
+    {
+      path: '/wdsq/service-stations',
+      component: () => import('@/views/wdsq/service-stations/index.vue')
+    },
+    {
+      path: '/wdsq/appeal/:mode',
+      component: () => import('@/views/wdsq/appeal/index.vue')
+    },
+    {
       path: '/wdsx',
       component: () => import('@/views/wdsx/index.vue')
     },

@@ -1,11 +1,13 @@
 <template>
-  <nav-bar title="系统二维码"></nav-bar>
-  <div class="system_code">
-    <div class="system_code_panel">
-      <div
-        class="system_code_panel-img"
-        ref="qrCodeImg"></div>
-      <p class="system_code_panel-tip">长按二维码保存到本地</p>
+  <div class="tw-w-full tw-h-full tw-flex tw-flex-col">
+    <nav-bar title="系统二维码"></nav-bar>
+    <div class="system_code tw-flex-1">
+      <div class="system_code_panel">
+        <div
+          class="system_code_panel-img"
+          ref="qrCodeImg"></div>
+        <p class="system_code_panel-tip">长按二维码保存到本地</p>
+      </div>
     </div>
   </div>
 

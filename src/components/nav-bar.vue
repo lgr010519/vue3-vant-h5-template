@@ -11,7 +11,7 @@
           alt="" />
       </div>
       <div
-        class="tw-ml-[14px] tw-h-[19px] tw-text-[#4A4A4A] tw-text-[19px] tw-font-medium tw-leading-[19px]">
+        class="tw-ml-[14px] tw-h-[19px] tw-text-[#4A4A4A] tw-text-[19px] tw-font-semibold tw-leading-[19px]">
         <span>{{ props.title }}</span>
       </div>
     </div>

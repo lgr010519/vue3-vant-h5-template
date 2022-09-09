@@ -1,37 +1,61 @@
 <template>
   <nav-bar title="系统二维码"></nav-bar>
   <div class="appeal">
-    <div class="appeal_part">
-      <div class="tw-flex">
-        <img
-          class="tw-w-[20px] tw-h-[20px] tw-mt-[3px]"
-          src="@/assets/images/wdsq/icon_warn.png"
-          alt="" />
-        <p class="tw-text-[17px] tw-text-[#0062E5] tw-font-medium tw-ml-[14px]">
-          深圳生态环境群众诉求服务平台反映问题说明
+    <router-link
+      to="/wdsq/service-note"
+      custom
+      v-slot="{ navigate }">
+      <div
+        class="appeal_part"
+        @click="navigate">
+        <div class="tw-flex">
+          <img
+            class="tw-w-[20px] tw-h-[20px] tw-mt-[3px]"
+            src="@/assets/images/wdsq/icon_warn.png"
+            alt="" />
+          <p class="tw-text-[17px] tw-text-[#0062E5] tw-font-semibold tw-ml-[14px]">
+            深圳生态环境群众诉求服务平台反映问题说明
+          </p>
+        </div>
+      </div>
+    </router-link>
+    <router-link
+      to="/wdsq/service-stations"
+      custom
+      v-slot="{ navigate }">
+      <div
+        class="appeal_part"
+        @click="navigate">
+        <div class="tw-flex">
+          <img
+            class="tw-w-[20px] tw-h-[20px] tw-mt-[3px]"
+            src="@/assets/images/wdsq/icon_address.png"
+            alt="" />
+          <p class="tw-text-[17px] tw-text-[#4A4A4A] tw-font-semibold tw-ml-[14px]">
+            服务站点地址查看
+          </p>
+        </div>
+        <p class="tw-text-[11px] tw-text-[#999999] tw-font-medium tw-ml-[34px]">
+          如有诉求也可直接到已开设的深圳生态环境群众服务站点反映
         </p>
       </div>
-    </div>
-    <div class="appeal_part">
-      <div class="tw-flex">
-        <img
-          class="tw-w-[20px] tw-h-[20px] tw-mt-[3px]"
-          src="@/assets/images/wdsq/icon_address.png"
-          alt="" />
-        <p class="tw-text-[17px] tw-text-[#4A4A4A] tw-font-medium tw-ml-[14px]">
-          深圳生态环境群众诉求服务平台反映问题说明
-        </p>
+    </router-link>
+    <router-link
+      to="/wdsq/appeal/create"
+      custom
+      v-slot="{ navigate }">
+      <div
+        class="appeal_part"
+        @click="navigate">
+        <div class="tw-flex">
+          <img
+            class="tw-w-[20px] tw-h-[20px] tw-mt-[3px]"
+            src="@/assets/images/wdsq/icon_reflect.png"
+            alt="" />
+          <p class="tw-text-[17px] tw-text-[#4A4A4A] tw-font-semibold tw-ml-[14px]">在线反映诉求</p>
+        </div>
       </div>
-    </div>
-    <div class="appeal_part">
-      <div class="tw-flex">
-        <img
-          class="tw-w-[20px] tw-h-[20px] tw-mt-[3px]"
-          src="@/assets/images/wdsq/icon_reflect.png"
-          alt="" />
-        <p class="tw-text-[17px] tw-text-[#4A4A4A] tw-font-medium tw-ml-[14px]">在线反映诉求</p>
-      </div>
-    </div>
+    </router-link>
   </div>
 </template>
 
