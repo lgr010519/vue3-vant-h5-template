@@ -31,6 +31,10 @@ const router = createRouter({
       component: () => import('@/views/rmjy/index.vue')
     },
     {
+      path: '/wdsq',
+      component: () => import('@/views/wdsq/index.vue')
+    },
+    {
       path: '/wdsx',
       component: () => import('@/views/wdsx/index.vue')
     },
