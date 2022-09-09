@@ -61,10 +61,12 @@
     console.log(action, index)
     switch (index) {
       case 0:
-        qrCode.download({
-          name: '二维码',
-          extension: 'png'
-        })
+        /**
+         * @todo
+         */
+        // qrCode.getRawData('png').then((buffer) => {
+
+        // })
         break
 
       default:
