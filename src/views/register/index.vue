@@ -1,7 +1,7 @@
 <template>
   <div class="tw-w-[100%]">
     <!-- < 用户注册 -->
-    <title-vue title="用户注册"></title-vue>
+    <nav-bar title="用户注册"></nav-bar>
     <!-- 注册表单 -->
     <van-form @submit="onSubmit">
       <van-cell-group inset>
@@ -11,7 +11,9 @@
           name="name"
           label="姓名"
           placeholder="请输入真实姓名"
-          :rules="[{ required: true, message: '请填写您的真实姓名' }]" />
+          :rules="[
+            { required: true, message: '请填写您的真实姓名' }
+          ]"></van-field>
         <!-- 性别 -->
         <van-field
           name="sex"
@@ -91,8 +93,7 @@
           block
           type="primary"
           native-type="submit"
-          style="border-radius: 6px 6px 6px 6px;"
-        >
+          style="border-radius: 6px 6px 6px 6px">
           确认注册
         </van-button>
       </div>
@@ -101,9 +102,8 @@
 </template>
 
 <script setup>
-  import titleVue from '@/components/title.vue'
+  import NavBar from '@/components/title.vue'
   import { reactive, ref } from 'vue'
-  import { useRouter } from 'vue-router'
   const user = reactive({
     name: '', // 姓名
     sex: '', // 性别
@@ -113,11 +113,6 @@
     text: ''
   })
   const show = ref(false)
-  // const route = useRoute()
-  const router = useRouter()
-  const back = () => {
-    router.back()
-  }
   const options = ref([
     {
       text: '浙江省',
