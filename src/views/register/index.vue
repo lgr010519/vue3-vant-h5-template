@@ -41,7 +41,8 @@
           name="phone"
           label="手机号"
           placeholder="请输入手机号"
-          :rules="[{ required: true, message: '请输入您的手机号' }]" />
+          :rules="[{ required: true, message: '请输入您的手机号' }]">
+        </van-field>
         <!-- 验证码 -->
         <van-field
           v-model="user.verifycode"
@@ -102,7 +103,7 @@
 </template>
 
 <script setup>
-  import NavBar from '@/components/title.vue'
+  import NavBar from '@/components/nav-bar.vue'
   import { reactive, ref } from 'vue'
   const user = reactive({
     name: '', // 姓名

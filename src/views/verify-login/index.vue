@@ -21,14 +21,16 @@
           label=""
           placeholder="请输入手机号"
           left-icon="phone"
-          :rules="[{ required: true, message: '请输入手机号' }]" />
+          :rules="[{ required: true, message: '请输入手机号' }]"
+          class="tw-h-[60px]">
+        </van-field>
         <van-field
           v-model="user.password"
           label=""
           left-icon="lock"
           placeholder="请输入验证码"
           :rules="[{ required: true, message: '请输入验证码' }]"
-          class="tw-h-[50px]">
+          class="tw-h-[60px]">
           <template #button>
             <van-button
               size="small"
@@ -82,10 +84,11 @@
     password: ''
   })
   const login = () => {
-    router.push({ path: '/login' })
+    router.push('/login')
   }
   const register = () => {
-    router.push({ path: '/register' })
+    console.log(12321321312)
+    router.push('/register')
   }
   const onSubmit = () => {
     console.log(123)
