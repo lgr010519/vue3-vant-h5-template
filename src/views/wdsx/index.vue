@@ -1,13 +1,9 @@
 <template>
-  <div class="tw-w-[100%] tw-h-[100%]">
+  <div class="tw-w-[100%] tw-h-[100%] tw-flex tw-flex-col">
     <Nav-bar title="我的事项"></Nav-bar>
     <van-cell-group inset>
       <van-field
-        style="
-          background-color: #f0f0f0;
-          margin-top: 16px;
-          border-radius: 6px 6px 6px 6px;
-        "
+        style="background-color: #f0f0f0; margin-top: 16px; border-radius: 6px 6px 6px 6px"
         v-model="keyWord"
         label=" "
         label-width="1px"
@@ -24,11 +20,12 @@
         :options="option2" />
     </van-dropdown-menu>
     <!-- list -->
-    <div class="tw-w-[100%] tw-h-[100%] tw-overflow-auto">
+    <div class="tw-w-[100%] tw-flex-1 tw-overflow-auto">
       <div
         class="tw-mx-auto tw-px-[14px] tw-h-[88px] tw-my-[16px]"
         v-for="(item, index) in list"
-        :key="index">
+        :key="index"
+        @click="go(item)">
         <div class="tw-text-[17px] tw-font-semibold">
           <span>{{ item.chinese }}</span>
         </div>
@@ -50,8 +47,9 @@
 <script setup>
   import { ref } from 'vue' //reactive
   import NavBar from '@/components/nav-bar.vue'
+  import { useRouter } from 'vue-router'
   const keyWord = ref('')
-
+  const router = useRouter()
   // const listData = reactive([
   //   {
   //     text: '哈哈哈哈',
@@ -84,41 +82,60 @@
   ]
   const list = [
     {
+      id: 0,
       chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
       time: '2020-09-28 12:20:28',
-      status: '待办理'
+      status: '待办理',
+      type: '局长信箱'
     },
     {
+      id: 2,
       chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
       status: '已完成',
-      time: '2020-09-28 12:20:28'
+      time: '2020-09-28 12:20:28',
+      type: '人民建议'
     },
     {
+      id: 3,
       chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
       status: '已完成',
-      time: '2020-09-28 12:20:28'
+      time: '2020-09-28 12:20:28',
+      type: '局长信箱'
     },
     {
+      id: 4,
       chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
       status: '已完成',
-      time: '2020-09-28 12:20:28'
+      time: '2020-09-28 12:20:28',
+      type: '人民建议'
     },
     {
+      id: 5,
       chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
       status: '已完成',
-      time: '2020-09-28 12:20:28'
+      time: '2020-09-28 12:20:28',
+      type: '人民建议'
     },
     {
+      id: 6,
       chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
       status: '已完成',
-      time: '2020-09-28 12:20:28'
+      time: '2020-09-28 12:20:28',
+      type: '局长信箱'
     },
     {
+      id: 7,
       chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
       status: '已完成',
-      time: '2020-09-28 12:20:28'
+      time: '2020-09-28 12:20:28',
+      type: '局长信箱'
     }
   ]
+  const go = (item) => {
+    item.type === '局长信箱'
+      ? router.push(`/jzxx/detail/${item.id}`)
+      : router.push(`/rmjy/detail/${item.id}`)
+  }
 </script>
 
 <style lang="scss" scoped>

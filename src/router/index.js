@@ -23,11 +23,11 @@ const router = createRouter({
       ]
     },
     {
-      path: '/jzxx/:mode',
+      path: '/jzxx/:mode/:id?',
       component: () => import('@/views/jzxx/index.vue')
     },
     {
-      path: '/rmjy/:mode',
+      path: '/rmjy/:mode/:id?',
       component: () => import('@/views/rmjy/index.vue')
     },
     {

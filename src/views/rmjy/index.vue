@@ -1,8 +1,8 @@
 <template>
-  <div class="tw-w-[100%] tw-h-[100%] tw-overflow-auto">
+  <div class="tw-w-[100%] tw-h-[100%] tw-flex tw-flex-col">
     <nav-bar title="人民建议征集"></nav-bar>
 
-    <div class="tw-mt-[24px] tw-px-[14px]">
+    <div class="tw-mt-[24px] tw-px-[14px] tw-w-[100%] tw-flex-1 tw-overflow-auto">
       <!-- 事项内容 -->
       <div class="tw-text-[#4A4A4A] tw-text-[17px] tw-font-semibold">
         <span>事项内容</span>
@@ -69,17 +69,21 @@
 
 <script setup>
   import navBar from '@/components/nav-bar.vue'
+  import { onMounted } from 'vue'
+  import { useRoute } from 'vue-router'
   import { reactive, ref } from 'vue'
+  const route = useRoute()
   const form = reactive({
     message: '',
     name: ''
   })
-  const value = ref([
-    { url: 'https://fastly.jsdelivr.net/npm/@vant/assets/leaf.jpeg' }
-  ])
+  const value = ref([{ url: 'https://fastly.jsdelivr.net/npm/@vant/assets/leaf.jpeg' }])
   const onSubmit = () => {
     console.log(123)
   }
+  onMounted(() => {
+    console.log(route.params)
+  })
 </script>
 
 <style></style>

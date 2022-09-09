@@ -7,7 +7,7 @@
         backgroundImage: `url(${imgBlue})`,
         boxShadow: '4px 4px 8px 0px #C7DFFF'
       }"
-      @click="onSelectItem('/jzxx')">
+      @click="onSelectItem('/jzxx/create')">
       <p
         class="home_item_text"
         style="color: #0047a7">
@@ -24,7 +24,7 @@
         backgroundImage: `url(${imgYellow})`,
         boxShadow: '4px 4px 8px 0px rgba(253,208,169,0.33)'
       }"
-      @click="onSelectItem('/rmjy')">
+      @click="onSelectItem('/rmjy/create')">
       <p
         class="home_item_text"
         style="color: #c35a00">

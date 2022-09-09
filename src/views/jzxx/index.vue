@@ -1,7 +1,8 @@
 <template>
-  <div class="tw-w-[100%] tw-h-[100%] tw-overflow-auto">
+  <div class="tw-w-[100%] tw-h-[100%] tw-flex tw-flex-col">
     <nav-bar title="局长信箱"></nav-bar>
-    <div class="tw-mx-auto tw-pt-[24px] tw-px-[14px] tw-pb-[14px]">
+    <div
+      class="tw-mx-auto tw-pt-[24px] tw-w-[100%] tw-px-[14px] tw-pb-[14px] tw-flex-1 tw-overflow-auto">
       <!-- 事项内容 -->
       <div
         class="tw-text-[17px] tw-text-[#4A4A4A] tw-font-semibold tw-w-[100%] tw-h-[24px] tw-text-left tw-leading-[17px]">
@@ -119,7 +120,9 @@
 
 <script setup>
   import navBar from '@/components/nav-bar.vue'
-  import { computed, reactive, ref } from 'vue'
+  import { computed, onMounted, reactive, ref } from 'vue'
+  import { useRoute } from 'vue-router'
+  const route = useRoute()
   const show = ref(false)
   const form = reactive({
     // 对象名称
@@ -135,7 +138,7 @@
   })
   // 地址详情
   const spaceAndMessage = computed(() => {
-    return form.spaceValue + '/' + form.message
+    return form.spaceValue + '/' + form.address
   })
   const cascaderValue = ref('')
   // const spaceValue = ref('')
@@ -192,9 +195,10 @@
     form.talkType = selectedOptions.map((option) => option.text).join('/')
   }
 
-  const value = ref([
-    { url: 'https://fastly.jsdelivr.net/npm/@vant/assets/leaf.jpeg' }
-  ])
+  const value = ref([{ url: 'https://fastly.jsdelivr.net/npm/@vant/assets/leaf.jpeg' }])
+  onMounted(() => {
+    console.log(route.params)
+  })
 </script>
 
 <style lang="scss" scoped></style>

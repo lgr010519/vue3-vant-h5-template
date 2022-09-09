@@ -1,112 +1,111 @@
 <template>
-  <div class="tw-w-[100%] tw-h-[100%] tw-overflow-auto">
+  <div class="tw-w-[100%] tw-h-[100%] tw-flex tw-flex-col">
     <!-- < 用户注册 -->
     <nav-bar title="用户注册"></nav-bar>
     <!-- 注册表单 -->
-    <van-form @submit="onSubmit">
-      <van-cell-group inset>
-        <!-- 姓名 -->
-        <van-field
-          style="background-color: #f9f9f9"
-          v-model="user.name"
-          name="name"
-          label="姓名"
-          placeholder="请输入真实姓名"
-          :rules="[
-            { required: true, message: '请填写您的真实姓名' }
-          ]"></van-field>
-        <!-- 性别 -->
-        <van-field
-          style="background-color: #f9f9f9"
-          name="sex"
-          label="性别">
-          <template #input>
-            <van-radio-group
-              v-model="user.sex"
-              direction="horizontal">
-              <van-radio name="male">男</van-radio>
-              <div class="tw-w-[14px]"></div>
-              <van-radio name="female">女</van-radio>
-            </van-radio-group>
-          </template>
-        </van-field>
-        <!-- 身份证号 -->
-        <van-field
-          style="background-color: #f9f9f9"
-          v-model="user.cardId"
-          name="cardId"
-          label="身份证号"
-          placeholder="请输入身份证号"
-          :rules="[{ required: true, message: '请正确输入您的身份证号' }]" />
-        <!-- 手机号 -->
-        <van-field
-          style="background-color: #f9f9f9"
-          v-model="user.phone"
-          name="phone"
-          label="手机号"
-          placeholder="请输入手机号"
-          :rules="[{ required: true, message: '请输入您的手机号' }]">
-        </van-field>
-        <!-- 验证码 -->
-        <van-field
-          style="background-color: #f9f9f9"
-          v-model="user.verifycode"
-          label=""
-          left-icon="lock"
-          placeholder="请输入验证码"
-          :rules="[{ required: true, message: '请输入验证码' }]">
-          <template #button>
-            <van-button
-              size="mini"
-              type="default"
-              style="border: none; color: #3189ff; background-color: #f9f9f9"
-              >发送验证码</van-button
-            >
-          </template>
-        </van-field>
-        <!-- 选择区域 -->
-        <van-field
-          style="background-color: #f9f9f9"
-          v-model="spaceValue"
-          is-link
-          readonly
-          label="地址"
-          placeholder="请选择所在地区"
-          @click="show = true" />
-        <van-popup
-          v-model:show="show"
-          round
-          position="bottom">
-          <van-cascader
-            v-model="cascaderValue"
-            title="请选择所在地区"
-            :options="options"
-            @close="show = false"
-            @finish="onFinish" />
-        </van-popup>
-        <!-- 详细地址 -->
-        <van-field
-          style="background-color: #f9f9f9"
-          v-model="message"
-          rows="2"
-          autosize
-          label=""
-          type="textarea"
-          placeholder="请输入详细地址"
-          show-word-limit />
-      </van-cell-group>
+    <div class="tw-flex-1 tw-w-[100%] tw-overflow-auto">
+      <van-form @submit="onSubmit">
+        <van-cell-group inset>
+          <!-- 姓名 -->
+          <van-field
+            style="background-color: #f9f9f9"
+            v-model="user.name"
+            name="name"
+            label="姓名"
+            placeholder="请输入真实姓名"
+            :rules="[{ required: true, message: '请填写您的真实姓名' }]"></van-field>
+          <!-- 性别 -->
+          <van-field
+            style="background-color: #f9f9f9"
+            name="sex"
+            label="性别">
+            <template #input>
+              <van-radio-group
+                v-model="user.sex"
+                direction="horizontal">
+                <van-radio name="male">男</van-radio>
+                <div class="tw-w-[14px]"></div>
+                <van-radio name="female">女</van-radio>
+              </van-radio-group>
+            </template>
+          </van-field>
+          <!-- 身份证号 -->
+          <van-field
+            style="background-color: #f9f9f9"
+            v-model="user.cardId"
+            name="cardId"
+            label="身份证号"
+            placeholder="请输入身份证号"
+            :rules="[{ required: true, message: '请正确输入您的身份证号' }]" />
+          <!-- 手机号 -->
+          <van-field
+            style="background-color: #f9f9f9"
+            v-model="user.phone"
+            name="phone"
+            label="手机号"
+            placeholder="请输入手机号"
+            :rules="[{ required: true, message: '请输入您的手机号' }]">
+          </van-field>
+          <!-- 验证码 -->
+          <van-field
+            style="background-color: #f9f9f9"
+            v-model="user.verifycode"
+            label=""
+            left-icon="lock"
+            placeholder="请输入验证码"
+            :rules="[{ required: true, message: '请输入验证码' }]">
+            <template #button>
+              <van-button
+                size="mini"
+                type="default"
+                style="border: none; color: #3189ff; background-color: #f9f9f9"
+                >发送验证码</van-button
+              >
+            </template>
+          </van-field>
+          <!-- 选择区域 -->
+          <van-field
+            style="background-color: #f9f9f9"
+            v-model="spaceValue"
+            is-link
+            readonly
+            label="地址"
+            placeholder="请选择所在地区"
+            @click="show = true" />
+          <van-popup
+            v-model:show="show"
+            round
+            position="bottom">
+            <van-cascader
+              v-model="cascaderValue"
+              title="请选择所在地区"
+              :options="options"
+              @close="show = false"
+              @finish="onFinish" />
+          </van-popup>
+          <!-- 详细地址 -->
+          <van-field
+            style="background-color: #f9f9f9"
+            v-model="message"
+            rows="2"
+            autosize
+            label=""
+            type="textarea"
+            placeholder="请输入详细地址"
+            show-word-limit />
+        </van-cell-group>
 
-      <div
-        class="tw-mx-auto tw-w-[347px] tw-h-[44px] tw-mt-[170px] tw-pb-[80px]">
-        <van-button
-          block
-          type="primary"
-          native-type="submit"
-          style="border-radius: 6px 6px 6px 6px">
-          确认注册
-        </van-button>
-      </div>
-    </van-form>
+        <div class="tw-mx-auto tw-w-[347px] tw-h-[44px] tw-mt-[170px] tw-pb-[80px]">
+          <van-button
+            block
+            type="primary"
+            native-type="submit"
+            style="border-radius: 6px 6px 6px 6px">
+            确认注册
+          </van-button>
+        </div>
+      </van-form>
+    </div>
   </div>
 </template>
 
