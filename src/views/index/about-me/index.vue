@@ -98,7 +98,7 @@
   /**
    * 点击退出系统
    */
-  const onSignOut = function () {
+  function onSignOut() {
     showActionSheet.value = true
   }
   /**
@@ -106,13 +106,13 @@
    * @param {*} action
    * @param {*} index
    */
-  const onSelectAction = function (action, index) {
+  function onSelectAction(action, index) {
     console.log(action, index)
   }
   /**
    * 取消选择
    */
-  const onCancelSignOut = function () {
+  function onCancelSignOut() {
     Toast('已取消')
   }
 </script>

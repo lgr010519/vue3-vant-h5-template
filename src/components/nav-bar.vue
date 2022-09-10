@@ -10,7 +10,7 @@
         @click="back" />
       <div
         class="tw-h-[19px] tw-text-[#4A4A4A] tw-text-[19px] tw-font-semibold tw-leading-[19px] tw-line-clamp-1">
-        <span>{{ props.title }}啊的拉开房间离开的撒娇弗兰克的撒发记录卡</span>
+        <span>{{ props.title }}</span>
       </div>
     </div>
   </div>

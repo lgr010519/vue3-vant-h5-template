@@ -4,3 +4,18 @@
   --van-cell-background-color: '#f9f9f9' !important;
   --van-dropdown-menu-background-color:'#f9f9f9' !important;
 }
+
+.custom_van_form {
+  --van-field-label-color: #666666;
+  --van-cell-horizontal-padding: 0px;
+  --van-field-placeholder-text-color: #999999;
+  :deep(.van-field__label) {
+    font-size: 16px;
+    color: #666666;
+    font-weight: 600;
+  }
+  :deep(textarea) {
+    padding: 10px 14px;
+    border: 1px solid #e0e0e0;
+  }
+}
