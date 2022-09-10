@@ -1,5 +1,8 @@
 <template>
   <div class="tw-w-[100%] tw-h-[100%] tw-flex tw-flex-col">
+    <van-loading
+      class="tw-mx-auto"
+      v-if="topLoading"></van-loading>
     <Nav-bar title="我的事项"></Nav-bar>
     <van-cell-group inset>
       <van-field
@@ -14,13 +17,15 @@
     <van-dropdown-menu active-color="#1989fa">
       <van-dropdown-item
         v-model="value1"
-        :options="option1" />
+        :options="eventType" />
       <van-dropdown-item
         v-model="value2"
-        :options="option2" />
+        :options="eventStatus" />
     </van-dropdown-menu>
     <!-- list -->
-    <div class="tw-w-[100%] tw-flex-1 tw-overflow-auto">
+    <div
+      class="tw-w-[100%] tw-flex-1 tw-overflow-auto"
+      ref="el">
       <div
         class="tw-mx-auto tw-px-[14px] tw-h-[88px] tw-my-[16px]"
         v-for="(item, index) in list"
@@ -41,101 +46,102 @@
         </div>
       </div>
     </div>
+    <van-loading
+      class="tw-mx-auto"
+      v-if="bottomLoading"></van-loading>
   </div>
 </template>
 
 <script setup>
-  import { ref } from 'vue' //reactive
+  import { onMounted, ref } from 'vue' //reactive
   import NavBar from '@/components/nav-bar.vue'
   import { useRouter } from 'vue-router'
+  import { useInfiniteScroll } from '@vueuse/core'
   const keyWord = ref('')
   const router = useRouter()
-  // const listData = reactive([
-  //   {
-  //     text: '哈哈哈哈',
-  //     time: '2020-09-28 12:20:28',
-  //     status: '待办理'
-  //   },
-  //   {
-  //     text: '哈哈哈哈',
-  //     time: '2020-09-28 12:20:28',
-  //     status: '待办理'
-  //   },
-  //   {
-  //     text: '哈哈哈哈',
-  //     time: '2020-09-28 12:20:28',
-  //     status: '待办理'
-  //   }
-  // ])
-  const value1 = ref(99)
+  const value1 = ref(0)
   const value2 = ref('s')
-  const option1 = [
-    { text: '全部', value: 99 },
-    { text: '局长信箱', value: 0 },
-    { text: '在线诉求', value: 1 },
-    { text: '人民建议征集', value: 2 }
+  const eventType = [
+    { text: '全部', value: 0 },
+    { text: '局长信箱', value: 1 },
+    { text: '在线诉求', value: 2 },
+    { text: '人民建议征集', value: 3 }
   ]
-  const option2 = [
+  const eventStatus = [
     { text: '全部', value: 's' },
     { text: '待办理', value: 'a' },
     { text: '已完成', value: 'b' }
-  ]
-  const list = [
-    {
-      id: 0,
-      chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
-      time: '2020-09-28 12:20:28',
-      status: '待办理',
-      type: '局长信箱'
-    },
-    {
-      id: 2,
-      chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
-      status: '已完成',
-      time: '2020-09-28 12:20:28',
-      type: '人民建议'
-    },
-    {
-      id: 3,
-      chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
-      status: '已完成',
-      time: '2020-09-28 12:20:28',
-      type: '局长信箱'
-    },
-    {
-      id: 4,
-      chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
-      status: '已完成',
-      time: '2020-09-28 12:20:28',
-      type: '人民建议'
-    },
-    {
-      id: 5,
-      chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
-      status: '已完成',
-      time: '2020-09-28 12:20:28',
-      type: '人民建议'
-    },
-    {
-      id: 6,
-      chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
-      status: '已完成',
-      time: '2020-09-28 12:20:28',
-      type: '局长信箱'
-    },
-    {
-      id: 7,
-      chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
-      status: '已完成',
-      time: '2020-09-28 12:20:28',
-      type: '局长信箱'
-    }
   ]
   const go = (item) => {
     item.type === '局长信箱'
       ? router.push(`/jzxx/detail/${item.id}`)
       : router.push(`/rmjy/detail/${item.id}`)
   }
+  // 测试数据
+  const count = ref(10)
+  const list = ref([])
+
+  const el = ref(null)
+  useInfiniteScroll(
+    el,
+    () => {
+      // load more
+      list.value.push(
+        {
+          id: 1,
+          chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
+          status: '已完成',
+          time: '2020-09-28 12:20:28',
+          type: '局长信箱'
+        },
+        {
+          id: 1,
+          chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
+          status: '已完成',
+          time: '2020-09-28 12:20:28',
+          type: '局长信箱'
+        },
+        {
+          id: 1,
+          chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
+          status: '已完成',
+          time: '2020-09-28 12:20:28',
+          type: '局长信箱'
+        },
+        {
+          id: 1,
+          chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
+          status: '已完成',
+          time: '2020-09-28 12:20:28',
+          type: '局长信箱'
+        },
+        {
+          id: 1,
+          chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
+          status: '已完成',
+          time: '2020-09-28 12:20:28',
+          type: '局长信箱'
+        }
+      )
+    },
+    { distance: 40 }
+  )
+
+  // 顶部是否出现加载
+  const topLoading = ref(false)
+  // 底部是否出现加载
+  const bottomLoading = ref(false)
+  onMounted(() => {
+    for (let i = 0; i < count.value; i++) {
+      list.value.push({
+        id: 1,
+        chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
+        status: '已完成',
+        time: '2020-09-28 12:20:28',
+        type: '人民建议'
+      })
+    }
+  })
 </script>
 
 <style lang="scss" scoped>
