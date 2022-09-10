@@ -230,7 +230,7 @@
   const value = ref([{ url: 'https://fastly.jsdelivr.net/npm/@vant/assets/leaf.jpeg' }])
   onMounted(() => {
     if (route.params.mode === 'detail') {
-      ;(form.spaceValue = '湖北省/武汉市'),
+      ;(form.spaceValue = '湖北省' + ' ' + '武汉市'),
         (form.talkType = '废气'),
         (form.message = '中秋节居然还要加班')
     }
