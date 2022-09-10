@@ -4,19 +4,20 @@
     <nav-bar title="用户注册"></nav-bar>
     <!-- 注册表单 -->
     <div class="tw-flex-1 tw-w-[100%] tw-overflow-auto">
-      <van-form @submit="onSubmit">
+      <van-form
+        class="custom_van_form"
+        @submit="onSubmit">
         <van-cell-group inset>
           <!-- 姓名 -->
           <van-field
-            style="background-color: #f9f9f9"
             v-model="user.name"
             name="name"
             label="姓名"
             placeholder="请输入真实姓名"
-            :rules="[{ required: true, message: '请填写您的真实姓名' }]"></van-field>
+            :rules="[{ required: true, message: '请填写您的真实姓名' }]">
+          </van-field>
           <!-- 性别 -->
           <van-field
-            style="background-color: #f9f9f9"
             name="sex"
             label="性别">
             <template #input>
@@ -31,7 +32,6 @@
           </van-field>
           <!-- 身份证号 -->
           <van-field
-            style="background-color: #f9f9f9"
             v-model="user.cardId"
             name="cardId"
             label="身份证号"
@@ -39,7 +39,6 @@
             :rules="[{ required: true, message: '请正确输入您的身份证号' }]" />
           <!-- 手机号 -->
           <van-field
-            style="background-color: #f9f9f9"
             v-model="user.phone"
             name="phone"
             label="手机号"
@@ -48,7 +47,6 @@
           </van-field>
           <!-- 验证码 -->
           <van-field
-            style="background-color: #f9f9f9"
             v-model="user.verifycode"
             label=""
             left-icon="lock"
@@ -67,7 +65,6 @@
           </van-field>
           <!-- 选择区域 -->
           <van-field
-            style="background-color: #f9f9f9"
             v-model="spaceValue"
             is-link
             readonly
@@ -87,7 +84,6 @@
           </van-popup>
           <!-- 详细地址 -->
           <van-field
-            style="background-color: #f9f9f9"
             v-model="user.addressMessage"
             rows="2"
             autosize
@@ -101,8 +97,8 @@
           <van-button
             block
             type="primary"
-            native-type="submit"
-            style="border-radius: 6px 6px 6px 6px">
+            color="#3189FF"
+            native-type="submit">
             确认注册
           </van-button>
         </div>
@@ -168,4 +164,8 @@
   const cascaderValue = ref('')
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+  .custom_van_form {
+    @extend .custom_van_form;
+  }
+</style>

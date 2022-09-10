@@ -40,7 +40,7 @@
           style="margin: 10px"
           v-if="isCreate">
           <van-button
-            style="border-radius: 6px 6px 6px 6px"
+            color="#3189FF"
             block
             type="primary"
             native-type="submit">
