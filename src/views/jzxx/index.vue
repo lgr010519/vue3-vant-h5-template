@@ -10,14 +10,14 @@
       </div>
       <!-- form表单 -->
       <van-form
+        class="custom_van_form"
+        :readonly="!isCreate"
         @submit="onSubmit"
-        label-align="left"
-        style="padding: 0; margin-top: 24px">
+        label-align="left">
         <van-cell-group
-          style="margin: 0"
+          style="margin: 0; background-color: #f9f9f9"
           inset>
           <van-field
-            style="padding: 0; height: 30px"
             v-model="form.objName"
             name="用户名"
             label="诉求对象名称"
@@ -25,14 +25,15 @@
           </van-field>
           <!-- 选择区域 -->
           <van-field
-            style="padding: 0; height: 30px; margin-top: 15px"
             v-model="form.spaceValue"
-            is-link
+            :is-link="isCreate"
             readonly
             label="诉求对象地址"
             placeholder="点击选择"
-            @click="show = true" />
+            value="hahaha"
+            @click="show = true"></van-field>
           <van-popup
+            v-if="isCreate"
             v-model:show="show"
             round
             position="bottom">
@@ -46,8 +47,7 @@
           </van-popup>
           <!-- 详细地址 -->
           <van-field
-            style="padding: 0; border: 1px solid #e0e0e0; margin-top: 20px"
-            v-model="form.address"
+            v-model="form.addressMessage"
             rows="3"
             autosize
             label=""
@@ -60,12 +60,13 @@
         <van-field
           style="padding: 0; height: 30px; margin-top: 15px"
           v-model="form.talkType"
-          is-link
+          :is-link="isCreate"
           readonly
           label="诉求类型"
           placeholder="请选择所在地区"
           @click="showType = true" />
         <van-popup
+          v-if="isCreate"
           v-model:show="showType"
           round
           position="bottom">
@@ -78,12 +79,11 @@
             @finish="typeFinish" />
         </van-popup>
         <!-- 诉求描述 -->
-        <div class="tw-mt-[22px] tw-text-[14px] tw-text-[#666666]">
+        <div class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
           <span>诉求描述</span>
         </div>
         <div>
           <van-field
-            style="padding: 0; border: 1px solid #e0e0e0; margin-top: 12px"
             v-model="form.message"
             rows="4"
             autosize
@@ -92,7 +92,7 @@
             show-word-limit>
           </van-field>
         </div>
-        <div class="tw-mt-[22px] tw-text-[14px] tw-text-[#666666]">
+        <div class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
           <span>附件说明</span>
         </div>
         <van-field
@@ -103,7 +103,9 @@
             <van-uploader v-model="value" />
           </template>
         </van-field>
-        <div style="margin: 16px">
+        <div
+          v-if="isCreate"
+          style="margin: 16px">
           <van-button
             style="border-radius: 6px 6px 6px 6px"
             block
@@ -113,9 +115,28 @@
           </van-button>
         </div>
       </van-form>
+      <!-- 办理结果 -->
+      <div v-if="!isCreate">
+        <p class="tw-text-[16px] tw-font-semibold tw-text-[#666666]">办理结果</p>
+        <div
+          class="tw-w-[100%] tw-mt-[12px] tw-flex tw-items-center tw-h-[94px] tw-bg-[#E5EFFB] tw-rounded-[6px]">
+          <div class="tw-mx-auto tw-flex tw-justify-between tw-w-[329px] tw-h-[66px]">
+            <div class="tw-w-[18px] tw-h-[18px] tw-mt-[2px]">
+              <img
+                style="width: 100%; height: 100%"
+                src="@/assets/images/jzxx/icon_handle.png"
+                alt="" />
+            </div>
+            <div class="tw-w-[293px] tw-h-[100%] tw-font-medium tw-text-[15px] tw-text-[#5591E0]">
+              <p>
+                您反映的问题，责任单位已处理。责任单位将通过您所留的方式答复结果，感谢您对我们工作的理解与支持！
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <h2>{{ spaceAndMessage }}</h2>
 </template>
 
 <script setup>
@@ -129,20 +150,18 @@
     objName: '',
     // 诉求类型
     talkType: '',
+    // 区级地址
+    district: '',
+    // 街道地址
+    address: '',
     // 区域地址
     spaceValue: '',
     // 详细地址
-    address: '',
+    addressMessage: '',
     // 诉求描述
     message: ''
   })
-  // 地址详情
-  const spaceAndMessage = computed(() => {
-    return form.spaceValue + '/' + form.address
-  })
   const cascaderValue = ref('')
-  // const spaceValue = ref('')
-  // const message = ref('')
   const onSubmit = () => {
     console.log(123)
   }
@@ -160,7 +179,14 @@
   ])
   const onFinish = ({ selectedOptions }) => {
     show.value = false
-    form.spaceValue = selectedOptions.map((option) => option.text).join('/')
+    console.log(selectedOptions)
+    if (selectedOptions[0].text) {
+      form.district = selectedOptions[0].text
+    }
+    if (selectedOptions[1].text) {
+      form.address = selectedOptions[1].text
+    }
+    form.spaceValue = selectedOptions.map((option) => option.text).join(' ')
   }
   // 是否战术诉求菜单
   const showType = ref(false)
@@ -197,8 +223,21 @@
 
   const value = ref([{ url: 'https://fastly.jsdelivr.net/npm/@vant/assets/leaf.jpeg' }])
   onMounted(() => {
-    console.log(route.params)
+    if (route.params.mode === 'detail') {
+      ;(form.spaceValue = '湖北省' + ' ' + '武汉市'),
+        (form.talkType = '废气'),
+        (form.message = '中秋节居然还要加班')
+    }
+  })
+
+  // 判断当前页面的展示状态
+  const isCreate = computed(() => {
+    return route.params.mode === 'create'
   })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+  :root {
+    --van-cell-label-font-size: 16px;
+  }
+</style>
