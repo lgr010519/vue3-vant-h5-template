@@ -8,10 +8,10 @@
         <span>事项内容</span>
       </div>
       <van-form
-        class="custom_van_form"
         :readonly="!isCreate"
         @submit="onSubmit"
-        style="padding: 0; margin-top: 24px">
+        style="padding: 0; margin-top: 24px"
+        class="custom_van_form">
         <van-cell-group
           inset
           style="margin: 0">
@@ -25,7 +25,7 @@
           </van-field>
         </van-cell-group>
         <!-- 意见建议描述 -->
-        <div class="tw-mt-[22px] tw-text-[14px] tw-text-[#666666]">
+        <div class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
           <span>意见建议描述</span>
         </div>
         <div>
@@ -44,7 +44,7 @@
             show-word-limit>
           </van-field>
         </div>
-        <div class="tw-mt-[22px] tw-text-[14px] tw-text-[#666666]">
+        <div class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
           <span>附件说明</span>
         </div>
         <van-field
