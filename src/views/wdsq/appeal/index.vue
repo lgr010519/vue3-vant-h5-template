@@ -85,7 +85,9 @@
         <p class="tw-text-[16px] tw-text-[#666666] tw-font-semibold tw-mt-[22px] tw-mb-[12px]">
           附件说明
         </p>
-        <upload-file :readonly="readonly"></upload-file>
+        <upload-file
+          v-model="formData.attachments"
+          :readonly="readonly"></upload-file>
       </van-form>
     </div>
   </div>
@@ -122,6 +124,7 @@
     address: '',
     type: '',
     desc: ''
+    // attachments: []
   })
 
   // 地址选择
