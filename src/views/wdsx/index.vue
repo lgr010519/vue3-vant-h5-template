@@ -6,8 +6,10 @@
     <Nav-bar title="我的事项"></Nav-bar>
     <van-cell-group inset>
       <van-field
+        @click-left-icon="clickIcon"
+        @keyup.enter="keyUp"
         style="background-color: #f0f0f0; margin-top: 16px; border-radius: 6px 6px 6px 6px"
-        v-model="keyWord"
+        v-model="obj.keyWord"
         label=" "
         label-width="1px"
         left-icon="search"
@@ -16,10 +18,10 @@
     <!-- 选择事项 -->
     <van-dropdown-menu active-color="#1989fa">
       <van-dropdown-item
-        v-model="value1"
+        v-model="obj.type"
         :options="eventType" />
       <van-dropdown-item
-        v-model="value2"
+        v-model="obj.status"
         :options="eventStatus" />
     </van-dropdown-menu>
     <!-- list -->
@@ -53,24 +55,26 @@
 </template>
 
 <script setup>
-  import { onMounted, ref } from 'vue' //reactive
+  import { onMounted, reactive, ref } from 'vue' //reactive
   import NavBar from '@/components/nav-bar.vue'
   import { useRouter } from 'vue-router'
   import { useInfiniteScroll } from '@vueuse/core'
-  const keyWord = ref('')
   const router = useRouter()
-  const value1 = ref(0)
-  const value2 = ref('s')
+  const obj = reactive({
+    keyWord: '',
+    type: '全部',
+    status: '全部'
+  })
   const eventType = [
-    { text: '全部', value: 0 },
-    { text: '局长信箱', value: 1 },
-    { text: '在线诉求', value: 2 },
-    { text: '人民建议征集', value: 3 }
+    { text: '全部', value: '全部' },
+    { text: '局长信箱', value: '局长信箱' },
+    { text: '在线诉求', value: '在线诉求' },
+    { text: '人民建议征集', value: '人民建议征集' }
   ]
   const eventStatus = [
-    { text: '全部', value: 's' },
-    { text: '待办理', value: 'a' },
-    { text: '已完成', value: 'b' }
+    { text: '全部', value: '全部' },
+    { text: '待办理', value: '待办理' },
+    { text: '已完成', value: '已完成' }
   ]
   const go = (item) => {
     item.type === '局长信箱'
@@ -142,6 +146,14 @@
       })
     }
   })
+
+  // 点击放大镜搜索
+  const clickIcon = () => {
+    console.log(obj)
+  }
+  const keyUp = () => {
+    console.log(obj)
+  }
 </script>
 
 <style lang="scss" scoped>

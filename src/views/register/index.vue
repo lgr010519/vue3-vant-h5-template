@@ -58,8 +58,10 @@
               <van-button
                 size="mini"
                 type="default"
+                :disabled="isSend"
+                @click="send"
                 style="border: none; color: #3189ff; background-color: #f9f9f9"
-                >发送验证码</van-button
+                >{{ isSend ? '已发送' : '发送验证码' }}</van-button
               >
             </template>
           </van-field>
@@ -86,7 +88,7 @@
           <!-- 详细地址 -->
           <van-field
             style="background-color: #f9f9f9"
-            v-model="message"
+            v-model="user.addressMessage"
             rows="2"
             autosize
             label=""
@@ -120,7 +122,12 @@
     cardId: '', // 身份证
     phone: '', // 手机号
     verifycode: '', //验证码
-    text: ''
+    // 区级地址
+    district: '',
+    // 街道地址
+    address: '',
+    // 详细地址
+    addressMessage: ''
   })
   const show = ref(false)
   const options = ref([
@@ -139,7 +146,13 @@
   const spaceValue = ref('')
   const onFinish = ({ selectedOptions }) => {
     show.value = false
-    spaceValue.value = selectedOptions.map((option) => option.text).join('/')
+    if (selectedOptions[0].text) {
+      user.district = selectedOptions[0].text
+    }
+    if (selectedOptions[1].text) {
+      user.address = selectedOptions[1].text
+    }
+    spaceValue.value = selectedOptions.map((option) => option.text).join(' ')
   }
   const message = ref('')
   //提交表单
@@ -147,6 +160,12 @@
     user.text = spaceValue.value + '/' + message.value
     router.push('/index')
   }
+  const isSend = ref(false)
+  const send = () => {
+    //发送验证请求
+    isSend.value = true
+  }
+  const cascaderValue = ref('')
 </script>
 
 <style></style>

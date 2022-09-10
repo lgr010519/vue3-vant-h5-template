@@ -35,15 +35,13 @@
           class="tw-h-[60px]">
           <template #button>
             <van-button
+              ref="btn"
               size="small"
               type="default"
-              style="
-                border: none;
-                color: #3189ff;
-                font-size: 13px;
-                background-color: #f9f9f9;
-              ">
-              发送验证码
+              @click="send"
+              :disabled="isSend"
+              style="border: none; color: #3189ff; font-size: 13px; background-color: #f9f9f9">
+              {{ isSend ? '已发送' : '发送验证码' }}
             </van-button>
           </template>
         </van-field>
@@ -83,18 +81,18 @@
 </template>
 
 <script setup>
-  import { reactive } from 'vue'
+  import { reactive, ref } from 'vue'
   import { useRouter } from 'vue-router'
   const router = useRouter()
   const user = reactive({
     username: '',
     password: ''
   })
+  const isSend = ref(false)
   const login = () => {
     router.push('/login')
   }
   const register = () => {
-    console.log(12321321312)
     router.push('/register')
   }
   const onSubmit = () => {
@@ -102,6 +100,12 @@
   }
   const forget = () => {
     router.push({ path: '/forget' })
+  }
+  const btn = ref()
+  const send = () => {
+    //发送验证请求
+    isSend.value = true
+    // console.log(btn.value.$el)
   }
 </script>
 

@@ -161,13 +161,7 @@
     // 诉求描述
     message: ''
   })
-  // 地址详情
-  const spaceAndMessage = computed(() => {
-    return form.spaceValue + '/' + form.address
-  })
   const cascaderValue = ref('')
-  // const spaceValue = ref('')
-  // const message = ref('')
   const onSubmit = () => {
     console.log(123)
   }
