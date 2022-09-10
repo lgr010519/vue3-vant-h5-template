@@ -237,7 +237,7 @@
 </script>
 
 <style lang="scss" scoped>
-  :root {
-    --van-cell-label-font-size: 16px;
+  .custom_van_form {
+    @extend .custom_van_form;
   }
 </style>

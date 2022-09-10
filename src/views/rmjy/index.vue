@@ -10,51 +10,32 @@
       <van-form
         :readonly="!isCreate"
         @submit="onSubmit"
-        style="padding: 0; margin-top: 24px"
         class="custom_van_form">
-        <van-cell-group
+        <!-- <van-cell-group
           inset
           style="margin: 0">
-          <!-- 意见建议名称 -->
-          <van-field
-            style="padding: 0; height: 30px; background-color: #f9f9f9"
-            v-model="form.name"
-            name="用户名"
-            label="意见建议名称"
-            placeholder="请输入名称">
-          </van-field>
-        </van-cell-group>
+        </van-cell-group> -->
+        <!-- 意见建议名称 -->
+        <van-field
+          v-model="form.name"
+          name="用户名"
+          label="意见建议名称"
+          placeholder="请输入名称">
+        </van-field>
         <!-- 意见建议描述 -->
-        <div class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
-          <span>意见建议描述</span>
-        </div>
-        <div>
-          <van-field
-            style="
-              padding: 0;
-              border: 1px solid #e0e0e0;
-              margin-top: 12px;
-              background-color: #f9f9f9;
-            "
-            v-model="form.message"
-            rows="4"
-            autosize
-            label=""
-            type="textarea"
-            show-word-limit>
-          </van-field>
-        </div>
+        <p class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">意见建议描述</p>
+        <van-field
+          v-model="form.message"
+          rows="4"
+          autosize
+          label=""
+          type="textarea"
+          show-word-limit>
+        </van-field>
         <div class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
           <span>附件说明</span>
         </div>
-        <van-field
-          style="padding: 0; margin-top: 12px; background-color: #f9f9f9"
-          name="uploader"
-          label="">
-          <template #input>
-            <van-uploader v-model="value" />
-          </template>
-        </van-field>
+        <upload-file></upload-file>
         <div
           style="margin: 10px"
           v-if="isCreate">
@@ -94,13 +75,14 @@
 <script setup>
   import navBar from '@/components/nav-bar.vue'
   import { useRoute } from 'vue-router'
-  import { reactive, ref, computed, onMounted } from 'vue'
+  import { reactive, computed, onMounted } from 'vue'
+  import UploadFile from '@/components/upload-file.vue'
   const route = useRoute()
   const form = reactive({
     message: '',
     name: ''
   })
-  const value = ref([{ url: 'https://fastly.jsdelivr.net/npm/@vant/assets/leaf.jpeg' }])
+  // const value = ref([{ url: 'https://fastly.jsdelivr.net/npm/@vant/assets/leaf.jpeg' }])
   const onSubmit = () => {
     console.log(123)
   }
@@ -116,4 +98,8 @@
   })
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+  .custom_van_form {
+    @extend .custom_van_form;
+  }
+</style>

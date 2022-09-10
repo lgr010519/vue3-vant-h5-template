@@ -88,6 +88,18 @@
         <upload-file
           v-model="formData.attachments"
           :readonly="readonly"></upload-file>
+
+        <div
+          v-if="!readonly"
+          class="tw-mt-[30px]">
+          <van-button
+            type="primary"
+            color="#3189FF"
+            block
+            native-type="submit">
+            提交
+          </van-button>
+        </div>
       </van-form>
     </div>
   </div>
