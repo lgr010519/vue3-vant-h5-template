@@ -9,51 +9,56 @@
           <!-- 姓名 -->
           <van-field
             style="background-color: #f9f9f9"
-            v-model="user.name"
+            v-model="user.realName"
             name="name"
+            label-width="70"
             label="姓名"
             placeholder="请输入真实姓名"
-            :rules="[{ required: true, message: '请填写您的真实姓名' }]"></van-field>
+            :rules="nameCheck"></van-field>
           <!-- 性别 -->
           <van-field
             style="background-color: #f9f9f9"
             name="sex"
+            label-width="70"
             label="性别">
             <template #input>
               <van-radio-group
-                v-model="user.sex"
+                v-model="user.gender"
                 direction="horizontal">
-                <van-radio name="male">男</van-radio>
+                <van-radio name="1">男</van-radio>
                 <div class="tw-w-[14px]"></div>
-                <van-radio name="female">女</van-radio>
+                <van-radio name="2">女</van-radio>
               </van-radio-group>
             </template>
           </van-field>
           <!-- 身份证号 -->
           <van-field
             style="background-color: #f9f9f9"
-            v-model="user.cardId"
+            v-model="user.idCard"
             name="cardId"
             label="身份证号"
+            label-width="70"
             placeholder="请输入身份证号"
-            :rules="[{ required: true, message: '请正确输入您的身份证号' }]" />
+            :rules="idCard" />
           <!-- 手机号 -->
           <van-field
             style="background-color: #f9f9f9"
-            v-model="user.phone"
+            v-model="user.telPhone"
             name="phone"
             label="手机号"
+            label-width="70"
             placeholder="请输入手机号"
-            :rules="[{ required: true, message: '请输入您的手机号' }]">
+            :rules="telPhoneCheck">
           </van-field>
           <!-- 验证码 -->
           <van-field
             style="background-color: #f9f9f9"
-            v-model="user.verifycode"
-            label=""
-            left-icon="lock"
+            v-model="user.smsCode"
+            label=" "
+            left-icon="chat-o"
+            label-width="50"
             placeholder="请输入验证码"
-            :rules="[{ required: true, message: '请输入验证码' }]">
+            :rules="smsCard">
             <template #button>
               <van-button
                 size="mini"
@@ -61,9 +66,21 @@
                 :disabled="isSend"
                 @click="send"
                 style="border: none; color: #3189ff; background-color: #f9f9f9"
-                >{{ isSend ? '已发送' : '发送验证码' }}</van-button
-              >
+                >{{ isSend ? '已发送' : '发送验证码' }}
+              </van-button>
             </template>
+          </van-field>
+          <!-- 密码 -->
+          <van-field
+            style="background-color: #f9f9f9"
+            v-model="user.password"
+            type="password"
+            name="password"
+            label=" "
+            label-width="50"
+            left-icon="lock"
+            placeholder="请输入密码"
+            :rules="passwordCheck">
           </van-field>
           <!-- 选择区域 -->
           <van-field
@@ -72,8 +89,11 @@
             is-link
             readonly
             label="地址"
+            label-width="70"
             placeholder="请选择所在地区"
-            @click="show = true" />
+            @click="show = true">
+          </van-field>
+
           <van-popup
             v-model:show="show"
             round
@@ -83,18 +103,20 @@
               title="请选择所在地区"
               :options="options"
               @close="show = false"
-              @finish="onFinish" />
+              @finish="onFinish">
+            </van-cascader>
           </van-popup>
           <!-- 详细地址 -->
           <van-field
             style="background-color: #f9f9f9"
-            v-model="user.addressMessage"
+            v-model="user.address"
             rows="2"
             autosize
             label=""
             type="textarea"
             placeholder="请输入详细地址"
-            show-word-limit />
+            show-word-limit>
+          </van-field>
         </van-cell-group>
 
         <div class="tw-mx-auto tw-w-[347px] tw-h-[44px] tw-mt-[170px] tw-pb-[80px]">
@@ -115,19 +137,23 @@
   import NavBar from '@/components/nav-bar.vue'
   import { reactive, ref } from 'vue'
   import { useRouter } from 'vue-router'
+  import { mobileCode, userRegister } from '@/api/index'
+  import { passwordCheck, telPhoneCheck, idCard, nameCheck, smsCard } from '@/configs/globalvar'
+  import { Toast } from 'vant'
   const router = useRouter()
   const user = reactive({
-    name: '', // 姓名
-    sex: '', // 性别
-    cardId: '', // 身份证
-    phone: '', // 手机号
-    verifycode: '', //验证码
+    realName: '', // 姓名
+    gender: '1', // 性别
+    idCard: '', // 身份证
+    telPhone: '', // 手机号
+    smsCode: '', //验证码
+    password: '', //密码
     // 区级地址
     district: '',
     // 街道地址
-    address: '',
+    community: '',
     // 详细地址
-    addressMessage: ''
+    address: ''
   })
   const show = ref(false)
   const options = ref([
@@ -144,26 +170,49 @@
   ])
   // 地址拼接
   const spaceValue = ref('')
+  // 手机号正则校验
+  const RegExpPhone = (val) => {
+    console.log(val)
+    return /^1\d{10}$/.test(val)
+  }
   const onFinish = ({ selectedOptions }) => {
     show.value = false
     if (selectedOptions[0].text) {
       user.district = selectedOptions[0].text
     }
     if (selectedOptions[1].text) {
-      user.address = selectedOptions[1].text
+      user.community = selectedOptions[1].text
     }
     spaceValue.value = selectedOptions.map((option) => option.text).join(' ')
   }
-  const message = ref('')
   //提交表单
-  const onSubmit = () => {
-    user.text = spaceValue.value + '/' + message.value
-    router.push('/index')
+  const onSubmit = async () => {
+    console.log(user)
+    const result = await userRegister(user)
+    if (result.data.msg == 'ok') {
+      Toast('注册成功')
+      // 注册成功
+      router.back()
+    } else {
+      Toast('注册失败,请稍等一会儿再尝试')
+      // 注册成功
+      router.back()
+    }
   }
   const isSend = ref(false)
-  const send = () => {
+  // 发送验证码
+  const send = async () => {
     //发送验证请求
-    isSend.value = true
+    if (user.telPhone && RegExpPhone(user.telPhone)) {
+      const result = await mobileCode({ mobile: user.telPhone })
+      if (result.status === 200) {
+        isSend.value = true
+        Toast('发送成功,请检查您的手机短信')
+      }
+    } else {
+      // 弹出提示
+      Toast('验证码发送失败,请检查你的手机号')
+    }
   }
   const cascaderValue = ref('')
 </script>

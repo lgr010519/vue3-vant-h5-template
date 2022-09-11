@@ -22,7 +22,7 @@
           label=""
           placeholder="请输入手机号"
           left-icon="phone"
-          :rules="[{ required: true, message: '请输入手机号' }]"
+          :rules="telPhoneCheck"
           class="tw-h-[60px]">
         </van-field>
         <van-field
@@ -33,7 +33,7 @@
           label=""
           left-icon="lock"
           placeholder="请输入密码"
-          :rules="[{ required: true, message: '请输入密码' }]"
+          :rules="passwordCheck"
           class="tw-h-[60px]">
         </van-field>
       </van-cell-group>
@@ -73,8 +73,13 @@
 <script setup>
   import { reactive } from 'vue'
   import { useRouter } from 'vue-router'
+  import { passwordLogin } from '@/api/index'
+  import SHA256 from 'crypto-js/sha256'
+  import { passwordCheck, telPhoneCheck } from '@/configs/globalvar'
+  import { Toast } from 'vant'
   const router = useRouter()
   const user = reactive({
+    auth_type: '1',
     username: '',
     password: ''
   })
@@ -84,8 +89,19 @@
   const register = () => {
     router.push({ path: '/register' })
   }
-  const onSubmit = () => {
-    router.push('/index')
+  const onSubmit = async () => {
+    const result = await passwordLogin({
+      auth_type: '1',
+      password: SHA256(user.password).toString(),
+      username: user.username
+    })
+    if (result.data.data) {
+      localStorage.setItem('token', result.data.data.token)
+      Toast('登录成功')
+      router.push('/index')
+    } else {
+      Toast('登录失败，请检查你的手机号或密码是否正确')
+    }
   }
   const forget = () => {
     router.push({ path: '/forget' })

@@ -17,7 +17,7 @@
       <van-cell-group inset>
         <van-field
           style="background-color: #f9f9f9"
-          v-model="user.username"
+          v-model="user.account"
           name="password"
           label=""
           placeholder="请输入手机号"
@@ -27,7 +27,7 @@
         </van-field>
         <van-field
           style="background-color: #f9f9f9"
-          v-model="user.password"
+          v-model="user.smscode"
           label=""
           left-icon="lock"
           placeholder="请输入验证码"
@@ -83,10 +83,12 @@
 <script setup>
   import { reactive, ref } from 'vue'
   import { useRouter } from 'vue-router'
+  import { Toast } from 'vant'
+  import { mobileCode, passwordLogin } from '@/api/index'
   const router = useRouter()
   const user = reactive({
-    username: '',
-    password: ''
+    account: '',
+    smscode: ''
   })
   const isSend = ref(false)
   const login = () => {
@@ -95,17 +97,41 @@
   const register = () => {
     router.push('/register')
   }
-  const onSubmit = () => {
-    router.push('/index')
+  const onSubmit = async () => {
+    const result = await passwordLogin({
+      auth_type: '1',
+      smscode: user.smscode,
+      account: user.account
+    })
+    if (result.data.data) {
+      localStorage.setItem('token', result.data.data.token)
+      Toast('登录成功')
+      router.push('/index')
+    } else {
+      Toast('登录失败，请检查你的手机号或验证码是否正确')
+    }
   }
   const forget = () => {
     router.push({ path: '/forget' })
   }
   const btn = ref()
-  const send = () => {
+  // 手机号正则校验
+  const RegExpPhone = (val) => {
+    console.log(val)
+    return /^1\d{10}$/.test(val)
+  }
+  const send = async () => {
     //发送验证请求
-    isSend.value = true
-    // console.log(btn.value.$el)
+    if (user.account && RegExpPhone(user.account)) {
+      const result = await mobileCode({ mobile: user.account })
+      if (result.status === 200) {
+        isSend.value = true
+        Toast('发送成功,请检查您的手机短信')
+      }
+    } else {
+      // 弹出提示
+      Toast('验证码发送失败,请检查你的手机号')
+    }
   }
 </script>
 
