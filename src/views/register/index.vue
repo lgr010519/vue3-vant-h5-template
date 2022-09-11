@@ -4,7 +4,9 @@
     <nav-bar title="用户注册"></nav-bar>
     <!-- 注册表单 -->
     <div class="tw-flex-1 tw-w-[100%] tw-overflow-auto">
-      <van-form @submit="onSubmit">
+      <van-form
+        class="custom_van_form"
+        @submit="onSubmit">
         <van-cell-group inset>
           <!-- 姓名 -->
           <van-field
@@ -17,7 +19,6 @@
             :rules="nameCheck"></van-field>
           <!-- 性别 -->
           <van-field
-            style="background-color: #f9f9f9"
             name="sex"
             label-width="70"
             label="性别">
@@ -84,7 +85,6 @@
           </van-field>
           <!-- 选择区域 -->
           <van-field
-            style="background-color: #f9f9f9"
             v-model="spaceValue"
             is-link
             readonly
@@ -123,8 +123,8 @@
           <van-button
             block
             type="primary"
-            native-type="submit"
-            style="border-radius: 6px 6px 6px 6px">
+            color="#3189FF"
+            native-type="submit">
             确认注册
           </van-button>
         </div>
@@ -217,4 +217,8 @@
   const cascaderValue = ref('')
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+  .custom_van_form {
+    @extend .custom_van_form;
+  }
+</style>

@@ -57,7 +57,7 @@
         <van-button
           block
           type="primary"
-          style="border-radius: 6px 6px 6px 6px"
+          color="#3189FF"
           native-type="submit">
           登录
         </van-button>
@@ -99,7 +99,7 @@
   }
   const onSubmit = async () => {
     const result = await passwordLogin({
-      auth_type: '1',
+      auth_type: 'sms',
       smscode: user.smscode,
       account: user.account
     })

@@ -14,9 +14,7 @@
         :readonly="!isCreate"
         @submit="onSubmit"
         label-align="left">
-        <van-cell-group
-          style="margin: 0; background-color: #f9f9f9"
-          inset>
+        <van-cell-group inset>
           <van-field
             v-model="form.objName"
             name="用户名"
@@ -107,7 +105,7 @@
           v-if="isCreate"
           style="margin: 16px">
           <van-button
-            style="border-radius: 6px 6px 6px 6px"
+            color="#3189FF"
             block
             type="primary"
             native-type="submit">
@@ -237,7 +235,7 @@
 </script>
 
 <style lang="scss" scoped>
-  :root {
-    --van-cell-label-font-size: 16px;
+  .custom_van_form {
+    @extend .custom_van_form;
   }
 </style>
