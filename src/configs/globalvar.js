@@ -29,3 +29,18 @@ export const smsCard = [{ required: true, message: '请输入验证码' }]
 
 //诉求校验
 export const talkSomething = [{ required: true, message: '请输入诉求详情' }]
+
+// 诉求对象名称
+export const userObjName = [{ required: true, message: '请输入诉求对象名称' }]
+
+// 诉求对象地址
+export const userObjAddress = [{ required: true, message: '请选择诉求对象地址' }]
+
+//诉求对象详细地址
+export const userObjMessageAddress = [{ required: true, message: '请填写诉求对象详细地址' }]
+
+//诉求类型
+export const userObjType = [{ required: true, message: '请选择诉求类型' }]
+
+//诉求描述
+export const userObjChinese = [{ required: true, message: '请填写述求描述' }]
