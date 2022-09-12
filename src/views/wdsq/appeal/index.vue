@@ -5,11 +5,14 @@
       <p class="appeal_title">事项内容</p>
       <van-form
         :readonly="readonly"
-        class="custom_van_form">
+        class="custom_van_form"
+        @submit="onSubmit">
         <van-field
-          v-model="formData.username"
+          v-model="formData.reflectionTitle"
           label="诉求对象名称"
-          :placeholder="readonly ? '' : '请输入诉求对象名称'">
+          name="reflectionTitle"
+          :placeholder="readonly ? '' : '请输入诉求对象名称'"
+          :rules="rules.reflectionTitle">
         </van-field>
 
         <van-field
@@ -17,14 +20,16 @@
           :is-link="!readonly"
           :readonly="true"
           label="诉求对象地址"
+          name="streetCasText"
           :placeholder="readonly ? '' : '点击选择'"
-          @click="onSelectStreet">
+          @click="onSelectStreet"
+          :rules="rules.streetCasText">
         </van-field>
         <van-popup
           v-model:show="showStreetPicker"
           position="bottom">
           <van-cascader
-            v-model="formData.street"
+            v-model="formData.reflectionAreaCode"
             :options="streetCasOptions"
             :field-names="filedNames"
             active-color="#3189FF"
@@ -34,8 +39,10 @@
         </van-popup>
 
         <van-field
-          v-model="formData.address"
+          v-model="formData.reflectionAddress"
           label=""
+          name="reflectionAddress"
+          :rules="rules.reflectionAddress"
           type="textarea"
           maxlength="100"
           :placeholder="readonly ? '' : '请输入详细地址'"
@@ -50,6 +57,8 @@
           :is-link="!readonly"
           :readonly="true"
           label="诉求类型"
+          name="typeCasText"
+          :rules="rules.typeCasText"
           :placeholder="readonly ? '' : '点击选择'"
           @click="onSelectType">
         </van-field>
@@ -57,7 +66,7 @@
           v-model:show="showTypePicker"
           position="bottom">
           <van-cascader
-            v-model="formData.type"
+            v-model="formData.reflectionType"
             :options="typeCasOptions"
             :field-names="filedNames"
             active-color="#3189FF"
@@ -71,8 +80,10 @@
           诉求描述
         </p>
         <van-field
-          v-model="formData.desc"
+          v-model="formData.reflectionDescription"
           label=""
+          name="reflectionDescription"
+          :rules="rules.reflectionDescription"
           type="textarea"
           maxlength="100"
           :placeholder="readonly ? '' : '请输入详细诉求描述'"
@@ -82,12 +93,17 @@
           :show-word-limit="false">
         </van-field>
 
-        <p class="tw-text-[16px] tw-text-[#666666] tw-font-semibold tw-mt-[22px] tw-mb-[12px]">
-          附件说明
-        </p>
-        <upload-file
-          v-model="formData.attachments"
-          :readonly="readonly"></upload-file>
+        <p class="tw-text-[16px] tw-text-[#666666] tw-font-semibold tw-mt-[22px]">附件说明</p>
+        <van-field
+          name="reflectionFilePath"
+          :rules="rules.reflectionFilePath">
+          <template #input>
+            <upload-file
+              v-model="formData.reflectionFilePath"
+              :readonly="readonly">
+            </upload-file>
+          </template>
+        </van-field>
 
         <div
           v-if="!readonly"
@@ -118,6 +134,24 @@
   const readonly = computed(() => route.params.mode !== 'create')
 
   /**
+   * 表单数据
+   */
+  const formData = reactive({
+    reflectionTitle: '',
+    district: '',
+    reflectionAreaCode: '',
+    reflectionAddress: '',
+    reflectionType: '',
+    reflectionDescription: '',
+    reflectionFilePath: []
+  })
+
+  const rules = reactive({
+    reflectionTitle: [{ require: true, message: '请输入诉求对象名称' }],
+    streetCasText: []
+  })
+
+  /**
    * 选择器字段对应
    */
   const filedNames = {
@@ -125,20 +159,6 @@
     value: 'value',
     children: 'children'
   }
-
-  /**
-   * 表单数据
-   */
-  const formData = reactive({
-    username: '',
-    district: '',
-    street: '',
-    address: '',
-    type: '',
-    desc: ''
-    // attachments: []
-  })
-
   // 地址选择
   /**
    * 控制地址选择显示
@@ -156,29 +176,14 @@
   /**
    * 地址选择选项
    */
-  const streetCasOptions = ref([
-    {
-      text: '福田区',
-      value: '1',
-      children: [
-        { text: '福田区街道1-1', value: '1-1' },
-        { text: '福田区街道1-2', value: '1-2' }
-      ]
-    },
-    {
-      text: '罗湖区',
-      value: '2',
-      children: [
-        { text: '罗湖区街道2-1', value: '2-1' },
-        { text: '罗湖区街道2-2', value: '2-2' }
-      ]
-    }
-  ])
+  const streetCasOptions = ref([])
   /**
    * 地址显示文字
    */
   const streetCasText = computed(() => {
-    return formData.district && formData.street ? `${formData.district} ${formData.street}` : ''
+    return formData.district && formData.reflectionAreaCode
+      ? `${formData.district} ${formData.reflectionAreaCode}`
+      : ''
   })
   /**
    * 赋值区，街道
@@ -191,7 +196,7 @@
     })
 
     formData.district = district
-    formData.street = street
+    formData.reflectionAreaCode = street
   }
 
   // 类型选择
@@ -222,7 +227,7 @@
    */
   const typeCasText = computed(() => {
     const result = typeCasOptions.value.find((item) => {
-      return item.value === formData.type
+      return item.value === formData.reflectionType
     })
 
     console.log(result)
@@ -235,6 +240,10 @@
   function onTypeCasFinish({ selectedOptions }) {
     showTypePicker.value = false
     console.log(selectedOptions)
+  }
+
+  function onSubmit(values) {
+    console.log(values)
   }
 </script>
 

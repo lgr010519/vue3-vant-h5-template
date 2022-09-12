@@ -118,7 +118,7 @@
     Toast('已取消')
   }
   //获取用户信息
-  const getuserData = async () => {
+  const getUserData = async () => {
     const result = await getUserInformation()
     console.log(result.data.data)
     if (result.data.data) {
@@ -130,7 +130,7 @@
   }
 
   onMounted(() => {
-    getuserData()
+    getUserData()
   })
 </script>
 
