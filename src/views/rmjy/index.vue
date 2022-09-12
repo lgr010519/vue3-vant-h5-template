@@ -35,7 +35,9 @@
         <div class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
           <span>附件说明</span>
         </div>
-        <upload-file></upload-file>
+        <upload-file
+          :readonly="!isCreate"
+          v-model="form.attachments"></upload-file>
         <div
           style="margin: 10px"
           v-if="isCreate">

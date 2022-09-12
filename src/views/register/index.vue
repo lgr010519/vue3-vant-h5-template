@@ -99,10 +99,11 @@
             round
             position="bottom">
             <van-cascader
+              :fieldNames="fieldNames"
               v-model="cascaderValue"
-              title="请选择所在地区"
               :options="options"
               @close="show = false"
+              closeable
               @finish="onFinish">
             </van-cascader>
           </van-popup>
@@ -135,11 +136,12 @@
 
 <script setup>
   import NavBar from '@/components/nav-bar.vue'
-  import { reactive, ref } from 'vue'
+  import { reactive, ref, onMounted } from 'vue'
   import { useRouter } from 'vue-router'
-  import { mobileCode, userRegister } from '@/api/index'
+  import { mobileCode, userRegister, getStreet } from '@/api/index'
   import { passwordCheck, telPhoneCheck, idCard, nameCheck, smsCard } from '@/configs/globalvar'
   import { Toast } from 'vant'
+  import sha256 from 'crypto-js/sha256'
   const router = useRouter()
   const user = reactive({
     realName: '', // 姓名
@@ -156,23 +158,17 @@
     address: ''
   })
   const show = ref(false)
-  const options = ref([
-    {
-      text: '浙江省',
-      value: '330000',
-      children: [{ text: '杭州市', value: '330100' }]
-    },
-    {
-      text: '江苏省',
-      value: '320000',
-      children: [{ text: '南京市', value: '320100' }]
-    }
-  ])
+  const options = ref([])
+  //自定义字段名
+  const fieldNames = {
+    text: 'name',
+    value: 'name',
+    children: 'streets'
+  }
   // 地址拼接
   const spaceValue = ref('')
   // 手机号正则校验
   const RegExpPhone = (val) => {
-    console.log(val)
     return /^1\d{10}$/.test(val)
   }
   const onFinish = ({ selectedOptions }) => {
@@ -187,7 +183,7 @@
   }
   //提交表单
   const onSubmit = async () => {
-    console.log(user)
+    user.password = sha256(user.password).toString()
     const result = await userRegister(user)
     if (result.data.msg == 'ok') {
       Toast('注册成功')
@@ -215,6 +211,19 @@
     }
   }
   const cascaderValue = ref('')
+
+  const getaddress = async () => {
+    const result = await getStreet()
+    console.log('街道', result)
+    if (result.data.data) {
+      options.value = result.data.data
+    } else {
+      Toast('获取街道信息失败')
+    }
+  }
+  onMounted(() => {
+    getaddress()
+  })
 </script>
 
 <style lang="scss" scoped>

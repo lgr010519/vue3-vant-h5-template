@@ -12,30 +12,30 @@
       <div class="about_me_part-info info">
         <div class="info_item">
           <p class="info_item_label">姓名</p>
-          <p class="info_item_value">{{ userInfo.name }}</p>
+          <p class="info_item_value">{{ userInfo.realName }}</p>
         </div>
         <div class="info_item">
           <p class="info_item_label">性别</p>
-          <p class="info_item_value">{{ userInfo.gender }}</p>
+          <p class="info_item_value">{{ userInfo.gender === 1 ? '男' : '女' }}</p>
         </div>
         <div class="info_item">
           <p class="info_item_label">身份证号</p>
-          <p class="info_item_value">{{ userInfo.name }}</p>
+          <p class="info_item_value">{{ userInfo.idCard }}</p>
         </div>
         <div class="info_item">
           <p class="info_item_label">手机号</p>
-          <p class="info_item_value">{{ userInfo.name }}</p>
+          <p class="info_item_value">{{ userInfo.account }}</p>
         </div>
         <div class="info_item">
           <p class="info_item_label">地址</p>
           <p class="info_item_value">
-            <span>{{ userInfo.address[0] }}</span>
-            <span>{{ userInfo.address[1] }}</span>
+            <span>{{ userInfo.community }}</span>
+            <span>{{ userInfo.address }}</span>
           </p>
         </div>
         <div class="!tw-mb-0 info_item">
-          <p class="info_item_label"></p>
-          <p class="info_item_value">{{ userInfo.address[2] }}</p>
+          <p class="info_item_label">{{}}</p>
+          <p class="info_item_value">{{}}</p>
         </div>
       </div>
     </div>
@@ -80,17 +80,17 @@
 
 <script setup>
   import { Toast } from 'vant'
-  import { reactive, ref } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { useRouter } from 'vue-router'
-
+  import { getUserInformation } from '@/api/index'
   const router = useRouter()
 
-  const userInfo = reactive({
-    name: '1',
-    gender: '2',
-    idCard: '3',
-    mobile: '4',
-    address: ['5', '6', 'qqqqqqqqqqq1111111111123121312']
+  const userInfo = ref({
+    realName: '',
+    gender: '',
+    idCard: '',
+    account: '',
+    address: []
   })
 
   const showActionSheet = ref(false)
@@ -106,8 +106,10 @@
    * @param {*} action
    * @param {*} index
    */
-  function onSelectAction(action, index) {
-    console.log(action, index)
+  function onSelectAction() {
+    localStorage.removeItem('token')
+    Toast('退出成功')
+    router.push('/login')
   }
   /**
    * 取消选择
@@ -115,6 +117,21 @@
   function onCancelSignOut() {
     Toast('已取消')
   }
+  //获取用户信息
+  const getuserData = async () => {
+    const result = await getUserInformation()
+    console.log(result.data.data)
+    if (result.data.data) {
+      userInfo.value = result.data.data
+    } else {
+      Toast('用户信息不存在')
+      router.push('/login')
+    }
+  }
+
+  onMounted(() => {
+    getuserData()
+  })
 </script>
 
 <style lang="scss" scoped>

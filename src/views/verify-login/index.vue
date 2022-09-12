@@ -17,7 +17,7 @@
       <van-cell-group inset>
         <van-field
           style="background-color: #f9f9f9"
-          v-model="user.account"
+          v-model="user.username"
           name="password"
           label=""
           placeholder="请输入手机号"
@@ -87,7 +87,7 @@
   import { mobileCode, passwordLogin } from '@/api/index'
   const router = useRouter()
   const user = reactive({
-    account: '',
+    username: '',
     smscode: ''
   })
   const isSend = ref(false)
@@ -101,7 +101,7 @@
     const result = await passwordLogin({
       auth_type: 'sms',
       smscode: user.smscode,
-      account: user.account
+      username: user.username
     })
     if (result.data.data) {
       localStorage.setItem('token', result.data.data.token)
@@ -122,8 +122,8 @@
   }
   const send = async () => {
     //发送验证请求
-    if (user.account && RegExpPhone(user.account)) {
-      const result = await mobileCode({ mobile: user.account })
+    if (user.username && RegExpPhone(user.username)) {
+      const result = await mobileCode({ mobile: user.username })
       if (result.status === 200) {
         isSend.value = true
         Toast('发送成功,请检查您的手机短信')
