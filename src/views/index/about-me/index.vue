@@ -30,7 +30,7 @@
           <p class="info_item_label">地址</p>
           <p class="info_item_value">
             <span>{{ userInfo.community }}</span>
-            <span>{{ userInfo.district }}</span>
+            <span class="tw-ml-[10px]">{{ userInfo.district }}</span>
           </p>
         </div>
         <div class="!tw-mb-0 info_item">
