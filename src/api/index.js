@@ -53,9 +53,13 @@ export const addNewPetition = (data) => {
   return post('/api/v1/petition', data)
 }
 
-// 新增人民建议征集
+/**
+ *
+ * @param {*} data
+ *  新增人民建议征集
+ */
 export const addNewPropose = (data) => {
-  post('/api/v1/propose', data)
+  return post('/api/v1/propose', data)
 }
 
 /**

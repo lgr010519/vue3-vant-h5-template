@@ -17,19 +17,21 @@
         </van-cell-group> -->
         <!-- 意见建议名称 -->
         <van-field
-          v-model="form.name"
+          v-model="form.opinionTitle"
           name="用户名"
           label="意见建议名称"
+          :rules="peopleOpinionTitle"
           placeholder="请输入名称">
         </van-field>
         <!-- 意见建议描述 -->
         <p class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">意见建议描述</p>
         <van-field
-          v-model="form.message"
+          v-model="form.opinionDescription"
           rows="4"
           autosize
           label=""
           type="textarea"
+          :rules="peopleOpinionMessage"
           show-word-limit>
         </van-field>
         <div class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
@@ -76,22 +78,32 @@
 
 <script setup>
   import navBar from '@/components/nav-bar.vue'
-  import { useRoute } from 'vue-router'
+  import { useRoute, useRouter } from 'vue-router'
   import { reactive, computed, onMounted } from 'vue'
   import UploadFile from '@/components/upload-file.vue'
+  import { peopleOpinionTitle, peopleOpinionMessage } from '@/configs/globalvar'
+  import { addNewPropose } from '@/api/index'
+  import { Toast } from 'vant'
   const route = useRoute()
+  const router = useRouter()
   const form = reactive({
-    message: '',
-    name: ''
+    opinionDescription: '',
+    opinionTitle: ''
   })
   // const value = ref([{ url: 'https://fastly.jsdelivr.net/npm/@vant/assets/leaf.jpeg' }])
-  const onSubmit = () => {
-    console.log(123)
+  const onSubmit = async () => {
+    const result = await addNewPropose(form)
+    if (result.data.code === 0) {
+      Toast('修改成功')
+      router.push('/index')
+    } else {
+      Toast('修改失败')
+    }
   }
   onMounted(() => {
     if (route.params.mode === 'detail') {
-      form.name = '李某人'
-      form.message = '救救我啊'
+      form.opinionTitle = '李某人'
+      form.opinionDescription = '救救我啊'
     }
   })
   // 判断当前页面的展示状态

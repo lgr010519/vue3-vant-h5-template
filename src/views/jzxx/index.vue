@@ -59,10 +59,10 @@
         <!-- 诉求类型 -->
         <van-field
           style="padding: 0; height: 30px; margin-top: 15px"
-          v-model="form.appealType"
+          v-model="typeValue"
           :is-link="isCreate"
           label="诉求类型"
-          placeholder="请选择所在地区"
+          placeholder="请选择诉求类型"
           :rules="userObjType"
           @click="showType = true" />
         <van-popup
@@ -199,7 +199,8 @@
   // 诉求表单回调
   const typeFinish = ({ selectedOptions }) => {
     showType.value = false
-    form.appealType = selectedOptions.map((option) => option.label).join('/')
+    typeValue.value = selectedOptions.map((option) => option.label).join('/')
+    form.appealAreaCode = selectedOptions.map((option) => option.index).join('/')
   }
   //获取诉求类型
   const getAppeal = async () => {

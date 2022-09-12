@@ -55,9 +55,8 @@
           <van-field
             style="background-color: #f9f9f9"
             v-model="user.smsCode"
-            label=" "
-            left-icon="chat-o"
-            label-width="50"
+            label="验证码"
+            label-width="70"
             placeholder="请输入验证码"
             :rules="smsCard">
             <template #button>
@@ -77,9 +76,8 @@
             v-model="user.password"
             type="password"
             name="password"
-            label=" "
-            label-width="50"
-            left-icon="lock"
+            label="密码"
+            label-width="70"
             placeholder="请输入密码"
             :rules="passwordCheck">
           </van-field>
@@ -91,6 +89,7 @@
             label="地址"
             label-width="70"
             placeholder="请选择所在地区"
+            :rules="userObjAddress"
             @click="show = true">
           </van-field>
 
@@ -99,11 +98,12 @@
             round
             position="bottom">
             <van-cascader
+              closeable
               :fieldNames="fieldNames"
               v-model="cascaderValue"
               :options="options"
               @close="show = false"
-              closeable
+              active-color="#1989fa"
               @finish="onFinish">
             </van-cascader>
           </van-popup>
@@ -139,7 +139,14 @@
   import { reactive, ref, onMounted } from 'vue'
   import { useRouter } from 'vue-router'
   import { mobileCode, userRegister, getStreet } from '@/api/index'
-  import { passwordCheck, telPhoneCheck, idCard, nameCheck, smsCard } from '@/configs/globalvar'
+  import {
+    passwordCheck,
+    telPhoneCheck,
+    idCard,
+    nameCheck,
+    smsCard,
+    userObjAddress
+  } from '@/configs/globalvar'
   import { Toast } from 'vant'
   import sha256 from 'crypto-js/sha256'
   const router = useRouter()
