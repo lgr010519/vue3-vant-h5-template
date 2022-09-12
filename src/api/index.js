@@ -51,3 +51,9 @@ export const addNewPetition = (data) => {
 export const addNewPropose = (data) => {
   post('/api/v1/propose', data)
 }
+
+/**
+ * 获取服务范围说明详情
+ * @param {*} data
+ */
+export const getRangeDetail = (data) => get(`/api/v1/description/query`, data)
