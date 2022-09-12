@@ -33,7 +33,9 @@ export const getStreet = () => {
   return get('/api/v1/district')
 }
 
-//获取诉求类型
+/**
+ * 获取诉求类型
+ */
 export const getAppealType = () => {
   return get('/down_list/workOrder/appealType')
 }
@@ -54,9 +56,14 @@ export const addNewPetition = (data) => {
 }
 
 /**
+<<<<<<< HEAD
  *
  * @param {*} data
  *  新增人民建议征集
+=======
+ * 新增人民建议征集
+ * @param {*} data
+>>>>>>> b4e234eea5e1e8aa11abafcb56e8bb546df182cb
  */
 export const addNewPropose = (data) => {
   return post('/api/v1/propose', data)
