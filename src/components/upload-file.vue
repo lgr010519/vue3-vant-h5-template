@@ -39,6 +39,7 @@
 </template>
 
 <script setup>
+  import { uploadFile } from '@/api'
   import { Dialog, Toast } from 'vant'
 
   const props = defineProps({
@@ -60,10 +61,10 @@
     return true
   }
 
-  function handleAfterRead({ file }) {
+  const getFileIcon = (type) => {
     let fileIcon = ''
 
-    switch (file.type) {
+    switch (type) {
       case 'application/vnd.ms-excel':
       case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
         fileIcon = 'excel'
@@ -90,13 +91,27 @@
         break
     }
 
-    emit('update:modelValue', [
-      ...props.modelValue,
-      {
-        fileIcon,
-        name: file.name
-      }
-    ])
+    return fileIcon
+  }
+
+  function handleAfterRead({ file }) {
+    uploadFile({
+      file,
+      tag: 'file'
+    })
+      .then((res) => {
+        if (res.data.code === 0) {
+          emit('update:modelValue', [
+            ...props.modelValue,
+            { ...res.data.data, fileIcon: getFileIcon(file.type), name: file.name }
+          ])
+        } else {
+          Toast(res.data.msg)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
   function handleOversize() {
     Toast('文件大小不能超过10M')

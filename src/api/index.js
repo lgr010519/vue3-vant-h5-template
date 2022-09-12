@@ -1,6 +1,12 @@
-import { baseUrl, post, get } from './config'
+import { baseUrl, post, get, upload } from './config'
 
-export const uploadUrl = baseUrl + '/uploads'
+export const uploadUrl = baseUrl + '/common/uploads'
+
+/**
+ * 文件上传
+ * @param {*} data
+ */
+export const uploadFile = (data) => upload('/common/uploads', data)
 
 //用户注册
 export const userRegister = (data) => {
