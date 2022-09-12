@@ -18,6 +18,7 @@
           v-model="form.appealTitle"
           name="用户名"
           label="诉求对象名称"
+          :rules="userObjName"
           placeholder="请输入名称">
         </van-field>
         <!-- 选择区域 -->
@@ -28,6 +29,7 @@
           label="诉求对象地址"
           placeholder="点击选择"
           value="hahaha"
+          :rules="userObjAddress"
           @click="show = true"></van-field>
         <van-popup
           v-if="isCreate"
@@ -50,6 +52,7 @@
           autosize
           label=""
           type="textarea"
+          :rules="userObjMessageAddress"
           placeholder="请输入详细地址"
           show-word-limit>
         </van-field>
@@ -58,9 +61,9 @@
           style="padding: 0; height: 30px; margin-top: 15px"
           v-model="form.appealType"
           :is-link="isCreate"
-          readonly
           label="诉求类型"
           placeholder="请选择所在地区"
+          :rules="userObjType"
           @click="showType = true" />
         <van-popup
           v-if="isCreate"
@@ -86,6 +89,7 @@
             rows="4"
             autosize
             label=""
+            :rules="userObjChinese"
             type="textarea"
             show-word-limit>
           </van-field>
@@ -136,6 +140,13 @@
   import { useRoute } from 'vue-router'
   import { getAppealType, getStreet, addNewPetition } from '@/api/index'
   import { Toast } from 'vant'
+  import {
+    userObjName,
+    userObjAddress,
+    userObjMessageAddress,
+    userObjType,
+    userObjChinese
+  } from '@/configs/globalvar'
   const route = useRoute()
   const show = ref(false)
   const form = reactive({
@@ -193,7 +204,7 @@
   //获取诉求类型
   const getAppeal = async () => {
     const result = await getAppealType()
-    if (result.data.data) {
+    if (result.data.code === 0) {
       TypeList.value = result.data.data
     } else {
       Toast('获取诉求类型失败')

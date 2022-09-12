@@ -13,17 +13,17 @@
       </div>
     </div>
     <div class="tw-flex-1 tw-w-[100%] tw-overflow-auto">
-      <van-form @submit="onSubmit">
+      <van-form
+        @submit="onSubmit"
+        label-width="65px">
         <van-cell-group inset>
           <van-field
-            label-width="65px"
             v-model="user.idCard"
             name="cardId"
             label="身份证号"
             placeholder="请输入身份证号"
             :rules="idCard"></van-field>
           <van-field
-            label-width="65px"
             v-model="user.account"
             name="phone"
             label="手机号"
@@ -32,9 +32,7 @@
           </van-field>
           <van-field
             v-model="user.smsCode"
-            label=" "
-            label-width="45"
-            left-icon="lock"
+            label="验证码"
             placeholder="请输入验证码"
             :rules="smsCard"
             class="tw-h-[60px]">
@@ -45,19 +43,18 @@
                 type="default"
                 @click="send"
                 :disabled="isSend"
-                style="border: none; color: #3189ff; font-size: 13px; background-color: #f9f9f9">
+                style="border: none; color: #3189ff; font-size: 13px">
                 {{ isSend ? '已发送' : '发送验证码' }}
               </van-button>
             </template>
           </van-field>
           <van-field
             class="password"
-            label-width="65px"
             v-model="user.password"
             type="password"
             name="password"
             label="新密码"
-            placeholder="请输入新密码,至少6位数,包含数字和字母"
+            placeholder="请输入新密码,至少10位数,包含数字和字母"
             :rules="passwordCheck">
           </van-field>
         </van-cell-group>
