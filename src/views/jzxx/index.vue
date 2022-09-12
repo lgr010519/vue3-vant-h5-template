@@ -15,7 +15,7 @@
         @submit="onSubmit"
         label-align="left">
         <van-field
-          v-model="form.objName"
+          v-model="form.appealTitle"
           name="用户名"
           label="诉求对象名称"
           placeholder="请输入名称">
@@ -45,7 +45,7 @@
         </van-popup>
         <!-- 详细地址 -->
         <van-field
-          v-model="form.addressMessage"
+          v-model="form.appealAddress"
           rows="3"
           autosize
           label=""
@@ -56,7 +56,7 @@
         <!-- 诉求类型 -->
         <van-field
           style="padding: 0; height: 30px; margin-top: 15px"
-          v-model="form.talkType"
+          v-model="form.appealType"
           :is-link="isCreate"
           readonly
           label="诉求类型"
@@ -69,7 +69,7 @@
           position="bottom">
           <van-cascader
             v-model="typeValue"
-            title="请选择所在地区"
+            title="请选择诉求类型"
             active-color="#3189FF"
             :field-names="fieldNames"
             :options="TypeList"
@@ -82,7 +82,7 @@
         </div>
         <div>
           <van-field
-            v-model="form.message"
+            v-model="form.appealDescription"
             rows="4"
             autosize
             label=""
@@ -140,19 +140,19 @@
   const show = ref(false)
   const form = reactive({
     // 对象名称
-    objName: '',
+    appealTitle: '',
     // 诉求类型
-    talkType: '',
+    appealType: '',
     // 区级地址
     district: '',
     // 街道地址
-    address: '',
+    appealAreaCode: '',
     // 区域地址
     spaceValue: '',
     // 详细地址
-    addressMessage: '',
+    appealAddress: '',
     // 诉求描述
-    message: ''
+    appealDescription: ''
   })
   const cascaderValue = ref('')
   //自定义字段名
@@ -168,15 +168,16 @@
   }
   const options = ref([])
   const onFinish = ({ selectedOptions }) => {
+    console.log(selectedOptions)
     show.value = false
     console.log(selectedOptions)
-    if (selectedOptions[0].text) {
-      form.district = selectedOptions[0].text
+    if (selectedOptions[0].name) {
+      form.district = selectedOptions[0].name
     }
-    if (selectedOptions[1].text) {
-      form.address = selectedOptions[1].text
+    if (selectedOptions[1].code) {
+      form.appealAreaCode = selectedOptions[1].code
     }
-    form.spaceValue = selectedOptions.map((option) => option.text).join(' ')
+    form.spaceValue = selectedOptions.map((option) => option.name).join(' ')
   }
   // 是否诉求菜单
   const showType = ref(false)
@@ -187,7 +188,7 @@
   // 诉求表单回调
   const typeFinish = ({ selectedOptions }) => {
     showType.value = false
-    form.talkType = selectedOptions.map((option) => option.label).join('/')
+    form.appealType = selectedOptions.map((option) => option.label).join('/')
   }
   //获取诉求类型
   const getAppeal = async () => {

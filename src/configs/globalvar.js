@@ -26,3 +26,6 @@ export const nameCheck = [{ required: true, message: '请填写您的真实姓�
 
 //验证码校验
 export const smsCard = [{ required: true, message: '请输入验证码' }]
+
+//诉求校验
+export const talkSomething = [{ required: true, message: '请输入诉求详情' }]

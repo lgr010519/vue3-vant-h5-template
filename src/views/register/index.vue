@@ -173,13 +173,13 @@
   }
   const onFinish = ({ selectedOptions }) => {
     show.value = false
-    if (selectedOptions[0].text) {
-      user.district = selectedOptions[0].text
+    if (selectedOptions[0].name) {
+      user.district = selectedOptions[0].name
     }
-    if (selectedOptions[1].text) {
-      user.community = selectedOptions[1].text
+    if (selectedOptions[1].name) {
+      user.community = selectedOptions[1].name
     }
-    spaceValue.value = selectedOptions.map((option) => option.text).join(' ')
+    spaceValue.value = selectedOptions.map((option) => option.name).join(' ')
   }
   //提交表单
   const onSubmit = async () => {
