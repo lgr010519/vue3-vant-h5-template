@@ -11,19 +11,19 @@
           v-model="formData.reflectionTitle"
           label="诉求对象名称"
           name="reflectionTitle"
-          :placeholder="readonly ? '' : '请输入诉求对象名称'"
-          :rules="rules.reflectionTitle">
+          :rules="rules.reflectionTitle"
+          :placeholder="readonly ? '' : '请输入诉求对象名称'">
         </van-field>
 
         <van-field
           :model-value="streetCasText"
-          :is-link="!readonly"
-          :readonly="true"
           label="诉求对象地址"
           name="streetCasText"
+          :rules="rules.streetCasText"
+          :is-link="!readonly"
+          :readonly="true"
           :placeholder="readonly ? '' : '点击选择'"
-          @click="onSelectStreet"
-          :rules="rules.streetCasText">
+          @click="onSelectStreet">
         </van-field>
         <van-popup
           v-model:show="showStreetPicker"
@@ -31,7 +31,7 @@
           <van-cascader
             v-model="formData.reflectionAreaCode"
             :options="streetCasOptions"
-            :field-names="filedNames"
+            :field-names="streetFiledNames"
             active-color="#3189FF"
             :show-header="false"
             @finish="onStreetCasFinish">
@@ -54,11 +54,11 @@
 
         <van-field
           :model-value="typeCasText"
-          :is-link="!readonly"
-          :readonly="true"
           label="诉求类型"
           name="typeCasText"
           :rules="rules.typeCasText"
+          :is-link="!readonly"
+          :readonly="true"
           :placeholder="readonly ? '' : '点击选择'"
           @click="onSelectType">
         </van-field>
@@ -68,10 +68,9 @@
           <van-cascader
             v-model="formData.reflectionType"
             :options="typeCasOptions"
-            :field-names="filedNames"
+            :field-names="typeFiledNames"
             active-color="#3189FF"
             :show-header="false"
-            @close="onTypeCasClose"
             @finish="onTypeCasFinish">
           </van-cascader>
         </van-popup>
@@ -94,16 +93,10 @@
         </van-field>
 
         <p class="tw-text-[16px] tw-text-[#666666] tw-font-semibold tw-mt-[22px]">附件说明</p>
-        <van-field
-          name="reflectionFilePath"
-          :rules="rules.reflectionFilePath">
-          <template #input>
-            <upload-file
-              v-model="formData.reflectionFilePath"
-              :readonly="readonly">
-            </upload-file>
-          </template>
-        </van-field>
+        <upload-file
+          v-model="formData.reflectionFilePath"
+          :readonly="readonly">
+        </upload-file>
 
         <div
           v-if="!readonly"
@@ -122,23 +115,37 @@
 </template>
 
 <script setup>
-  import { computed, reactive, ref } from 'vue'
-  import { useRoute } from 'vue-router'
+  import { computed, onMounted, reactive, ref } from 'vue'
+  import { useRoute, useRouter } from 'vue-router'
   import UploadFile from '@/components/upload-file.vue'
+  import {
+    userObjName,
+    userObjAddress,
+    userObjMessageAddress,
+    userObjType,
+    userObjChinese
+  } from '@/configs/globalvar'
+  import { addNewAppeal, getAppealType, getStreet } from '@/api'
+  import { Toast } from 'vant'
 
   const route = useRoute()
+  const router = useRouter()
   console.log(route.params.mode)
   /**
    * 创建 、详情
    */
   const readonly = computed(() => route.params.mode !== 'create')
 
+  onMounted(() => {
+    getStreetCasOptions()
+    getTypeCasOptions()
+  })
+
   /**
    * 表单数据
    */
   const formData = reactive({
     reflectionTitle: '',
-    district: '',
     reflectionAreaCode: '',
     reflectionAddress: '',
     reflectionType: '',
@@ -147,17 +154,20 @@
   })
 
   const rules = reactive({
-    reflectionTitle: [{ require: true, message: '请输入诉求对象名称' }],
-    streetCasText: []
+    reflectionTitle: userObjName,
+    streetCasText: userObjAddress,
+    reflectionAddress: userObjMessageAddress,
+    typeCasText: userObjType,
+    reflectionDescription: userObjChinese
   })
 
   /**
    * 选择器字段对应
    */
-  const filedNames = {
-    text: 'text',
-    value: 'value',
-    children: 'children'
+  const streetFiledNames = {
+    text: 'name',
+    value: 'code',
+    children: 'streets'
   }
   // 地址选择
   /**
@@ -177,28 +187,62 @@
    * 地址选择选项
    */
   const streetCasOptions = ref([])
+  function getStreetCasOptions() {
+    getStreet()
+      .then((res) => {
+        if (res.data.code === 0) {
+          streetCasOptions.value = res.data.data.map((item, code) => {
+            return {
+              ...item,
+              code
+            }
+          })
+        } else {
+          Toast(res.data.msg)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
   /**
    * 地址显示文字
    */
   const streetCasText = computed(() => {
-    return formData.district && formData.reflectionAreaCode
-      ? `${formData.district} ${formData.reflectionAreaCode}`
-      : ''
+    let district = ''
+    let street = ''
+
+    for (let i = 0; i < streetCasOptions.value.length; i++) {
+      const item = streetCasOptions.value[i]
+      for (let j = 0; j < item.streets.length; j++) {
+        if (item.streets[j].code === formData.reflectionAreaCode) {
+          district = item.name
+          street = item.streets[j].name
+          break
+        }
+      }
+      if (district && street) {
+        break
+      }
+    }
+
+    return formData.reflectionAreaCode ? `${district} ${street}` : ''
   })
   /**
    * 赋值区，街道
    */
+  // eslint-disable-next-line no-unused-vars
   function onStreetCasFinish({ selectedOptions }) {
     showStreetPicker.value = false
-    console.log(selectedOptions)
-    const [district, street] = selectedOptions.map((item) => {
-      return item.text
-    })
-
-    formData.district = district
-    formData.reflectionAreaCode = street
   }
 
+  /**
+   * 选择器字段对应
+   */
+  const typeFiledNames = {
+    text: 'label',
+    value: 'index'
+  }
   // 类型选择
   /**
    * 控制类型选择显示
@@ -214,36 +258,56 @@
     showTypePicker.value = true
   }
   /**
-   * @todo 接口获取
    * 类型选择选项
    */
-  const typeCasOptions = ref([
-    { text: '噪声', value: '1' },
-    { text: '废水', value: '2' },
-    { text: '废气', value: '3' }
-  ])
+  const typeCasOptions = ref([])
+  function getTypeCasOptions() {
+    getAppealType()
+      .then((res) => {
+        if (res.data.code === 0) {
+          typeCasOptions.value = res.data.data
+        } else {
+          Toast(res.data.msg)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
   /**
    * 类型显示文字
    */
   const typeCasText = computed(() => {
     const result = typeCasOptions.value.find((item) => {
-      return item.value === formData.reflectionType
+      return item.index === formData.reflectionType
     })
 
-    console.log(result)
-
-    return result ? result.text : ''
+    return result ? result.label : ''
   })
-  /**
-   * @todo 需要赋值吗？
-   */
+
+  // eslint-disable-next-line no-unused-vars
   function onTypeCasFinish({ selectedOptions }) {
     showTypePicker.value = false
-    console.log(selectedOptions)
   }
 
   function onSubmit(values) {
     console.log(values)
+    addNewAppeal({
+      ...formData,
+      reflectionType: JSON.stringify(formData.reflectionType),
+      reflectionFilePath: JSON.stringify(formData.reflectionFilePath)
+    })
+      .then((res) => {
+        if (res.data.code === 0) {
+          Toast('提交成功，感谢您对我们工作的支持！')
+          router.push('/')
+        } else {
+          Toast(res.data.msg)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 </script>
 
