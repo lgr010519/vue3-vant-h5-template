@@ -78,9 +78,9 @@
 
 <script setup>
   import navBar from '@/components/nav-bar.vue'
+  import UploadFile from '@/components/upload-file.vue'
   import { useRoute, useRouter } from 'vue-router'
   import { reactive, computed, onMounted } from 'vue'
-  import UploadFile from '@/components/upload-file.vue'
   import { peopleOpinionTitle, peopleOpinionMessage } from '@/configs/globalvar'
   import { addNewPropose } from '@/api/index'
   import { Toast } from 'vant'
@@ -90,16 +90,6 @@
     opinionDescription: '',
     opinionTitle: ''
   })
-  // const value = ref([{ url: 'https://fastly.jsdelivr.net/npm/@vant/assets/leaf.jpeg' }])
-  const onSubmit = async () => {
-    const result = await addNewPropose(form)
-    if (result.data.code === 0) {
-      Toast('修改成功')
-      router.push('/index')
-    } else {
-      Toast('修改失败')
-    }
-  }
   onMounted(() => {
     if (route.params.mode === 'detail') {
       form.opinionTitle = '李某人'
@@ -110,6 +100,25 @@
   const isCreate = computed(() => {
     return route.params.mode === 'create'
   })
+
+  const submitForm = () => {
+    addNewPropose(form)
+      .then((res) => {
+        if (res.data.code === 0) {
+          Toast('提交成功')
+          router.push('/index')
+        } else {
+          Toast(res.data.msg)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const onSubmit = () => {
+    submitForm()
+  }
 </script>
 
 <style lang="scss" scoped>

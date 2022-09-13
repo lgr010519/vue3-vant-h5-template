@@ -137,7 +137,7 @@
 <script setup>
   import navBar from '@/components/nav-bar.vue'
   import { computed, onMounted, reactive, ref } from 'vue'
-  import { useRoute } from 'vue-router'
+  import { useRoute, useRouter } from 'vue-router'
   import { getAppealType, getStreet, addNewPetition } from '@/api/index'
   import { Toast } from 'vant'
   import {
@@ -148,6 +148,7 @@
     userObjChinese
   } from '@/configs/globalvar'
   const route = useRoute()
+  const router = useRouter()
   const show = ref(false)
   const form = reactive({
     // 对象名称
@@ -200,7 +201,7 @@
   const typeFinish = ({ selectedOptions }) => {
     showType.value = false
     typeValue.value = selectedOptions.map((option) => option.label).join('/')
-    form.appealAreaCode = selectedOptions.map((option) => option.index).join('/')
+    form.appealType = selectedOptions.map((option) => option.index).join('/')
   }
   //获取诉求类型
   const getAppeal = async () => {
@@ -236,9 +237,22 @@
     return route.params.mode === 'create'
   })
   //提交表单
-  const onSubmit = async () => {
-    const result = await addNewPetition(form)
-    console.log(result)
+  const submitForm = () => {
+    addNewPetition(form)
+      .then((res) => {
+        if (res.data.code === 0) {
+          Toast('提交成功')
+          router.push('/index')
+        } else {
+          Toast(res.data.msg)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+  const onSubmit = () => {
+    submitForm()
   }
 </script>
 
