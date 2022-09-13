@@ -32,7 +32,10 @@ export const idCard = [
 export const nameCheck = [{ required: true, message: '请填写您的真实姓名' }]
 
 //验证码校验
-export const smsCard = [{ required: true, message: '请输入验证码' }]
+export const smsCard = [
+  { required: true, message: '请输入验证码' },
+  { pattern: /^[0-9]{6}$/, message: '验证码格式错误', trigger: 'onBlur' }
+]
 
 //诉求校验
 export const talkSomething = [{ required: true, message: '请输入诉求详情' }]
