@@ -16,32 +16,32 @@
 
       <div
         class="stations_item"
-        v-for="item in 10"
-        :key="item">
+        v-for="station in stations"
+        :key="station.id">
         <div class="stations_item_info">
-          <p class="tw-text-[17px] tw-text-[#4A4A4A] tw-font-semibold">环境局环境局环境局</p>
+          <p class="tw-text-[17px] tw-text-[#4A4A4A] tw-font-semibold">{{ station.pname }}</p>
           <div class="tw-flex tw-mt-[6px]">
             <img
               class="tw-w-[16px] tw-h-[16px] tw-mr-[4px]"
               src="@/assets/images/wdsq/icon_address_blue.png"
               alt="" />
             <p class="tw-text-[11px] tw-text-[#999999] tw-font-medium">
-              地址地址地址地地址地址地址地址地址
+              {{ station.address }}
             </p>
           </div>
         </div>
         <div
           class="stations_item_info"
-          v-for="childItem in 10"
-          :key="childItem">
-          <p class="tw-text-[17px] tw-text-[#4A4A4A] tw-font-semibold">环境局环境局环境局</p>
+          v-for="childStation in station.children"
+          :key="childStation.id">
+          <p class="tw-text-[17px] tw-text-[#4A4A4A] tw-font-semibold">{{ childStation.ename }}</p>
           <div class="tw-flex tw-mt-[6px]">
             <img
               class="tw-w-[16px] tw-h-[16px] tw-mr-[4px]"
               src="@/assets/images/wdsq/icon_address_blue.png"
               alt="" />
             <p class="tw-text-[11px] tw-text-[#999999] tw-font-medium">
-              地址地址地址地址地址地址地址地址地址
+              {{ childStation.address }}
             </p>
           </div>
         </div>
@@ -50,7 +50,30 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+  import { getStationList } from '@/api'
+  import { Toast } from 'vant'
+  import { onMounted, ref } from 'vue'
+
+  onMounted(() => {
+    getStations()
+  })
+
+  const stations = ref([])
+  function getStations() {
+    getStationList()
+      .then((res) => {
+        if (res.data.code === 0) {
+          stations.value = res.data.data
+        } else {
+          Toast(res.data.msg)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+</script>
 
 <style lang="scss" scoped>
   .stations {
