@@ -7,66 +7,68 @@
         alt="" />
     </div>
 
-    <div class="title tw-h-[18px] tw-mt-[20px] tw-mx-auto tw-text-center">
-      <span>深圳生态环境群众诉求服务</span>
-    </div>
+    <h1 class="title tw-mt-[20px] tw-text-center">深圳生态环境群众诉求服务</h1>
 
     <van-form
-      @submit="onSubmit"
-      class="tw-mt-[58px]">
-      <van-cell-group inset>
-        <van-field
-          style="background-color: #f9f9f9"
-          v-model="user.username"
-          name="password"
-          label=""
-          placeholder="请输入手机号"
-          left-icon="phone"
-          :rules="telPhoneCheck"
-          class="tw-h-[60px]">
-        </van-field>
-        <van-field
-          style="background-color: #f9f9f9"
-          v-model="user.password"
-          type="password"
-          name="password"
-          label=""
-          left-icon="lock"
-          placeholder="请输入密码"
-          :rules="passwordCheck"
-          class="tw-h-[60px]">
-        </van-field>
-      </van-cell-group>
-      <div class="forget tw-w-[100%] tw-h-[18px] tw-mt-[16px] tw-mr-[14px]">
-        <span
-          style="margin-right: 40px"
-          @click="forget"
-          >忘记密码</span
-        >
-      </div>
-      <div style="margin: 16px">
-        <van-button
-          block
-          type="primary"
-          native-type="submit"
-          color="#3189FF">
-          登录
-        </van-button>
-      </div>
-
-      <div
-        class="tw-w-[100%] tw-h-[23px] tw-mx-auto tw-text-center tw-text-[16px] tw-text-[#666666] tw-leading-[23px]">
-        <span
-          class="tw-w-[81px] tw-h-[23px]"
-          @click="verify"
-          >验证码登录</span
-        >
-      </div>
+      class="login_form tw-mt-[48px]"
+      @submit="onSubmit">
+      <van-field
+        v-model="user.username"
+        name="username"
+        placeholder="请输入手机号"
+        :rules="telPhoneCheck">
+        <template #label>
+          <img
+            class=""
+            src="../../assets/images/login/icon_phone.png"
+            alt=""
+            width="20"
+            height="20" />
+        </template>
+      </van-field>
+      <van-field
+        v-model="user.password"
+        type="password"
+        name="password"
+        placeholder="请输入密码"
+        :rules="passwordCheck">
+        <template #label>
+          <img
+            src="../../assets/images/login/icon_password.png"
+            alt=""
+            width="20"
+            height="20" />
+        </template>
+      </van-field>
     </van-form>
-    <div
-      class="tw-h-[18px] tw-mx-auto tw-text-center tw-text-[13px] tw-mt-[138px] tw-text-[#666666] tw-leading-[13px] tw-pb-[50px]">
-      <span @click="register">用户注册</span>
+
+    <p
+      class="forget tw-w-[100%] tw-mt-[16px] tw-pr-[14px]"
+      @click="forget">
+      忘记密码
+    </p>
+
+    <div class="tw-mx-[14px] tw-mt-[36px]">
+      <van-button
+        block
+        type="primary"
+        native-type="submit"
+        color="#3189FF">
+        登录
+      </van-button>
     </div>
+
+    <p
+      class="tw-text-center tw-text-[16px] tw-text-[#666666] tw-mt-[12px]"
+      @click="verify">
+      验证码登录
+    </p>
+
+    <p
+      class="tw-text-center tw-text-[13px] tw-text-[#666666] tw-mt-[138px] tw-pb-[50px]"
+      @click="register">
+      用户注册
+    </p>
   </div>
 </template>
 
@@ -108,7 +110,7 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .title {
     font-size: 18px;
     font-weight: 600;
@@ -119,7 +121,21 @@
     font-size: 13px;
     font-weight: 400;
     color: #666666;
-    line-height: 13px;
+    line-height: 18px;
     text-align: right;
+  }
+  .login_form.van-form {
+    :deep(.van-cell.van-field) {
+      padding: 10px 14px;
+      .van-field__control::placeholder {
+        font-size: 16px;
+        font-weight: 500;
+        color: #999999;
+      }
+      .van-field__label {
+        width: 20px;
+        margin-right: 20px;
+      }
+    }
   }
 </style>
