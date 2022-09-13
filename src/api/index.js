@@ -75,3 +75,19 @@ export const getRangeDetail = (data) => get(`/api/v1/description/query`, data)
  * @param {*} data
  */
 export const getStationList = (data) => get(`/api/v1/station/getAll`, data)
+
+/**
+ * 查询人民建议诉求详情
+ * @param {*} orderId
+ */
+export const getProposeDetail = (orderId) => {
+  return get(`/api/v1/propose/${orderId}/detail`)
+}
+
+/**
+ * 查询局长信箱诉求详情
+ * @param {*} orderId
+ */
+export const getPetitionDetail = (orderId) => {
+  return get(`/api/v1/petition/${orderId}/detail`)
+}

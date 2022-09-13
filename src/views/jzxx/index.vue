@@ -137,7 +137,7 @@
   import navBar from '@/components/nav-bar.vue'
   import { computed, onMounted, reactive, ref } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
-  import { getAppealType, getStreet, addNewPetition } from '@/api/index'
+  import { getAppealType, getStreet, addNewPetition, getPetitionDetail } from '@/api/index'
   import { Toast } from 'vant'
   import {
     userObjName,
@@ -221,14 +221,21 @@
   }
 
   onMounted(() => {
-    getAppeal()
-    getstreet()
     if (route.params.mode === 'detail') {
-      form.appealTitle = '哈哈哈'
-      form.spaceValue = '湖北省' + ' ' + '武汉市'
-      form.appealAddress = '中秋节居然还要加班'
-      form.appealDescription = '123321'
-      typeValue.value = '废气'
+      getPetitionDetail(route.params.id)
+        .then((res) => {
+          if (res.data.code === 0) {
+            Toast('获取数据成功')
+          } else {
+            Toast(res.data.msg)
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    } else {
+      getAppeal()
+      getstreet()
     }
   })
 

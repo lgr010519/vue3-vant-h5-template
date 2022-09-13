@@ -78,7 +78,7 @@
   import { useRoute, useRouter } from 'vue-router'
   import { reactive, computed, onMounted } from 'vue'
   import { peopleOpinionTitle, peopleOpinionMessage } from '@/configs/globalvar'
-  import { addNewPropose } from '@/api/index'
+  import { addNewPropose, getProposeDetail } from '@/api/index'
   import { Toast } from 'vant'
   const route = useRoute()
   const router = useRouter()
@@ -89,9 +89,17 @@
   })
   onMounted(() => {
     if (route.params.mode === 'detail') {
-      //调用接口查询
-      form.opinionTitle = '李某人'
-      form.opinionDescription = '救救我啊'
+      getProposeDetail(route.params.id)
+        .then((res) => {
+          if (res.data.code === 0) {
+            Toast('获取数据成功')
+          } else {
+            Toast(res.data.msg)
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   })
   // 判断当前页面的展示状态

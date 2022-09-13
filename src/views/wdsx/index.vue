@@ -1,8 +1,5 @@
 <template>
   <div class="tw-w-[100%] tw-h-[100%] tw-flex tw-flex-col">
-    <van-loading
-      class="tw-mx-auto"
-      v-if="topLoading"></van-loading>
     <Nav-bar title="我的事项"></Nav-bar>
     <van-cell-group inset>
       <van-field
@@ -28,29 +25,35 @@
     <div
       class="tw-w-[100%] tw-flex-1 tw-overflow-auto"
       ref="el">
-      <div
-        class="tw-mx-auto tw-px-[14px] tw-h-[88px] tw-my-[16px]"
-        v-for="(item, index) in list"
-        :key="index"
-        @click="go(item)">
-        <div class="tw-text-[17px] tw-font-semibold">
-          <span>{{ item.title }}</span>
-        </div>
-        <div class="tw-flex tw-justify-between tw-mt-[8px]">
-          <div class="tw-text-[11px] tw-font-normal tw-text-[#858585]">
-            {{ item.time }}
+      <!-- 下拉刷新 -->
+      <van-pull-refresh
+        v-model="isLoading"
+        @refresh="onRefresh">
+        <div
+          class="tw-mx-auto tw-px-[14px] tw-h-[88px] tw-my-[16px]"
+          v-for="(item, index) in list"
+          :key="index"
+          @click="go(item)">
+          <div class="tw-text-[17px] tw-font-semibold">
+            <span>{{ item.title }}</span>
           </div>
-          <div
-            class="tw-text-[13px] tw-font-medium"
-            :class="item.status === '已完成' ? 'green' : 'orange'">
-            <span>{{ item.status }}</span>
+          <div class="tw-flex tw-justify-between tw-mt-[8px]">
+            <div class="tw-text-[11px] tw-font-normal tw-text-[#858585]">
+              {{ item.time }}
+            </div>
+            <div
+              class="tw-text-[13px] tw-font-medium"
+              :class="item.status === '已完成' ? 'green' : 'orange'">
+              <span>{{ item.status }}</span>
+            </div>
           </div>
         </div>
-      </div>
+      </van-pull-refresh>
     </div>
     <van-loading
       class="tw-mx-auto"
-      v-if="bottomLoading"></van-loading>
+      v-if="bottomLoading">
+    </van-loading>
   </div>
 </template>
 
@@ -59,6 +62,7 @@
   import NavBar from '@/components/nav-bar.vue'
   import { useRouter } from 'vue-router'
   import { useInfiniteScroll } from '@vueuse/core'
+  import { Toast } from 'vant'
   const router = useRouter()
   const obj = reactive({
     keyWord: '',
@@ -90,22 +94,33 @@
     el,
     () => {
       // load more
+      // 开启loading
+      bottomLoading.value = true
+      setTimeout(() => {
+        Toast('更新成功')
+        bottomLoading.value = false
+      }, 1000)
     },
     { distance: 40 }
   )
-
-  // 顶部是否出现加载
-  const topLoading = ref(false)
+  const isLoading = ref(false)
+  const onRefresh = () => {
+    isLoading.value = true
+    setTimeout(() => {
+      Toast('刷新成功')
+      isLoading.value = false
+    }, 1000)
+  }
   // 底部是否出现加载
   const bottomLoading = ref(false)
   onMounted(() => {
     for (let i = 0; i < count.value; i++) {
       list.value.push({
-        id: 1,
+        id: 2,
         title: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
         status: '已完成',
         time: '2020-09-28 12:20:28',
-        type: '局长信箱'
+        type: '人民建议'
       })
     }
   })
