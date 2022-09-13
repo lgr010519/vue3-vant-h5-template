@@ -15,6 +15,7 @@
         </p>
 
         <img
+          v-if="!readonly"
           class="file_list_item-delete"
           src="@/assets/images/upload-file/button_close.png"
           alt=""
@@ -22,6 +23,7 @@
       </div>
     </div>
     <van-uploader
+      v-if="!readonly"
       accept="*"
       :preview-image="false"
       :show-upload="!readonly"
@@ -150,6 +152,9 @@
       margin-bottom: 12px;
       border-radius: 6px;
       background-color: #f2f2f2;
+      &:last-child {
+        margin-bottom: 0;
+      }
       &-icon {
         width: 40px;
         height: 40px;

@@ -110,6 +110,21 @@
           </van-button>
         </div>
       </van-form>
+
+      <template v-if="readonly">
+        <p class="tw-text-[16px] tw-text-[#666666] tw-font-semibold tw-mt-[22px] tw-mb-[12px]">
+          办理结果
+        </p>
+        <div class="tw-flex tw-h-[94px] tw-bg-[#E5EFFB] tw-rounded-[6px] tw-p-[14px]">
+          <img
+            class="tw-w-[18px] tw-h-[18px] tw-mt-[5px] tw-mr-[8px]"
+            src="@/assets/images/jzxx/icon_handle.png"
+            alt="" />
+          <p class="tw-flex-1 tw-font-medium tw-text-[15px] tw-text-[#5591E0]">
+            您反映的问题，责任单位已处理。责任单位将通过您所留的方式答复结果，感谢您对我们工作的理解与支持！
+          </p>
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -125,7 +140,7 @@
     userObjType,
     userObjChinese
   } from '@/configs/globalvar'
-  import { addNewAppeal, getAppealType, getStreet } from '@/api'
+  import { addNewAppeal, getAppealDetail, getAppealType, getStreet } from '@/api'
   import { Toast } from 'vant'
 
   const route = useRoute()
@@ -139,6 +154,11 @@
   onMounted(() => {
     getStreetCasOptions()
     getTypeCasOptions()
+
+    if (readonly.value) {
+      const id = route.params.id
+      getDetail(id)
+    }
   })
 
   /**
@@ -166,7 +186,7 @@
    */
   const streetFiledNames = {
     text: 'name',
-    value: 'code',
+    value: 'name',
     children: 'streets'
   }
   // 地址选择
@@ -215,7 +235,7 @@
     for (let i = 0; i < streetCasOptions.value.length; i++) {
       const item = streetCasOptions.value[i]
       for (let j = 0; j < item.streets.length; j++) {
-        if (item.streets[j].code === formData.reflectionAreaCode) {
+        if (item.streets[j].name === formData.reflectionAreaCode) {
           district = item.name
           street = item.streets[j].name
           break
@@ -301,6 +321,28 @@
         if (res.data.code === 0) {
           Toast('提交成功，感谢您对我们工作的支持！')
           router.push('/')
+        } else {
+          Toast(res.data.msg)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  function getDetail(id) {
+    getAppealDetail(id)
+      .then((res) => {
+        if (res.data.code === 0) {
+          for (const key in formData) {
+            if (Object.hasOwnProperty.call(formData, key)) {
+              if (key === 'reflectionFilePath') {
+                formData[key] = JSON.parse(res.data.data[key])
+              } else {
+                formData[key] = res.data.data[key]
+              }
+            }
+          }
         } else {
           Toast(res.data.msg)
         }
