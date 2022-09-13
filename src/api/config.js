@@ -25,11 +25,7 @@ axios.interceptors.response.use(
         token = res.headers.authorization
         localStorage.setItem('token', token)
       }
-      if (
-        res.data.code === 10127 ||
-        res.data.code === 10126 ||
-        res.data.code === 10117
-      ) {
+      if (res.data.code === 10127 || res.data.code === 10126 || res.data.code === 10117) {
         // token失效
         localStorage.removeItem('token')
         router.replace('/login')
