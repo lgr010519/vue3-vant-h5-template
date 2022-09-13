@@ -3,124 +3,109 @@
     <!-- < 用户注册 -->
     <nav-bar title="用户注册"></nav-bar>
     <!-- 注册表单 -->
-    <div class="tw-flex-1 tw-w-[100%] tw-overflow-auto">
+    <div class="tw-flex-1 tw-w-[100%] tw-overflow-auto tw-px-[14px] tw-pt-[14px]">
       <van-form
         class="custom_van_form"
         @submit="onSubmit">
-        <van-cell-group inset>
-          <!-- 姓名 -->
-          <van-field
-            style="background-color: #f9f9f9"
-            v-model="user.realName"
-            name="name"
-            label-width="70"
-            label="姓名"
-            placeholder="请输入真实姓名"
-            :rules="nameCheck"></van-field>
-          <!-- 性别 -->
-          <van-field
-            name="sex"
-            label-width="70"
-            label="性别">
-            <template #input>
-              <van-radio-group
-                v-model="user.gender"
-                direction="horizontal">
-                <van-radio name="1">男</van-radio>
-                <div class="tw-w-[14px]"></div>
-                <van-radio name="2">女</van-radio>
-              </van-radio-group>
-            </template>
-          </van-field>
-          <!-- 身份证号 -->
-          <van-field
-            style="background-color: #f9f9f9"
-            v-model="user.idCard"
-            name="cardId"
-            label="身份证号"
-            label-width="70"
-            placeholder="请输入身份证号"
-            :rules="idCard" />
-          <!-- 手机号 -->
-          <van-field
-            style="background-color: #f9f9f9"
-            v-model="user.telPhone"
-            name="phone"
-            label="手机号"
-            label-width="70"
-            placeholder="请输入手机号"
-            :rules="telPhoneCheck">
-          </van-field>
-          <!-- 验证码 -->
-          <van-field
-            style="background-color: #f9f9f9"
-            v-model="user.smsCode"
-            label="验证码"
-            label-width="70"
-            placeholder="请输入验证码"
-            :rules="smsCard">
-            <template #button>
-              <van-button
-                size="mini"
-                type="default"
-                :disabled="isSend"
-                @click="send"
-                style="border: none; color: #3189ff; background-color: #f9f9f9"
-                >{{ isSend ? '已发送' : '发送验证码' }}
-              </van-button>
-            </template>
-          </van-field>
-          <!-- 密码 -->
-          <van-field
-            style="background-color: #f9f9f9"
-            v-model="user.password"
-            type="password"
-            name="password"
-            label="密码"
-            label-width="70"
-            placeholder="请输入密码"
-            :rules="passwordCheck">
-          </van-field>
-          <!-- 选择区域 -->
-          <van-field
-            v-model="spaceValue"
-            is-link
-            readonly
-            label="地址"
-            label-width="70"
-            placeholder="请选择所在地区"
-            :rules="userObjAddress"
-            @click="show = true">
-          </van-field>
+        <!-- 姓名 -->
+        <van-field
+          v-model="user.realName"
+          name="realName"
+          label="姓名"
+          placeholder="请输入真实姓名"
+          :rules="nameCheck"></van-field>
+        <!-- 性别 -->
+        <van-field
+          name="gender"
+          label="性别">
+          <template #input>
+            <van-radio-group
+              v-model="user.gender"
+              direction="horizontal">
+              <van-radio name="1">男</van-radio>
+              <div class="tw-w-[14px]"></div>
+              <van-radio name="2">女</van-radio>
+            </van-radio-group>
+          </template>
+        </van-field>
+        <!-- 身份证号 -->
+        <van-field
+          v-model="user.idCard"
+          name="idCard"
+          label="身份证号"
+          placeholder="请输入身份证号"
+          :rules="idCard" />
+        <!-- 手机号 -->
+        <van-field
+          v-model="user.telPhone"
+          name="telPhone"
+          label="手机号"
+          placeholder="请输入手机号"
+          :rules="telPhoneCheck">
+        </van-field>
+        <!-- 验证码 -->
+        <van-field
+          v-model="user.smsCode"
+          label="验证码"
+          placeholder="请输入验证码"
+          :rules="smsCard">
+          <template #button>
+            <van-button
+              size="mini"
+              type="default"
+              :disabled="isSend"
+              @click="send"
+              style="border: none; color: #3189ff; background-color: #f9f9f9">
+              {{ isSend ? '已发送' : '发送验证码' }}
+            </van-button>
+          </template>
+        </van-field>
+        <!-- 密码 -->
+        <van-field
+          v-model="user.password"
+          type="password"
+          name="password"
+          label="密码"
+          placeholder="请输入密码"
+          :rules="passwordCheck">
+        </van-field>
+        <!-- 选择区域 -->
+        <van-field
+          v-model="spaceValue"
+          is-link
+          readonly
+          label="地址"
+          placeholder="请选择所在地区"
+          :rules="userObjAddress"
+          @click="show = true">
+        </van-field>
 
-          <van-popup
-            v-model:show="show"
-            round
-            position="bottom">
-            <van-cascader
-              closeable
-              :fieldNames="fieldNames"
-              v-model="cascaderValue"
-              :options="options"
-              @close="show = false"
-              active-color="#1989fa"
-              @finish="onFinish">
-            </van-cascader>
-          </van-popup>
-          <!-- 详细地址 -->
-          <van-field
-            style="background-color: #f9f9f9"
-            v-model="user.address"
-            rows="2"
-            autosize
-            label=""
-            type="textarea"
-            placeholder="请输入详细地址"
-            show-word-limit>
-          </van-field>
-        </van-cell-group>
+        <van-popup
+          v-model:show="show"
+          round
+          position="bottom">
+          <van-cascader
+            closeable
+            :fieldNames="fieldNames"
+            v-model="cascaderValue"
+            :options="options"
+            @close="show = false"
+            active-color="#1989fa"
+            @finish="onFinish">
+          </van-cascader>
+        </van-popup>
+        <!-- 详细地址 -->
+        <van-field
+          v-model="user.address"
+          rows="2"
+          autosize
+          label=""
+          type="textarea"
+          placeholder="请输入详细地址"
+          show-word-limit>
+        </van-field>
 
-        <div class="tw-mx-auto tw-w-[347px] tw-h-[44px] tw-mt-[170px] tw-pb-[80px]">
+        <div class="tw-mx-auto tw-w-[347px] tw-h-[44px] tw-mt-[170px] tw-mb-[14px]">
           <van-button
             block
             type="primary"
@@ -236,5 +221,6 @@
 <style lang="scss" scoped>
   .custom_van_form {
     @extend .custom_van_form;
+    // padding: 14px 14px 0 14px;
   }
 </style>
