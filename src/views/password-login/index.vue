@@ -124,14 +124,11 @@
     line-height: 18px;
     text-align: right;
   }
+
   .login_form.van-form {
+    padding: 0 14px;
+    @extend .custom_van_form;
     :deep(.van-cell.van-field) {
-      padding: 10px 14px;
-      .van-field__control::placeholder {
-        font-size: 16px;
-        font-weight: 500;
-        color: #999999;
-      }
       .van-field__label {
         width: 20px;
         margin-right: 20px;
