@@ -5,8 +5,17 @@
       <div class="system_code_panel">
         <div
           class="system_code_panel-img"
-          ref="qrCodeImg"></div>
-        <p class="system_code_panel-tip">长按二维码保存到本地</p>
+          @click="onClick">
+          <div
+            class="tw-w-full tw-h-full"
+            ref="qrCodeCanvas"></div>
+          <img
+            class="tw-absolute tw-inset-0"
+            ref="qrCodeImg"
+            :src="imgSrc"
+            alt="" />
+        </div>
+        <p class="system_code_panel-tip">点击二维码保存到本地</p>
       </div>
     </div>
   </div>
@@ -26,36 +35,53 @@
   import { onMounted, ref } from 'vue'
   import qrCodeOptions from './options'
   import logo from '@/assets/images/login/logo.png'
-  import Hammer from 'hammerjs'
+  // import Hammer from 'hammerjs'
+  // import { downloadFile } from '@/utils'
+  import { saveAs } from 'file-saver'
 
   const qrCode = new QRCodeStyling(qrCodeOptions)
+  const qrCodeCanvas = ref(null)
+
   const qrCodeImg = ref(null)
+  const imgSrc = ref('')
   function initQrCode() {
-    console.log(qrCodeImg.value)
-    qrCodeOptions.width = qrCodeImg.value.offsetWidth
-    qrCodeOptions.height = qrCodeImg.value.offsetHeight
-    qrCodeOptions.data = location.origin
+    qrCodeOptions.width = qrCodeCanvas.value.offsetWidth
+    qrCodeOptions.height = qrCodeCanvas.value.offsetHeight
+    qrCodeOptions.data = location.origin + '/system-code'
     qrCodeOptions.image = logo
 
-    qrCode.append(qrCodeImg.value)
+    qrCode.append(qrCodeCanvas.value)
     qrCode.update(qrCodeOptions)
+
+    qrCode.getRawData().then((buffer) => {
+      const fileReader = new FileReader()
+      fileReader.onload = (e) => {
+        imgSrc.value = e.target.result
+      }
+
+      fileReader.readAsDataURL(buffer)
+    })
   }
 
-  function initHammer() {
-    const manager = new Hammer.Manager(qrCodeImg.value)
-    const Press = new Hammer.Press({
-      time: 500
-    })
-    manager.add(Press)
-    manager.on('press', function () {
-      showActionSheet.value = true
-    })
-  }
+  // function initHammer() {
+  //   const manager = new Hammer.Manager(qrCodeImg.value)
+  //   const Press = new Hammer.Press({
+  //     time: 500
+  //   })
+  //   manager.add(Press)
+  //   manager.on('press', function () {
+  //     showActionSheet.value = true
+  //   })
+  // }
 
   onMounted(() => {
     initQrCode()
-    initHammer()
+    // initHammer()
   })
+
+  function onClick() {
+    showActionSheet.value = true
+  }
 
   const showActionSheet = ref(false)
   const actionSheetOptions = [{ name: '保存到本地' }]
@@ -63,12 +89,9 @@
     console.log(action, index)
     switch (index) {
       case 0:
-        /**
-         * @todo
-         */
-        // qrCode.getRawData('png').then((buffer) => {
-
-        // })
+        qrCode.getRawData().then((buffer) => {
+          saveAs(buffer, '系统二维码.png')
+        })
         break
 
       default:
@@ -96,13 +119,10 @@
       justify-content: center;
       align-items: center;
       &-img {
+        position: relative;
         width: 220px;
         height: 224px;
         margin-bottom: 26px;
-        #qrCode {
-          width: 100%;
-          height: 100%;
-        }
       }
       &-tip {
         color: #373737;

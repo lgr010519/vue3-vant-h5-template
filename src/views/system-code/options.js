@@ -1,6 +1,7 @@
 export default {
   width: 220,
   height: 224,
+  // type: 'svg',
   data: '',
   margin: 0,
   qrOptions: { typeNumber: '0', mode: 'Byte', errorCorrectionLevel: 'Q' },

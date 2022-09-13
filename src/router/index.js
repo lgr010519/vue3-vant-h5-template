@@ -57,7 +57,7 @@ const router = createRouter({
       path: '/system-code',
       component: () => import('@/views/system-code/index.vue'),
       meta: {
-        requireAuth: true
+        requireAuth: false
       }
     },
     // 局长信箱
