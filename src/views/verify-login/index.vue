@@ -13,7 +13,6 @@
       @submit="onSubmit"
       class="login_form tw-mt-[48px]">
       <van-field
-        style="background-color: #f9f9f9"
         v-model="user.username"
         name="password"
         placeholder="请输入手机号"
@@ -30,7 +29,6 @@
         </template>
       </van-field>
       <van-field
-        style="background-color: #f9f9f9"
         v-model="user.smscode"
         placeholder="请输入验证码"
         :rules="smsCard">

@@ -64,7 +64,7 @@
     </p>
 
     <p class="tw-text-center tw-text-[13px] tw-text-[#666666] tw-mt-[138px] tw-pb-[50px]">
-      <span @click="register"></span>
+      <span @click="register">用户注册</span>
     </p>
   </div>
 </template>
