@@ -8,9 +8,9 @@
           src="../../assets/images/login/icon_warn.png"
           style="width: 100%; height: 100%" />
       </div>
-      <div class="tw-h-[18px] tw-ml-[8px] tw-text-[13px] tw-leading-[18px] tw-text-[#F5754E]">
-        <span>身份证号和手机号均验证通过才能进行密码修改</span>
-      </div>
+      <p class="tw-h-[18px] tw-ml-[8px] tw-text-[13px] tw-leading-[18px] tw-text-[#F5754E]">
+        身份证号和手机号均验证通过才能进行密码修改
+      </p>
     </div>
     <div class="tw-flex-1 tw-w-[100%] tw-overflow-auto">
       <van-form
@@ -104,7 +104,6 @@
   }
   // 手机号正则校验
   const RegExpPhone = (val) => {
-    console.log(val)
     return /^1\d{10}$/.test(val)
   }
   const isSend = ref(false)

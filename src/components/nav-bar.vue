@@ -8,10 +8,10 @@
         src="@/assets/images/login/icon_left.png"
         alt=""
         @click="back" />
-      <div
+      <p
         class="tw-h-[19px] tw-text-[#4A4A4A] tw-text-[19px] tw-font-semibold tw-leading-[19px] tw-line-clamp-1">
-        <span>{{ props.title }}</span>
-      </div>
+        {{ props.title }}
+      </p>
     </div>
   </div>
 </template>

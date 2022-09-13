@@ -7,9 +7,7 @@
         alt="" />
     </div>
 
-    <div class="title tw-h-[18px] tw-mt-[20px] tw-mx-auto tw-text-center">
-      <span>深圳生态环境群众诉求服务</span>
-    </div>
+    <p class="title tw-h-[18px] tw-mt-[20px] tw-mx-auto tw-text-center">深圳生态环境群众诉求服务</p>
 
     <van-form
       @submit="onSubmit"
@@ -95,7 +93,7 @@
       password: SHA256(user.password).toString(),
       username: user.username
     })
-    if (result.data.data) {
+    if (result.data.code === 0) {
       localStorage.setItem('token', result.data.data.token)
       Toast('登录成功')
       router.push('/index')

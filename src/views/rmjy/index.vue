@@ -4,9 +4,7 @@
 
     <div class="tw-mt-[24px] tw-px-[14px] tw-w-[100%] tw-flex-1 tw-overflow-auto">
       <!-- 事项内容 -->
-      <div class="tw-text-[#4A4A4A] tw-text-[17px] tw-font-semibold">
-        <span>事项内容</span>
-      </div>
+      <p class="tw-text-[#4A4A4A] tw-text-[17px] tw-font-semibold">事项内容</p>
       <van-form
         :readonly="!isCreate"
         @submit="onSubmit"
@@ -34,12 +32,10 @@
           :rules="peopleOpinionMessage"
           show-word-limit>
         </van-field>
-        <div class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
-          <span>附件说明</span>
-        </div>
+        <p class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">附件说明</p>
         <upload-file
           :readonly="!isCreate"
-          v-model="form.attachments"></upload-file>
+          v-model="form.opinionFilePath"></upload-file>
         <div
           style="margin: 10px"
           v-if="isCreate">
@@ -88,10 +84,12 @@
   const router = useRouter()
   const form = reactive({
     opinionDescription: '',
-    opinionTitle: ''
+    opinionTitle: '',
+    opinionFilePath: []
   })
   onMounted(() => {
     if (route.params.mode === 'detail') {
+      //调用接口查询
       form.opinionTitle = '李某人'
       form.opinionDescription = '救救我啊'
     }
@@ -102,7 +100,7 @@
   })
 
   const submitForm = () => {
-    addNewPropose(form)
+    addNewPropose({ ...form, opinionFilePath: JSON.stringify(form.opinionFilePath) })
       .then((res) => {
         if (res.data.code === 0) {
           Toast('提交成功')

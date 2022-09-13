@@ -82,7 +82,7 @@
       : router.push(`/rmjy/detail/${item.id}`)
   }
   // 测试数据
-  const count = ref(10)
+  const count = ref(5)
   const list = ref([])
 
   const el = ref(null)
@@ -91,27 +91,6 @@
     () => {
       // load more
       list.value.push(
-        {
-          id: 1,
-          chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
-          status: '已完成',
-          time: '2020-09-28 12:20:28',
-          type: '局长信箱'
-        },
-        {
-          id: 1,
-          chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
-          status: '已完成',
-          time: '2020-09-28 12:20:28',
-          type: '局长信箱'
-        },
-        {
-          id: 1,
-          chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
-          status: '已完成',
-          time: '2020-09-28 12:20:28',
-          type: '局长信箱'
-        },
         {
           id: 1,
           chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
@@ -142,7 +121,7 @@
         chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
         status: '已完成',
         time: '2020-09-28 12:20:28',
-        type: '人民建议'
+        type: '局长信箱'
       })
     }
   })

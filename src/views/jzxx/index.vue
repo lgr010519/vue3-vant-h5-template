@@ -4,10 +4,10 @@
     <div
       class="tw-mx-auto tw-pt-[24px] tw-w-[100%] tw-px-[14px] tw-pb-[14px] tw-flex-1 tw-overflow-auto">
       <!-- 事项内容 -->
-      <div
+      <p
         class="tw-text-[17px] tw-text-[#4A4A4A] tw-font-semibold tw-w-[100%] tw-h-[24px] tw-text-left tw-leading-[17px]">
-        <span>事项内容</span>
-      </div>
+        事项内容
+      </p>
       <!-- form表单 -->
       <van-form
         class="custom_van_form"
@@ -62,7 +62,7 @@
           v-model="typeValue"
           :is-link="isCreate"
           label="诉求类型"
-          placeholder="请选择诉求类型"
+          placeholder="点击选择"
           :rules="userObjType"
           @click="showType = true" />
         <van-popup
@@ -71,7 +71,7 @@
           round
           position="bottom">
           <van-cascader
-            v-model="typeValue"
+            v-model="form.appealType"
             title="请选择诉求类型"
             active-color="#3189FF"
             :field-names="fieldNames"
@@ -80,9 +80,7 @@
             @finish="typeFinish" />
         </van-popup>
         <!-- 诉求描述 -->
-        <div class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
-          <span>诉求描述</span>
-        </div>
+        <p class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">诉求描述</p>
         <div>
           <van-field
             v-model="form.appealDescription"
@@ -94,12 +92,10 @@
             show-word-limit>
           </van-field>
         </div>
-        <div class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
-          <span>附件说明</span>
-        </div>
+        <p class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">附件说明</p>
         <upload-file
           :readonly="!isCreate"
-          v-model="form.attachments"></upload-file>
+          v-model="form.appealFilePath"></upload-file>
         <div v-if="isCreate">
           <van-button
             color="#3189FF"
@@ -164,7 +160,8 @@
     // 详细地址
     appealAddress: '',
     // 诉求描述
-    appealDescription: ''
+    appealDescription: '',
+    appealFilePath: []
   })
   const cascaderValue = ref('')
   //自定义字段名
@@ -180,9 +177,7 @@
   }
   const options = ref([])
   const onFinish = ({ selectedOptions }) => {
-    console.log(selectedOptions)
     show.value = false
-    console.log(selectedOptions)
     if (selectedOptions[0].name) {
       form.district = selectedOptions[0].name
     }
@@ -225,11 +220,13 @@
   onMounted(() => {
     getAppeal()
     getstreet()
-    // if (route.params.mode === 'detail') {
-    //   form.spaceValue = '湖北省' + ' ' + '武汉市'
-    //   form.talkType = '废气'
-    //   form.message = '中秋节居然还要加班'
-    // }
+    if (route.params.mode === 'detail') {
+      form.appealTitle = '哈哈哈'
+      form.spaceValue = '湖北省' + ' ' + '武汉市'
+      form.appealAddress = '中秋节居然还要加班'
+      form.appealDescription = '123321'
+      typeValue.value = '废气'
+    }
   })
 
   // 判断当前页面的展示状态
@@ -238,7 +235,7 @@
   })
   //提交表单
   const submitForm = () => {
-    addNewPetition(form)
+    addNewPetition({ ...form, appealFilePath: JSON.stringify(form.appealFilePath) })
       .then((res) => {
         if (res.data.code === 0) {
           Toast('提交成功')
