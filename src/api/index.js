@@ -69,3 +69,9 @@ export const addNewPropose = (data) => {
  * @param {*} data
  */
 export const getRangeDetail = (data) => get(`/api/v1/description/query`, data)
+
+/**
+ * 获取站点列表
+ * @param {*} data
+ */
+export const getStationList = (data) => get(`/api/v1/station/getAll`, data)
