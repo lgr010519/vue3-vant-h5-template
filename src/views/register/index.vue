@@ -98,7 +98,8 @@
             round
             position="bottom">
             <van-cascader
-              closeable
+              :closeable="false"
+              :show-header="false"
               :fieldNames="fieldNames"
               v-model="cascaderValue"
               :options="options"

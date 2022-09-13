@@ -37,6 +37,8 @@
           round
           position="bottom">
           <van-cascader
+            :closeable="false"
+            :show-header="false"
             v-model="cascaderValue"
             title="请选择所在地区"
             :options="options"
@@ -70,6 +72,8 @@
           round
           position="bottom">
           <van-cascader
+            :closeable="false"
+            :show-header="false"
             v-model="form.appealType"
             title="请选择诉求类型"
             active-color="#3189FF"

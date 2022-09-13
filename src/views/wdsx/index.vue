@@ -34,7 +34,7 @@
         :key="index"
         @click="go(item)">
         <div class="tw-text-[17px] tw-font-semibold">
-          <span>{{ item.chinese }}</span>
+          <span>{{ item.title }}</span>
         </div>
         <div class="tw-flex tw-justify-between tw-mt-[8px]">
           <div class="tw-text-[11px] tw-font-normal tw-text-[#858585]">
@@ -102,7 +102,7 @@
     for (let i = 0; i < count.value; i++) {
       list.value.push({
         id: 1,
-        chinese: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
+        title: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
         status: '已完成',
         time: '2020-09-28 12:20:28',
         type: '局长信箱'
