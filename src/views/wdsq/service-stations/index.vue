@@ -16,9 +16,12 @@
 
       <div
         class="stations_item"
-        v-for="station in stations"
-        :key="station.id">
-        <div class="stations_item_info">
+        v-for="(value, key) in stations"
+        :key="key">
+        <div
+          class="stations_item_info"
+          v-for="station in value"
+          :key="station.pid">
           <p class="tw-text-[17px] tw-text-[#4A4A4A] tw-font-semibold">{{ station.pname }}</p>
           <div class="tw-flex tw-mt-[6px]">
             <img
@@ -27,21 +30,6 @@
               alt="" />
             <p class="tw-text-[11px] tw-text-[#999999] tw-font-medium">
               {{ station.address }}
-            </p>
-          </div>
-        </div>
-        <div
-          class="stations_item_info"
-          v-for="childStation in station.children"
-          :key="childStation.id">
-          <p class="tw-text-[17px] tw-text-[#4A4A4A] tw-font-semibold">{{ childStation.ename }}</p>
-          <div class="tw-flex tw-mt-[6px]">
-            <img
-              class="tw-w-[16px] tw-h-[16px] tw-mr-[4px]"
-              src="@/assets/images/wdsq/icon_address_blue.png"
-              alt="" />
-            <p class="tw-text-[11px] tw-text-[#999999] tw-font-medium">
-              {{ childStation.address }}
             </p>
           </div>
         </div>
