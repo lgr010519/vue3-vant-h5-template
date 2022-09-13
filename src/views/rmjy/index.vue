@@ -8,7 +8,7 @@
       <van-form
         :readonly="!isCreate"
         @submit="onSubmit"
-        class="custom_van_form">
+        class="custom_van_form tw-pt-[14px]">
         <!-- <van-cell-group
           inset
           style="margin: 0">
@@ -35,10 +35,11 @@
         <p class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">附件说明</p>
         <upload-file
           :readonly="!isCreate"
-          v-model="form.opinionFilePath"></upload-file>
+          v-model="form.opinionFilePath">
+        </upload-file>
         <div
-          style="margin: 10px"
-          v-if="isCreate">
+          v-if="isCreate"
+          class="tw-mt-[144px]">
           <van-button
             color="#3189FF"
             block

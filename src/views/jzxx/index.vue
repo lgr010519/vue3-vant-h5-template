@@ -10,7 +10,7 @@
       </p>
       <!-- form表单 -->
       <van-form
-        class="custom_van_form"
+        class="custom_van_form tw-pt-[14px]"
         :readonly="!isCreate"
         @submit="onSubmit"
         label-align="left">
@@ -84,21 +84,22 @@
         </van-popup>
         <!-- 诉求描述 -->
         <p class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">诉求描述</p>
-        <div>
-          <van-field
-            v-model="form.appealDescription"
-            rows="4"
-            autosize
-            label=""
-            :rules="userObjChinese"
-            type="textarea"
-            show-word-limit>
-          </van-field>
-        </div>
+        <van-field
+          v-model="form.appealDescription"
+          rows="4"
+          autosize
+          label=""
+          :rules="userObjChinese"
+          type="textarea"
+          show-word-limit>
+        </van-field>
+
         <p class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">附件说明</p>
         <upload-file
           :readonly="!isCreate"
-          v-model="form.appealFilePath"></upload-file>
+          v-model="form.appealFilePath">
+        </upload-file>
+
         <div v-if="isCreate">
           <van-button
             color="#3189FF"
