@@ -10,7 +10,7 @@
       </p>
       <!-- form表单 -->
       <van-form
-        class="custom_van_form"
+        class="custom_van_form tw-pt-[14px]"
         :readonly="!isCreate"
         @submit="onSubmit"
         label-align="left">
@@ -84,21 +84,22 @@
         </van-popup>
         <!-- 诉求描述 -->
         <p class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">诉求描述</p>
-        <div>
-          <van-field
-            v-model="form.appealDescription"
-            rows="4"
-            autosize
-            label=""
-            :rules="userObjChinese"
-            type="textarea"
-            show-word-limit>
-          </van-field>
-        </div>
+        <van-field
+          v-model="form.appealDescription"
+          rows="4"
+          autosize
+          label=""
+          :rules="userObjChinese"
+          type="textarea"
+          show-word-limit>
+        </van-field>
+
         <p class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">附件说明</p>
         <upload-file
           :readonly="!isCreate"
-          v-model="form.appealFilePath"></upload-file>
+          v-model="form.appealFilePath">
+        </upload-file>
+
         <div v-if="isCreate">
           <van-button
             color="#3189FF"
@@ -137,7 +138,7 @@
   import navBar from '@/components/nav-bar.vue'
   import { computed, onMounted, reactive, ref } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
-  import { getAppealType, getStreet, addNewPetition } from '@/api/index'
+  import { getAppealType, getStreet, addNewPetition, getPetitionDetail } from '@/api/index'
   import { Toast } from 'vant'
   import {
     userObjName,
@@ -221,14 +222,21 @@
   }
 
   onMounted(() => {
-    getAppeal()
-    getstreet()
     if (route.params.mode === 'detail') {
-      form.appealTitle = '哈哈哈'
-      form.spaceValue = '湖北省' + ' ' + '武汉市'
-      form.appealAddress = '中秋节居然还要加班'
-      form.appealDescription = '123321'
-      typeValue.value = '废气'
+      getPetitionDetail(route.params.id)
+        .then((res) => {
+          if (res.data.code === 0) {
+            Toast('获取数据成功')
+          } else {
+            Toast(res.data.msg)
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    } else {
+      getAppeal()
+      getstreet()
     }
   })
 

@@ -82,3 +82,26 @@ export const getStationList = (data) => get(`/api/v1/station/getAll`, data)
  * @param {*} data
  */
 export const getAppealDetail = (id, data) => get(`/api/v1/appeal/${id}/detail`, data)
+
+/**
+ * 查询人民建议诉求详情
+ * @param {*} orderId
+ */
+export const getProposeDetail = (orderId) => {
+  return get(`/api/v1/propose/${orderId}/detail`)
+}
+
+/**
+ * 查询局长信箱诉求详情
+ * @param {*} orderId
+ */
+export const getPetitionDetail = (orderId) => {
+  return get(`/api/v1/petition/${orderId}/detail`)
+}
+
+/**
+ * 查询我的事项
+ */
+export const getMyOrderList = () => {
+  return get('/api/v1/order/list')
+}

@@ -8,7 +8,7 @@
       <van-form
         :readonly="!isCreate"
         @submit="onSubmit"
-        class="custom_van_form">
+        class="custom_van_form tw-pt-[14px]">
         <!-- <van-cell-group
           inset
           style="margin: 0">
@@ -35,10 +35,11 @@
         <p class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">附件说明</p>
         <upload-file
           :readonly="!isCreate"
-          v-model="form.opinionFilePath"></upload-file>
+          v-model="form.opinionFilePath">
+        </upload-file>
         <div
-          style="margin: 10px"
-          v-if="isCreate">
+          v-if="isCreate"
+          class="tw-mt-[144px]">
           <van-button
             color="#3189FF"
             block
@@ -78,7 +79,7 @@
   import { useRoute, useRouter } from 'vue-router'
   import { reactive, computed, onMounted } from 'vue'
   import { peopleOpinionTitle, peopleOpinionMessage } from '@/configs/globalvar'
-  import { addNewPropose } from '@/api/index'
+  import { addNewPropose, getProposeDetail } from '@/api/index'
   import { Toast } from 'vant'
   const route = useRoute()
   const router = useRouter()
@@ -89,9 +90,17 @@
   })
   onMounted(() => {
     if (route.params.mode === 'detail') {
-      //调用接口查询
-      form.opinionTitle = '李某人'
-      form.opinionDescription = '救救我啊'
+      getProposeDetail(route.params.id)
+        .then((res) => {
+          if (res.data.code === 0) {
+            Toast('获取数据成功')
+          } else {
+            Toast(res.data.msg)
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   })
   // 判断当前页面的展示状态

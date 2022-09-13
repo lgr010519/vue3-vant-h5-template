@@ -18,12 +18,14 @@
         placeholder="请输入手机号"
         :rules="telPhoneCheck">
         <template #label>
-          <img
-            class=""
-            src="../../assets/images/login/icon_phone.png"
-            alt=""
-            width="20"
-            height="20" />
+          <div class="tw-h-[24px] tw-flex tw-items-center">
+            <img
+              class=""
+              src="../../assets/images/login/icon_phone.png"
+              alt=""
+              width="20"
+              height="20" />
+          </div>
         </template>
       </van-field>
       <van-field
@@ -33,17 +35,17 @@
         placeholder="请输入密码"
         :rules="passwordCheck">
         <template #label>
-          <img
-            src="../../assets/images/login/icon_password.png"
-            alt=""
-            width="20"
-            height="20" />
+          <div class="tw-h-[24px] tw-flex tw-items-center">
+            <img
+              src="../../assets/images/login/icon_password.png"
+              alt=""
+              width="20"
+              height="20" />
+          </div>
         </template>
       </van-field>
-      <p
-        class="forget tw-w-[100%] tw-mt-[16px] tw-pr-[14px]"
-        @click="forget">
-        忘记密码
+      <p class="forget tw-w-[100%] tw-mt-[16px] tw-pr-[14px]">
+        <span @click="forget">忘记密码</span>
       </p>
 
       <div class="tw-mx-[14px] tw-mt-[36px]">
@@ -57,16 +59,12 @@
       </div>
     </van-form>
 
-    <p
-      class="tw-text-center tw-text-[16px] tw-text-[#666666] tw-mt-[12px]"
-      @click="verify">
-      验证码登录
+    <p class="tw-text-center tw-text-[16px] tw-text-[#666666] tw-mt-[12px]">
+      <span @click="verify">验证码登录</span>
     </p>
 
-    <p
-      class="tw-text-center tw-text-[13px] tw-text-[#666666] tw-mt-[138px] tw-pb-[50px]"
-      @click="register">
-      用户注册
+    <p class="tw-text-center tw-text-[13px] tw-text-[#666666] tw-mt-[138px] tw-pb-[50px]">
+      <span @click="register">用户注册</span>
     </p>
   </div>
 </template>
