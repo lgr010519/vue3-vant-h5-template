@@ -87,7 +87,7 @@
           maxlength="100"
           :placeholder="readonly ? '' : '请输入详细诉求描述'"
           rows="6"
-          :border="false"
+          :border="true"
           :autosize="false"
           :show-word-limit="false">
         </van-field>
@@ -338,6 +338,8 @@
             if (Object.hasOwnProperty.call(formData, key)) {
               if (key === 'reflectionFilePath') {
                 formData[key] = JSON.parse(res.data.data[key])
+              } else if (key === 'reflectionType') {
+                formData[key] = Number(res.data.data[key])
               } else {
                 formData[key] = res.data.data[key]
               }
