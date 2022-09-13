@@ -66,7 +66,7 @@
                 :disabled="isSend"
                 @click="send"
                 style="border: none; color: #3189ff; background-color: #f9f9f9"
-                >{{ isSend ? '已发送' : '发送验证码' }}
+                >{{ sendSmsBtnText }}
               </van-button>
             </template>
           </van-field>
@@ -202,15 +202,30 @@
       router.back()
     }
   }
+  const sendSmsBtnText = ref('获取验证码')
   const isSend = ref(false)
   // 发送验证码
   const send = async () => {
     //发送验证请求
     if (user.telPhone && RegExpPhone(user.telPhone)) {
       const result = await mobileCode({ mobile: user.telPhone })
-      if (result.status === 200) {
+      if (result.data.code === 0) {
         isSend.value = true
         Toast('发送成功,请检查您的手机短信')
+        let count = 30
+        sendSmsBtnText.value = `已发送${count}s`
+        const interval = setInterval(() => {
+          if (count <= 0) {
+            clearInterval(interval)
+            sendSmsBtnText.value = '发送验证码'
+            isSend.value = false
+          } else {
+            count--
+            sendSmsBtnText.value = `已发送${count}s`
+          }
+        }, 1000)
+      } else {
+        Toast(result.data.msg)
       }
     } else {
       // 弹出提示

@@ -6,54 +6,58 @@
         class="width:100%;height:100%"
         alt="" />
     </div>
-
-    <div class="title tw-h-[18px] tw-mt-[20px] tw-mx-auto tw-text-center">
-      <span>深圳生态环境群众诉求服务</span>
-    </div>
-
+    <h1 class="title tw-h-[18px] tw-mt-[20px] tw-mx-auto tw-text-center">
+      深圳生态环境群众诉求服务
+    </h1>
     <van-form
       @submit="onSubmit"
-      class="tw-mt-[58px]">
-      <van-cell-group inset>
-        <van-field
-          style="background-color: #f9f9f9"
-          v-model="user.username"
-          name="password"
-          label=""
-          placeholder="请输入手机号"
-          left-icon="phone"
-          :rules="[{ required: true, message: '请输入手机号' }]"
-          class="tw-h-[60px]">
-        </van-field>
-        <van-field
-          style="background-color: #f9f9f9"
-          v-model="user.smscode"
-          label=""
-          left-icon="lock"
-          placeholder="请输入验证码"
-          :rules="[{ required: true, message: '请输入验证码' }]"
-          class="tw-h-[60px]">
-          <template #button>
-            <van-button
-              ref="btn"
-              size="small"
-              type="default"
-              @click="send"
-              :disabled="isSend"
-              style="border: none; color: #3189ff; font-size: 13px; background-color: #f9f9f9">
-              {{ isSend ? '已发送' : '发送验证码' }}
-            </van-button>
-          </template>
-        </van-field>
-      </van-cell-group>
-      <div class="forget tw-w-[100%] tw-h-[18px] tw-mt-[16px] tw-mr-[14px]">
-        <span
-          style="margin-right: 40px; font-size: 13px"
-          @click="forget"
-          >忘记密码</span
-        >
-      </div>
-      <div style="margin: 16px">
+      class="login_form tw-mt-[48px]">
+      <van-field
+        style="background-color: #f9f9f9"
+        v-model="user.username"
+        name="password"
+        placeholder="请输入手机号"
+        :rules="telPhoneCheck">
+        <template #label>
+          <img
+            class=""
+            src="../../assets/images/login/icon_phone.png"
+            alt=""
+            width="20"
+            height="20" />
+        </template>
+      </van-field>
+      <van-field
+        style="background-color: #f9f9f9"
+        v-model="user.smscode"
+        placeholder="请输入验证码"
+        :rules="smsCard">
+        <template #label>
+          <img
+            class=""
+            src="../../assets/images/login/icon_password.png"
+            alt=""
+            width="20"
+            height="20" />
+        </template>
+        <template #button>
+          <van-button
+            ref="btn"
+            size="small"
+            type="default"
+            @click="send"
+            :disabled="isSend"
+            style="border: none; color: #3189ff; font-size: 13px; background-color: #f9f9f9">
+            {{ sendSmsBtnText }}
+          </van-button>
+        </template>
+      </van-field>
+      <p
+        class="forget tw-w-[100%] tw-mt-[16px] tw-pr-[14px]"
+        @click="forget">
+        忘记密码
+      </p>
+      <div class="tw-mx-[14px] tw-mt-[36px]">
         <van-button
           block
           type="primary"
@@ -63,19 +67,16 @@
         </van-button>
       </div>
 
-      <div
-        class="tw-w-[100%] tw-h-[23px] tw-mx-auto tw-text-center tw-text-[16px] tw-text-[#666666] tw-leading-[23px]">
-        <span
-          class="tw-w-[81px] tw-h-[23px]"
-          @click="login">
-          密码登录
-        </span>
-      </div>
-
-      <div
-        class="tw-w-[100%] tw-h-[18px] tw-mx-auto tw-text-center tw-text-[13px] tw-mt-[138px] tw-text-[#666666] tw-leading-[13px] tw-pb-[50px]">
-        <span @click="register">用户注册</span>
-      </div>
+      <p
+        class="tw-mx-auto tw-text-center tw-text-[16px] tw-text-[#666666] tw-mt-[12px]"
+        @click="login">
+        密码登录
+      </p>
+      <p
+        class="tw-text-center tw-text-[13px] tw-mt-[138px] tw-text-[#666666] tw-pb-[50px]"
+        @click="register">
+        用户注册
+      </p>
     </van-form>
   </div>
 </template>
@@ -85,6 +86,7 @@
   import { useRouter } from 'vue-router'
   import { Toast } from 'vant'
   import { mobileCode, passwordLogin } from '@/api/index'
+  import { telPhoneCheck, smsCard } from '@/configs/globalvar'
   const router = useRouter()
   const user = reactive({
     username: '',
@@ -108,13 +110,14 @@
       Toast('登录成功')
       router.push('/index')
     } else {
-      Toast('登录失败，请检查你的手机号或验证码是否正确')
+      Toast(result.data.msg)
     }
   }
   const forget = () => {
     router.push({ path: '/forget' })
   }
   const btn = ref()
+  const sendSmsBtnText = ref('获取验证码')
   // 手机号正则校验
   const RegExpPhone = (val) => {
     console.log(val)
@@ -124,9 +127,23 @@
     //发送验证请求
     if (user.username && RegExpPhone(user.username)) {
       const result = await mobileCode({ mobile: user.username })
-      if (result.status === 200) {
+      if (result.data.code === 0) {
         isSend.value = true
         Toast('发送成功,请检查您的手机短信')
+        let count = 30
+        sendSmsBtnText.value = `已发送${count}s`
+        const interval = setInterval(() => {
+          if (count <= 0) {
+            clearInterval(interval)
+            sendSmsBtnText.value = '发送验证码'
+            isSend.value = false
+          } else {
+            count--
+            sendSmsBtnText.value = `已发送${count}s`
+          }
+        }, 1000)
+      } else {
+        Toast(result.data.msg)
       }
     } else {
       // 弹出提示
@@ -148,5 +165,29 @@
     color: #666666;
     line-height: 13px;
     text-align: right;
+  }
+
+  .login_form.van-form {
+    :deep(.van-cell.van-field) {
+      padding: 10px 14px;
+      .van-field__control::placeholder {
+        font-size: 16px;
+        font-weight: 500;
+        color: #999999;
+      }
+      .van-field__label {
+        width: 20px;
+        margin-right: 20px;
+      }
+    }
+
+    .van-cell::after {
+      position: absolute;
+      box-sizing: border-box;
+      content: ' ';
+      pointer-events: none;
+      bottom: 0;
+      transform: scaleY(0.5);
+    }
   }
 </style>

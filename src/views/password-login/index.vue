@@ -40,23 +40,22 @@
             height="20" />
         </template>
       </van-field>
+      <p
+        class="forget tw-w-[100%] tw-mt-[16px] tw-pr-[14px]"
+        @click="forget">
+        忘记密码
+      </p>
+
+      <div class="tw-mx-[14px] tw-mt-[36px]">
+        <van-button
+          block
+          type="primary"
+          native-type="submit"
+          color="#3189FF">
+          登录
+        </van-button>
+      </div>
     </van-form>
-
-    <p
-      class="forget tw-w-[100%] tw-mt-[16px] tw-pr-[14px]"
-      @click="forget">
-      忘记密码
-    </p>
-
-    <div class="tw-mx-[14px] tw-mt-[36px]">
-      <van-button
-        block
-        type="primary"
-        native-type="submit"
-        color="#3189FF">
-        登录
-      </van-button>
-    </div>
 
     <p
       class="tw-text-center tw-text-[16px] tw-text-[#666666] tw-mt-[12px]"
@@ -92,6 +91,7 @@
     router.push({ path: '/register' })
   }
   const onSubmit = async () => {
+    console.log(123321)
     const result = await passwordLogin({
       auth_type: '1',
       password: SHA256(user.password).toString(),
@@ -102,7 +102,7 @@
       Toast('登录成功')
       router.push('/index')
     } else {
-      Toast('登录失败，请检查你的手机号或密码是否正确')
+      Toast(result.data.msg)
     }
   }
   const forget = () => {
@@ -136,6 +136,15 @@
         width: 20px;
         margin-right: 20px;
       }
+    }
+
+    .van-cell::after {
+      position: absolute;
+      box-sizing: border-box;
+      content: ' ';
+      pointer-events: none;
+      bottom: 0;
+      transform: scaleY(0.5);
     }
   }
 </style>

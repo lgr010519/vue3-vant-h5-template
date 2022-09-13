@@ -58,7 +58,6 @@
         </van-field>
         <!-- 诉求类型 -->
         <van-field
-          style="padding: 0; height: 30px; margin-top: 15px"
           v-model="typeValue"
           :is-link="isCreate"
           label="诉求类型"
