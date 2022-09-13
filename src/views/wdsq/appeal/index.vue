@@ -75,7 +75,7 @@
           </van-cascader>
         </van-popup>
 
-        <p class="tw-text-[16px] tw-text-[#666666] tw-font-semibold tw-mt-[22px] tw-mb-[12px]">
+        <p class="tw-text-[16px] tw-text-[#666666] tw-font-semibold tw-mt-[22px] tw-mb-[2px]">
           诉求描述
         </p>
         <van-field
@@ -363,7 +363,7 @@
       color: #4a4a4a;
       font-size: 17px;
       font-weight: 700;
-      margin-bottom: 24px;
+      margin-bottom: 14px;
     }
   }
 </style>
