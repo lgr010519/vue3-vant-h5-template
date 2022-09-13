@@ -98,3 +98,10 @@ export const getProposeDetail = (orderId) => {
 export const getPetitionDetail = (orderId) => {
   return get(`/api/v1/petition/${orderId}/detail`)
 }
+
+/**
+ * 查询我的事项
+ */
+export const getMyOrderList = () => {
+  return get('/api/v1/order/list')
+}

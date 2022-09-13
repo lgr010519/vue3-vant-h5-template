@@ -63,6 +63,7 @@
   import { useRouter } from 'vue-router'
   import { useInfiniteScroll } from '@vueuse/core'
   import { Toast } from 'vant'
+  import { getMyOrderList } from '@/api/index'
   const router = useRouter()
   const obj = reactive({
     keyWord: '',
@@ -85,10 +86,8 @@
       ? router.push(`/jzxx/detail/${item.id}`)
       : router.push(`/rmjy/detail/${item.id}`)
   }
-  // 测试数据
-  const count = ref(5)
-  const list = ref([])
 
+  const list = ref([])
   const el = ref(null)
   useInfiniteScroll(
     el,
@@ -113,18 +112,23 @@
   }
   // 底部是否出现加载
   const bottomLoading = ref(false)
-  onMounted(() => {
-    for (let i = 0; i < count.value; i++) {
-      list.value.push({
-        id: 2,
-        title: '诉求对象名称这是一段话这是一段诉求对象的名称文字',
-        status: '已完成',
-        time: '2020-09-28 12:20:28',
-        type: '人民建议'
-      })
-    }
-  })
 
+  const getList = () => {
+    getMyOrderList()
+      .then((res) => {
+        if (res.data.code === 0) {
+          // 加载成功
+        } else {
+          Toast(res.data.msg)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+  onMounted(() => {
+    getList()
+  })
   // 点击放大镜搜索
   const clickIcon = () => {
     console.log(obj)
