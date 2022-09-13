@@ -57,7 +57,7 @@
           :rules="passwordCheck">
         </van-field>
         <div
-          class="tw-mt-[346px] tw-w-[347px] tw-h-[44px] tw-mx-auto tw-text-[16px] tw-font-medium">
+          class="tw-mt-[300px] tw-w-[347px] tw-h-[44px] tw-mx-auto tw-text-[16px] tw-font-medium">
           <van-button
             block
             type="primary"
@@ -137,7 +137,7 @@
 
 <style lang="scss" scoped>
   .forget_form.van-form {
-    padding: 0 14px;
+    padding: 14px 14px;
     @extend .custom_van_form;
   }
 </style>

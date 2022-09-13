@@ -11,6 +11,7 @@ specifiers:
   crypto-js: ^4.1.1
   eslint: ^8.22.0
   eslint-plugin-vue: ^9.3.0
+  file-saver: ^2.0.5
   hammerjs: ^2.0.8
   pinia: ^2.0.21
   postcss: ^8.4.16
@@ -29,6 +30,7 @@ dependencies:
   '@vueuse/core': 9.2.0_vue@3.2.38
   axios: 0.27.2
   crypto-js: 4.1.1
+  file-saver: 2.0.5
   hammerjs: 2.0.8
   pinia: 2.0.22_vue@3.2.38
   qr-code-styling: 1.6.0-rc.1
@@ -1023,6 +1025,10 @@ packages:
     dependencies:
       flat-cache: 3.0.4
     dev: true
+
+  /file-saver/2.0.5:
+    resolution: {integrity: sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA==}
+    dev: false
 
   /fill-range/7.0.1:
     resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}
