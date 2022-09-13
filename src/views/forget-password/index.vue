@@ -15,7 +15,7 @@
     <div class="tw-flex-1 tw-w-[100%] tw-overflow-auto">
       <van-form
         @submit="onSubmit"
-        class="forget_form">
+        class="forget_form tw-mt-[16px]">
         <van-field
           v-model="user.idCard"
           name="idCard"

@@ -6,7 +6,7 @@
         @click-left-icon="clickIcon"
         @keyup.enter="keyUp"
         style="background-color: #f0f0f0; margin-top: 16px; border-radius: 6px 6px 6px 6px"
-        v-model="obj.keyWord"
+        v-model="mySelf.keyWord"
         label=" "
         label-width="1px"
         left-icon="search"
@@ -15,10 +15,10 @@
     <!-- 选择事项 -->
     <van-dropdown-menu active-color="#1989fa">
       <van-dropdown-item
-        v-model="obj.type"
+        v-model="mySelf.type"
         :options="eventType" />
       <van-dropdown-item
-        v-model="obj.status"
+        v-model="mySelf.status"
         :options="eventStatus" />
     </van-dropdown-menu>
     <!-- list -->
@@ -65,10 +65,12 @@
   import { Toast } from 'vant'
   import { getMyOrderList } from '@/api/index'
   const router = useRouter()
-  const obj = reactive({
+  const mySelf = reactive({
     keyWord: '',
-    type: '全部',
-    status: '全部'
+    type: '1',
+    status: '1',
+    pageNum: 1,
+    pageSize: 10
   })
   const eventType = [
     { text: '全部', value: '全部' },
@@ -114,10 +116,12 @@
   const bottomLoading = ref(false)
 
   const getList = () => {
-    getMyOrderList()
+    getMyOrderList(mySelf)
       .then((res) => {
         if (res.data.code === 0) {
           // 加载成功
+          mySelf.pageNum + 1
+          //用list接收
         } else {
           Toast(res.data.msg)
         }
@@ -131,10 +135,10 @@
   })
   // 点击放大镜搜索
   const clickIcon = () => {
-    console.log(obj)
+    console.log(mySelf)
   }
   const keyUp = () => {
-    console.log(obj)
+    console.log(mySelf)
   }
 </script>
 
