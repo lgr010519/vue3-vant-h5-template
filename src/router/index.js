@@ -102,7 +102,7 @@ const router = createRouter({
     },
     // 我的诉求-新增诉求
     {
-      path: '/wdsq/appeal/:mode/?id',
+      path: '/wdsq/appeal/:mode/:id?',
       component: () => import('@/views/wdsq/appeal/index.vue'),
       meta: {
         requireAuth: true
