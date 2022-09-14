@@ -8,10 +8,10 @@
         class="custom_van_form"
         @submit="onSubmit">
         <van-field
-          v-model="formData.reflectionTitle"
+          v-model="formData.title"
           label="诉求对象名称"
-          name="reflectionTitle"
-          :rules="rules.reflectionTitle"
+          name="title"
+          :rules="rules.title"
           :placeholder="readonly ? '' : '请输入诉求对象名称'">
         </van-field>
 
@@ -29,7 +29,7 @@
           v-model:show="showStreetPicker"
           position="bottom">
           <van-cascader
-            v-model="formData.reflectionAreaCode"
+            v-model="formData.areaCode"
             :options="streetCasOptions"
             :field-names="streetFiledNames"
             active-color="#3189FF"
@@ -39,10 +39,10 @@
         </van-popup>
 
         <van-field
-          v-model="formData.reflectionAddress"
+          v-model="formData.address"
           label=""
-          name="reflectionAddress"
-          :rules="rules.reflectionAddress"
+          name="address"
+          :rules="rules.address"
           type="textarea"
           maxlength="100"
           :placeholder="readonly ? '' : '请输入详细地址'"
@@ -66,7 +66,7 @@
           v-model:show="showTypePicker"
           position="bottom">
           <van-cascader
-            v-model="formData.reflectionType"
+            v-model="formData.appealType"
             :options="typeCasOptions"
             :field-names="typeFiledNames"
             active-color="#3189FF"
@@ -79,10 +79,10 @@
           诉求描述
         </p>
         <van-field
-          v-model="formData.reflectionDescription"
+          v-model="formData.description"
           label=""
-          name="reflectionDescription"
-          :rules="rules.reflectionDescription"
+          name="description"
+          :rules="rules.description"
           type="textarea"
           maxlength="100"
           :placeholder="readonly ? '' : '请输入详细诉求描述'"
@@ -94,7 +94,7 @@
 
         <p class="tw-text-[16px] tw-text-[#666666] tw-font-semibold tw-mt-[22px]">附件说明</p>
         <upload-file
-          v-model="formData.reflectionFilePath"
+          v-model="formData.filePath"
           :readonly="readonly">
         </upload-file>
 
@@ -140,7 +140,7 @@
     userObjType,
     userObjChinese
   } from '@/configs/globalvar'
-  import { addNewAppeal, getAppealDetail, getAppealType, getStreet } from '@/api'
+  import { createAppeal, getAppealDetail, getAppealType, getStreet } from '@/api'
   import { Toast } from 'vant'
 
   const route = useRoute()
@@ -165,20 +165,20 @@
    * 表单数据
    */
   const formData = reactive({
-    reflectionTitle: '',
-    reflectionAreaCode: '',
-    reflectionAddress: '',
-    reflectionType: '',
-    reflectionDescription: '',
-    reflectionFilePath: []
+    title: '',
+    areaCode: '',
+    address: '',
+    appealType: '',
+    description: '',
+    filePath: []
   })
 
   const rules = reactive({
-    reflectionTitle: userObjName,
+    title: userObjName,
     streetCasText: userObjAddress,
-    reflectionAddress: userObjMessageAddress,
+    address: userObjMessageAddress,
     typeCasText: userObjType,
-    reflectionDescription: userObjChinese
+    description: userObjChinese
   })
 
   /**
@@ -235,7 +235,7 @@
     for (let i = 0; i < streetCasOptions.value.length; i++) {
       const item = streetCasOptions.value[i]
       for (let j = 0; j < item.streets.length; j++) {
-        if (item.streets[j].name === formData.reflectionAreaCode) {
+        if (item.streets[j].name === formData.areaCode) {
           district = item.name
           street = item.streets[j].name
           break
@@ -246,7 +246,7 @@
       }
     }
 
-    return formData.reflectionAreaCode ? `${district} ${street}` : ''
+    return formData.areaCode ? `${district} ${street}` : ''
   })
   /**
    * 赋值区，街道
@@ -299,7 +299,7 @@
    */
   const typeCasText = computed(() => {
     const result = typeCasOptions.value.find((item) => {
-      return item.index === formData.reflectionType
+      return item.index === formData.appealType
     })
 
     return result ? result.label : ''
@@ -312,10 +312,10 @@
 
   function onSubmit(values) {
     console.log(values)
-    addNewAppeal({
+    createAppeal({
       ...formData,
-      reflectionType: JSON.stringify(formData.reflectionType),
-      reflectionFilePath: JSON.stringify(formData.reflectionFilePath)
+      appealType: JSON.stringify(formData.appealType),
+      filePath: JSON.stringify(formData.filePath)
     })
       .then((res) => {
         if (res.data.code === 0) {
@@ -336,9 +336,9 @@
         if (res.data.code === 0) {
           for (const key in formData) {
             if (Object.hasOwnProperty.call(formData, key)) {
-              if (key === 'reflectionFilePath') {
+              if (key === 'filePath') {
                 formData[key] = JSON.parse(res.data.data[key])
-              } else if (key === 'reflectionType') {
+              } else if (key === 'appealType') {
                 formData[key] = Number(res.data.data[key])
               } else {
                 formData[key] = res.data.data[key]
