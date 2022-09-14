@@ -10,8 +10,8 @@
       深圳生态环境群众诉求服务
     </h1>
     <van-form
-      @submit="onSubmit"
-      class="login_form tw-mt-[48px]">
+      class="login_form tw-mt-[48px]"
+      @submit="onSubmit">
       <van-field
         v-model="user.username"
         name="password"
@@ -47,9 +47,9 @@
             ref="btn"
             size="small"
             type="default"
-            @click="send"
             :disabled="isSend"
-            style="border: none; color: #3189ff; font-size: 13px; background-color: #f9f9f9">
+            style="border: none; color: #3189ff; font-size: 13px; background-color: #f9f9f9"
+            @click="send">
             {{ sendSmsBtnText }}
           </van-button>
         </template>

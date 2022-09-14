@@ -52,11 +52,11 @@
           </div>
         </div>
       </van-pull-refresh>
-      <!-- <p
+      <p
         v-if="isFinish"
         class="tw-text-center tw-text-[#999999] tw-text-[12px] tw-mt-[10px]">
         空空如也
-      </p> -->
+      </p>
     </div>
     <van-loading
       v-if="bottomLoading"
@@ -113,6 +113,7 @@
       // 开启loading
       if (!isFinish.value) {
         bottomLoading.value = true
+        mySelf.pageNum = mySelf.pageNum + 1
         getList('next')
         bottomLoading.value = false
       }
@@ -134,7 +135,6 @@
       getMyOrderList(mySelf)
         .then((res) => {
           if (res.data.code === 0) {
-            mySelf.pageNum = mySelf.pageNum + 1
             if (res.data.data.list.length <= 9) {
               //数据获取完毕
               isFinish.value = true
