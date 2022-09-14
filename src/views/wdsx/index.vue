@@ -31,6 +31,7 @@
       <!-- 下拉刷新 -->
       <van-pull-refresh
         v-model="isLoading"
+        success-text="刷新成功"
         @refresh="onRefresh">
         <div
           v-for="(item, index) in list"
@@ -54,8 +55,8 @@
       </van-pull-refresh>
       <p
         v-if="isFinish"
-        class="tw-text-center tw-text-[#999999] tw-text-[12px] tw-mt-[10px]">
-        空空如也
+        class="tw-text-center tw-text-[#999999] tw-text-[12px] tw-mt-[10px] tw-pb-[20px]">
+        到底了
       </p>
     </div>
     <van-loading
@@ -115,17 +116,17 @@
         bottomLoading.value = true
         mySelf.pageNum = mySelf.pageNum + 1
         getList('next')
-        bottomLoading.value = false
       }
     },
-    { distance: 40 }
+    { distance: 30 }
   )
   const isLoading = ref(false)
   const onRefresh = () => {
+    // 开启加载
     isLoading.value = true
     isFinish.value = false
-    getList('falsh')
-    isLoading.value = false
+    mySelf.pageNum = 1
+    getList('flash')
   }
   // 底部是否出现加载
   const bottomLoading = ref(false)
@@ -135,9 +136,7 @@
       getMyOrderList(mySelf)
         .then((res) => {
           if (res.data.code === 0) {
-            if (res.data.data.list.length <= 9) {
-              //数据获取完毕
-              isFinish.value = true
+            if (mySelf.pageNum == res.data.data.lastPage) {
               if (keeploading && keeploading == 'next') {
                 res.data.data.list.map((item) => {
                   list.value.push(item)
@@ -148,6 +147,10 @@
                   list.value.push(item)
                 })
               }
+              //数据获取完毕
+              isFinish.value = true
+              isLoading.value = false
+              bottomLoading.value = false
             } else {
               if (keeploading && keeploading == 'next') {
                 res.data.data.list.map((item) => {
@@ -159,6 +162,8 @@
                   list.value.push(item)
                 })
               }
+              isLoading.value = false
+              bottomLoading.value = false
             }
           } else {
             Toast(res.data.msg)
@@ -175,20 +180,24 @@
   // 点击放大镜搜索
   const clickIcon = () => {
     isFinish.value = false
+    mySelf.pageNum = 1
     getList()
   }
   const keyUp = () => {
     isFinish.value = false
+    mySelf.pageNum = 1
     getList()
   }
   const varietyChange = (val) => {
     isFinish.value = false
     mySelf.orderType = val
+    mySelf.pageNum = 1
     getList()
   }
   const statusChange = (val) => {
     isFinish.value = false
     mySelf.processStatus = val
+    mySelf.pageNum = 1
     getList()
   }
 </script>
