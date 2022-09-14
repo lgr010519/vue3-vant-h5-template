@@ -6,12 +6,29 @@ module.exports = {
   env: {
     node: true
   },
-  extends: ['plugin:vue/vue3-essential', 'eslint:recommended', '@vue/eslint-config-prettier'],
+  extends: ['plugin:vue/vue3-recommended', 'eslint:recommended', '@vue/eslint-config-prettier'],
   parserOptions: {
     ecmaVersion: 'latest'
   },
   rules: {
     'vue/multi-word-component-names': 'off',
-    'prettier/prettier': 'error'
+    'prettier/prettier': 'error',
+    'vue/html-self-closing': [
+      'error',
+      {
+        html: {
+          void: 'any',
+          normal: 'never',
+          component: 'never'
+        }
+      }
+    ],
+    'vue/object-curly-newline': [
+      'error',
+      {
+        multiline: true,
+        minProperties: 1
+      }
+    ]
   }
 }
