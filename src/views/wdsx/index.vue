@@ -1,25 +1,28 @@
 <template>
   <div class="tw-w-[100%] tw-h-[100%] tw-flex tw-flex-col">
     <Nav-bar title="我的事项"></Nav-bar>
-    <van-cell-group inset>
+    <div class="tw-p-[16px] tw-pb-[12px]">
       <van-field
         @click-left-icon="clickIcon"
         @keyup.enter="keyUp"
-        style="background-color: #f0f0f0; margin-top: 16px; border-radius: 6px 6px 6px 6px"
+        style="background-color: #f0f0f0; border-radius: 6px"
         v-model="mySelf.keyWord"
         label=" "
         label-width="1px"
         left-icon="search"
-        placeholder="请输入关键字进行搜索"></van-field>
-    </van-cell-group>
+        placeholder="请输入关键字进行搜索">
+      </van-field>
+    </div>
     <!-- 选择事项 -->
     <van-dropdown-menu active-color="#1989fa">
       <van-dropdown-item
         v-model="mySelf.variety"
-        :options="eventType" />
+        :options="eventType"
+        @change="varietyChange" />
       <van-dropdown-item
         v-model="mySelf.status"
-        :options="eventStatus" />
+        :options="eventStatus"
+        @change="statusChange" />
     </van-dropdown-menu>
     <!-- list -->
     <div
@@ -44,13 +47,17 @@
             <div
               class="tw-text-[13px] tw-font-medium"
               :class="item.status === '已完成' ? 'green' : 'orange'">
-              <span>{{ item.status === '1' ? '待办理' : '已完成' }}</span>
+              <span>{{ item.status === '0' ? '待办理' : '已完成' }}</span>
             </div>
           </div>
         </div>
       </van-pull-refresh>
+      <!-- <p
+        v-if="isFinish"
+        class="tw-text-center tw-text-[#999999] tw-text-[12px] tw-mt-[10px]">
+        空空如也
+      </p> -->
     </div>
-    <!-- <p v-if="isFinish" class="tw-text">到底啦</p> -->
     <van-loading
       class="tw-mx-auto"
       v-if="bottomLoading">
@@ -85,9 +92,11 @@
     { text: '已完成', value: '2' }
   ]
   const go = (item) => {
-    item.type === '局长信箱'
+    item.type === '3'
       ? router.push(`/jzxx/detail/${item.id}`)
-      : router.push(`/rmjy/detail/${item.id}`)
+      : item.type === '2'
+      ? router.push(`/rmjy/detail/${item.id}`)
+      : router.push(`/wdsq/appeal/detail/${item.id}`)
   }
 
   const list = ref([])
@@ -100,9 +109,8 @@
       // 开启loading
       if (!isFinish.value) {
         bottomLoading.value = true
-        setTimeout(() => {
-          bottomLoading.value = false
-        }, 1000)
+        getList('next')
+        bottomLoading.value = false
       }
     },
     { distance: 40 }
@@ -110,46 +118,75 @@
   const isLoading = ref(false)
   const onRefresh = () => {
     isLoading.value = true
-    setTimeout(() => {
+    if (isFinish.value) {
       isLoading.value = false
-    }, 1000)
+    } else {
+      getList('falsh')
+    }
   }
   // 底部是否出现加载
   const bottomLoading = ref(false)
 
-  const getList = () => {
-    getMyOrderList(mySelf)
-      .then((res) => {
-        if (res.data.code === 0) {
-          if (res.data.data.list.length < 10) {
-            // 数据全部请求完成
-            isFinish.value = true
-            res.data.data.list.map((item) => {
-              list.value.push(item)
-            })
+  const getList = (keeploading) => {
+    if (!isFinish.value) {
+      getMyOrderList(mySelf)
+        .then((res) => {
+          if (res.data.code === 0) {
+            if (res.data.data.list.length < 10) {
+              //数据获取完毕
+              isFinish.value = true
+              if (keeploading && keeploading == 'next') {
+                res.data.data.list.map((item) => {
+                  list.value.push(item)
+                })
+              } else {
+                list.value = []
+                res.data.data.list.map((item) => {
+                  list.value.push(item)
+                })
+              }
+            } else {
+              if (keeploading && keeploading == 'next') {
+                res.data.data.list.map((item) => {
+                  list.value.push(item)
+                })
+              } else {
+                list.value = []
+                res.data.data.list.map((item) => {
+                  list.value.push(item)
+                })
+              }
+            }
           } else {
-            // 加载成功
-            mySelf.pageNum + 1
-            //用list接收
-            list.value = res.data.data.list
+            Toast(res.data.msg)
           }
-        } else {
-          Toast(res.data.msg)
-        }
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
   }
   onMounted(() => {
     getList()
   })
   // 点击放大镜搜索
   const clickIcon = () => {
-    console.log(mySelf)
+    isFinish.value = false
+    getList()
   }
   const keyUp = () => {
-    console.log(mySelf)
+    isFinish.value = false
+    getList()
+  }
+  const varietyChange = (val) => {
+    isFinish.value = false
+    mySelf.variety = val
+    getList()
+  }
+  const statusChange = (val) => {
+    isFinish.value = false
+    mySelf.status = val
+    getList()
   }
 </script>
 
