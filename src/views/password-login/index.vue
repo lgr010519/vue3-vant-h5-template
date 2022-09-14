@@ -76,7 +76,9 @@
   import SHA256 from 'crypto-js/sha256'
   import { passwordCheck, telPhoneCheck } from '@/configs/globalvar'
   import { Toast } from 'vant'
+  import { userInfo } from '@/stores/userInfo'
   const router = useRouter()
+  const store = userInfo()
   const user = reactive({
     auth_type: '1',
     username: '',
@@ -97,6 +99,8 @@
     })
     if (result.data.code === 0) {
       localStorage.setItem('token', result.data.data.token)
+      // 将数据传入store
+      store.updataUserInfo(result.data.data)
       Toast('登录成功')
       router.push('/index')
     } else {

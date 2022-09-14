@@ -56,8 +56,7 @@
           placeholder="请输入新密码,至少10位数,包含数字和字母"
           :rules="passwordCheck">
         </van-field>
-        <div
-          class="tw-mt-[300px] tw-w-[347px] tw-h-[44px] tw-mx-auto tw-text-[16px] tw-font-medium">
+        <div class="tw-mt-[300px] tw-mx-[14px] tw-h-[44px] tw-text-[16px] tw-font-medium">
           <van-button
             block
             type="primary"

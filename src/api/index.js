@@ -45,23 +45,12 @@ export const getUserInformation = () => {
   return get('/api/v1/me')
 }
 
-// 新增在线诉求反映工单管理
-export const addNewAppeal = (data) => {
-  return post('/api/v1/appeal', data)
-}
-
-// 新增局长信箱诉求
-export const addNewPetition = (data) => {
-  return post('/api/v1/petition', data)
-}
-
 /**
- *
- * 新增人民建议征集
- * @param {*} data
+ *@param {*} data
+ *新增诉求
  */
-export const addNewPropose = (data) => {
-  return post('/api/v1/propose', data)
+export const createAppeal = (data) => {
+  return post('/api/v1/order/create', data)
 }
 
 /**
@@ -102,6 +91,6 @@ export const getPetitionDetail = (orderId) => {
 /**
  * 查询我的事项
  */
-export const getMyOrderList = () => {
-  return get('/api/v1/order/list')
+export const getMyOrderList = (mySelf) => {
+  return get('/api/v1/order/list', mySelf)
 }
