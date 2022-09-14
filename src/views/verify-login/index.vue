@@ -119,6 +119,7 @@
     console.log(val)
     return /^1\d{10}$/.test(val)
   }
+
   const send = async () => {
     //发送验证请求
     if (user.username && RegExpPhone(user.username)) {

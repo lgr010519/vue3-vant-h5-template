@@ -14,8 +14,8 @@
     </div>
     <div class="tw-flex-1 tw-w-[100%] tw-overflow-auto">
       <van-form
-        @submit="onSubmit"
-        class="forget_form tw-mt-[16px]">
+        class="forget_form tw-mt-[16px]"
+        @submit="onSubmit">
         <van-field
           v-model="user.idCard"
           name="idCard"
@@ -40,16 +40,16 @@
               ref="btn"
               size="small"
               type="default"
-              @click="send"
               :disabled="isSend"
-              style="border: none; color: #3189ff; font-size: 13px; background-color: #f9f9f9">
+              style="border: none; color: #3189ff; font-size: 13px; background-color: #f9f9f9"
+              @click="send">
               {{ sendSmsBtnText }}
             </van-button>
           </template>
         </van-field>
         <van-field
-          class="password"
           v-model="user.password"
+          class="password"
           type="password"
           name="password"
           label="新密码"

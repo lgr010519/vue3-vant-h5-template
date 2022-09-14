@@ -3,39 +3,39 @@
     <Nav-bar title="我的事项"></Nav-bar>
     <div class="tw-p-[16px] tw-pb-[12px]">
       <van-field
-        @click-left-icon="clickIcon"
-        @keyup.enter="keyUp"
+        v-model="mySelf.keyword"
         style="background-color: #f0f0f0; border-radius: 6px"
-        v-model="mySelf.keyWord"
         label=" "
         label-width="1px"
         left-icon="search"
-        placeholder="请输入关键字进行搜索">
+        placeholder="请输入关键字进行搜索"
+        @click-left-icon="clickIcon"
+        @keyup.enter="keyUp">
       </van-field>
     </div>
     <!-- 选择事项 -->
     <van-dropdown-menu active-color="#1989fa">
       <van-dropdown-item
-        v-model="mySelf.variety"
+        v-model="mySelf.orderType"
         :options="eventType"
-        @change="varietyChange" />
+        @change="varietyChange"></van-dropdown-item>
       <van-dropdown-item
-        v-model="mySelf.status"
+        v-model="mySelf.processStatus"
         :options="eventStatus"
-        @change="statusChange" />
+        @change="statusChange"></van-dropdown-item>
     </van-dropdown-menu>
     <!-- list -->
     <div
-      class="tw-w-[100%] tw-flex-1 tw-overflow-auto"
-      ref="el">
+      ref="el"
+      class="tw-w-[100%] tw-flex-1 tw-overflow-auto">
       <!-- 下拉刷新 -->
       <van-pull-refresh
         v-model="isLoading"
         @refresh="onRefresh">
         <div
-          class="tw-mx-auto tw-px-[14px] tw-h-[88px] tw-my-[16px]"
           v-for="(item, index) in list"
           :key="index"
+          class="tw-mx-auto tw-px-[14px] tw-h-[88px] tw-my-[16px]"
           @click="go(item)">
           <div class="tw-text-[17px] tw-font-semibold">
             <span>{{ item.title }}</span>
@@ -46,8 +46,8 @@
             </div>
             <div
               class="tw-text-[13px] tw-font-medium"
-              :class="item.status === '已完成' ? 'green' : 'orange'">
-              <span>{{ item.status === '0' ? '待办理' : '已完成' }}</span>
+              :class="item.processStatus === 1 ? 'green' : 'orange'">
+              <span>{{ item.processStatus === 1 ? '待办理' : '已完成' }}</span>
             </div>
           </div>
         </div>
@@ -59,8 +59,8 @@
       </p> -->
     </div>
     <van-loading
-      class="tw-mx-auto"
-      v-if="bottomLoading">
+      v-if="bottomLoading"
+      class="tw-mx-auto">
     </van-loading>
   </div>
 </template>
@@ -74,27 +74,31 @@
   import { getMyOrderList } from '@/api/index'
   const router = useRouter()
   const mySelf = reactive({
-    keyWord: '',
-    variety: '',
-    status: '',
+    //关键字
+    keyword: '',
+    //诉求类型
+    orderType: '0',
+    //诉求状态
+    processStatus: '0',
     pageNum: 1,
     pageSize: 10
   })
   const eventType = [
-    { text: '全部', value: '' },
+    { text: '全部', value: '0' },
     { text: '局长信箱', value: '3' },
     { text: '在线诉求', value: '1' },
     { text: '人民建议征集', value: '2' }
   ]
   const eventStatus = [
-    { text: '全部', value: '' },
+    { text: '全部', value: '0' },
     { text: '待办理', value: '1' },
     { text: '已完成', value: '2' }
   ]
   const go = (item) => {
-    item.type === '3'
+    console.log(item)
+    item.orderType === 3
       ? router.push(`/jzxx/detail/${item.id}`)
-      : item.type === '2'
+      : item.orderType === 2
       ? router.push(`/rmjy/detail/${item.id}`)
       : router.push(`/wdsq/appeal/detail/${item.id}`)
   }
@@ -118,11 +122,9 @@
   const isLoading = ref(false)
   const onRefresh = () => {
     isLoading.value = true
-    if (isFinish.value) {
-      isLoading.value = false
-    } else {
-      getList('falsh')
-    }
+    isFinish.value = false
+    getList('falsh')
+    isLoading.value = false
   }
   // 底部是否出现加载
   const bottomLoading = ref(false)
@@ -132,7 +134,8 @@
       getMyOrderList(mySelf)
         .then((res) => {
           if (res.data.code === 0) {
-            if (res.data.data.list.length < 10) {
+            mySelf.pageNum = mySelf.pageNum + 1
+            if (res.data.data.list.length <= 9) {
               //数据获取完毕
               isFinish.value = true
               if (keeploading && keeploading == 'next') {
@@ -180,12 +183,12 @@
   }
   const varietyChange = (val) => {
     isFinish.value = false
-    mySelf.variety = val
+    mySelf.orderType = val
     getList()
   }
   const statusChange = (val) => {
     isFinish.value = false
-    mySelf.status = val
+    mySelf.processStatus = val
     getList()
   }
 </script>

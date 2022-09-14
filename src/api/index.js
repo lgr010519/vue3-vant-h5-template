@@ -9,49 +9,33 @@ export const uploadUrl = baseUrl + '/common/uploads'
 export const uploadFile = (data) => upload('/common/uploads', data)
 
 //用户注册
-export const userRegister = (data) => {
-  return post('/api/v1/auth/register', data)
-}
+export const userRegister = (data) => post('/api/v1/auth/register', data)
 
 //发送验证码接口
-export const mobileCode = (data) => {
-  return post('/api/v1/send/code', data)
-}
+export const mobileCode = (data) => post('/api/v1/send/code', data)
 
 //登录接口
-export const passwordLogin = (data) => {
-  return post('/api/v1/auth/login', data)
-}
+export const passwordLogin = (data) => post('/api/v1/auth/login', data)
 
 //忘记密码
-export const updatePassword = (data) => {
-  return post('/api/v1/auth/forget', data)
-}
+export const updatePassword = (data) => post('/api/v1/auth/forget', data)
 
 //获取街道
-export const getStreet = () => {
-  return get('/api/v1/district')
-}
+export const getStreet = () => get('/api/v1/district')
 
 /**
  * 获取诉求类型
  */
-export const getAppealType = () => {
-  return get('/down_list/workOrder/appealType')
-}
+export const getAppealType = () => get('/down_list/workOrder/appealType')
 
 //获取个人信息
-export const getUserInformation = () => {
-  return get('/api/v1/me')
-}
+export const getUserInformation = () => get('/api/v1/me')
 
 /**
  *@param {*} data
  *新增诉求
  */
-export const createAppeal = (data) => {
-  return post('/api/v1/order/create', data)
-}
+export const createAppeal = (data) => post('/api/v1/order/create', data)
 
 /**
  * 获取服务范围说明详情
@@ -70,27 +54,9 @@ export const getStationList = (data) => get(`/api/v1/station/getAll`, data)
  * @param {*} id
  * @param {*} data
  */
-export const getAppealDetail = (id, data) => get(`/api/v1/appeal/${id}/detail`, data)
-
-/**
- * 查询人民建议诉求详情
- * @param {*} orderId
- */
-export const getProposeDetail = (orderId) => {
-  return get(`/api/v1/propose/${orderId}/detail`)
-}
-
-/**
- * 查询局长信箱诉求详情
- * @param {*} orderId
- */
-export const getPetitionDetail = (orderId) => {
-  return get(`/api/v1/petition/${orderId}/detail`)
-}
+export const getAppealDetail = (orderId) => get(`/api/v1/order/detail/${orderId}`)
 
 /**
  * 查询我的事项
  */
-export const getMyOrderList = (mySelf) => {
-  return get('/api/v1/order/list', mySelf)
-}
+export const getMyOrderList = (mySelf) => get('/api/v1/order/list', mySelf)

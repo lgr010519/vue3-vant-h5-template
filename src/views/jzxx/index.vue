@@ -12,10 +12,10 @@
       <van-form
         class="custom_van_form tw-pt-[14px]"
         :readonly="!isCreate"
-        @submit="onSubmit"
-        label-align="left">
+        label-align="left"
+        @submit="onSubmit">
         <van-field
-          v-model="form.appealTitle"
+          v-model="form.title"
           name="用户名"
           label="诉求对象名称"
           :rules="userObjName"
@@ -37,19 +37,19 @@
           round
           position="bottom">
           <van-cascader
+            v-model="cascaderValue"
             :closeable="false"
             :show-header="false"
-            v-model="cascaderValue"
             title="请选择所在地区"
             :options="options"
             :field-names="streesNames"
             active-color="#3189FF"
             @close="show = false"
-            @finish="onFinish" />
+            @finish="onFinish"></van-cascader>
         </van-popup>
         <!-- 详细地址 -->
         <van-field
-          v-model="form.appealAddress"
+          v-model="form.address"
           rows="3"
           autosize
           label=""
@@ -65,27 +65,27 @@
           label="诉求类型"
           placeholder="点击选择"
           :rules="userObjType"
-          @click="showType = true" />
+          @click="showType = true"></van-field>
         <van-popup
           v-if="isCreate"
           v-model:show="showType"
           round
           position="bottom">
           <van-cascader
+            v-model="form.appealType"
             :closeable="false"
             :show-header="false"
-            v-model="form.appealType"
             title="请选择诉求类型"
             active-color="#3189FF"
             :field-names="fieldNames"
             :options="TypeList"
             @close="showType = false"
-            @finish="typeFinish" />
+            @finish="typeFinish"></van-cascader>
         </van-popup>
         <!-- 诉求描述 -->
         <p class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">诉求描述</p>
         <van-field
-          v-model="form.appealDescription"
+          v-model="form.description"
           rows="4"
           autosize
           label=""
@@ -96,8 +96,8 @@
 
         <p class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">附件说明</p>
         <upload-file
-          :readonly="!isCreate"
-          v-model="form.appealFilePath">
+          v-model="form.filePath"
+          :readonly="!isCreate">
         </upload-file>
 
         <div v-if="isCreate">
@@ -138,7 +138,7 @@
   import navBar from '@/components/nav-bar.vue'
   import { computed, onMounted, reactive, ref } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
-  import { getAppealType, getStreet, addNewPetition, getPetitionDetail } from '@/api/index'
+  import { getAppealType, getStreet, createAppeal, getAppealDetail } from '@/api/index'
   import { Toast } from 'vant'
   import {
     userObjName,
@@ -151,21 +151,23 @@
   const router = useRouter()
   const show = ref(false)
   const form = reactive({
+    //局长信箱默认类型
+    orderType: 3,
     // 对象名称
-    appealTitle: '',
+    title: '',
     // 诉求类型
     appealType: '',
     // 区级地址
     district: '',
     // 街道地址
-    appealAreaCode: '',
+    areaCode: '',
     // 区域地址
     spaceValue: '',
     // 详细地址
-    appealAddress: '',
+    address: '',
     // 诉求描述
-    appealDescription: '',
-    appealFilePath: []
+    description: '',
+    filePath: []
   })
   const cascaderValue = ref('')
   //自定义字段名
@@ -186,7 +188,7 @@
       form.district = selectedOptions[0].name
     }
     if (selectedOptions[1].code) {
-      form.appealAreaCode = selectedOptions[1].code
+      form.areaCode = selectedOptions[1].name
     }
     form.spaceValue = selectedOptions.map((option) => option.name).join(' ')
   }
@@ -220,13 +222,58 @@
       Toast(result.data.msg)
     }
   }
+  const getOrderType = (orderType) => {
+    switch (orderType) {
+      case 0:
+        return '噪声'
+      case 1:
+        return '废气'
+      case 2:
+        return '废水'
+      case 3:
+        return '固废'
+      case 4:
+        return '其他'
+    }
+  }
+
+  const streetCasText = computed(() => {
+    let district = ''
+    let street = ''
+
+    for (let i = 0; i < options.value.length; i++) {
+      const item = options.value[i]
+      for (let j = 0; j < item.streets.length; j++) {
+        if (item.streets[j].name === form.areaCode) {
+          district = item.name
+          street = item.streets[j].name
+          break
+        }
+      }
+      if (district && street) {
+        break
+      }
+    }
+
+    return form.areaCode ? `${district} ${street}` : ''
+  })
 
   onMounted(() => {
+    getAppeal()
+    getstreet()
     if (route.params.mode === 'detail') {
-      getPetitionDetail(route.params.id)
+      getAppealDetail(route.params.id)
         .then((res) => {
           if (res.data.code === 0) {
-            Toast('获取数据成功')
+            const { title, areaCode, description, filePath, orderType, address } = res.data.data
+            form.address = address
+            form.title = title
+            form.areaCode = areaCode
+            form.description = description
+            form.filePath = JSON.parse(filePath)
+            form.orderType = orderType
+            typeValue.value = getOrderType(orderType)
+            form.spaceValue = streetCasText
           } else {
             Toast(res.data.msg)
           }
@@ -234,9 +281,6 @@
         .catch((err) => {
           console.log(err)
         })
-    } else {
-      getAppeal()
-      getstreet()
     }
   })
 
@@ -246,10 +290,11 @@
   })
   //提交表单
   const submitForm = () => {
-    addNewPetition({ ...form, appealFilePath: JSON.stringify(form.appealFilePath) })
+    createAppeal({ ...form, filePath: JSON.stringify(form.filePath) })
       .then((res) => {
         if (res.data.code === 0) {
-          Toast('提交成功')
+          Toast('提交成功，感谢您对我们工作的支持！')
+          console.log(res.data)
           router.push('/index')
         } else {
           Toast(res.data.msg)

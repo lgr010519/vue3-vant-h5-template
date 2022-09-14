@@ -7,15 +7,15 @@
       <p class="tw-text-[#4A4A4A] tw-text-[17px] tw-font-semibold">事项内容</p>
       <van-form
         :readonly="!isCreate"
-        @submit="onSubmit"
-        class="custom_van_form tw-pt-[14px]">
+        class="custom_van_form tw-pt-[14px]"
+        @submit="onSubmit">
         <!-- <van-cell-group
           inset
           style="margin: 0">
         </van-cell-group> -->
         <!-- 意见建议名称 -->
         <van-field
-          v-model="form.opinionTitle"
+          v-model="form.title"
           name="用户名"
           label="意见建议名称"
           :rules="peopleOpinionTitle"
@@ -24,7 +24,7 @@
         <!-- 意见建议描述 -->
         <p class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">意见建议描述</p>
         <van-field
-          v-model="form.opinionDescription"
+          v-model="form.description"
           rows="4"
           autosize
           label=""
@@ -34,8 +34,8 @@
         </van-field>
         <p class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">附件说明</p>
         <upload-file
-          :readonly="!isCreate"
-          v-model="form.opinionFilePath">
+          v-model="form.filePath"
+          :readonly="!isCreate">
         </upload-file>
         <div
           v-if="isCreate"
@@ -79,21 +79,25 @@
   import { useRoute, useRouter } from 'vue-router'
   import { reactive, computed, onMounted } from 'vue'
   import { peopleOpinionTitle, peopleOpinionMessage } from '@/configs/globalvar'
-  import { addNewPropose, getProposeDetail } from '@/api/index'
+  import { createAppeal, getAppealDetail } from '@/api/index'
   import { Toast } from 'vant'
   const route = useRoute()
   const router = useRouter()
   const form = reactive({
-    opinionDescription: '',
-    opinionTitle: '',
-    opinionFilePath: []
+    description: '',
+    title: '',
+    filePath: [],
+    orderType: 2
   })
   onMounted(() => {
     if (route.params.mode === 'detail') {
-      getProposeDetail(route.params.id)
+      getAppealDetail(route.params.id)
         .then((res) => {
           if (res.data.code === 0) {
-            Toast('获取数据成功')
+            const { description, title, filePath } = res.data.data
+            form.description = description
+            form.title = title
+            form.filePath = JSON.parse(filePath)
           } else {
             Toast(res.data.msg)
           }
@@ -109,10 +113,10 @@
   })
 
   const submitForm = () => {
-    addNewPropose({ ...form, opinionFilePath: JSON.stringify(form.opinionFilePath) })
+    createAppeal({ ...form, filePath: JSON.stringify(form.filePath) })
       .then((res) => {
         if (res.data.code === 0) {
-          Toast('提交成功')
+          Toast('提交成功，感谢您对我们工作的支持！')
           router.push('/index')
         } else {
           Toast(res.data.msg)
