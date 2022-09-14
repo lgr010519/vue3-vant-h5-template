@@ -1,17 +1,18 @@
 <template>
   <div class="tw-w-[100%] tw-h-[100%] tw-flex tw-flex-col">
     <Nav-bar title="我的事项"></Nav-bar>
-    <van-cell-group inset>
+    <div class="tw-p-[16px] tw-pb-[12px]">
       <van-field
         @click-left-icon="clickIcon"
         @keyup.enter="keyUp"
-        style="background-color: #f0f0f0; margin-top: 16px; border-radius: 6px 6px 6px 6px"
+        style="background-color: #f0f0f0; border-radius: 6px"
         v-model="mySelf.keyWord"
         label=" "
         label-width="1px"
         left-icon="search"
-        placeholder="请输入关键字进行搜索"></van-field>
-    </van-cell-group>
+        placeholder="请输入关键字进行搜索">
+      </van-field>
+    </div>
     <!-- 选择事项 -->
     <van-dropdown-menu active-color="#1989fa">
       <van-dropdown-item
@@ -67,19 +68,19 @@
   const router = useRouter()
   const mySelf = reactive({
     keyWord: '',
-    type: '1',
-    status: '1',
+    type: '',
+    status: '',
     pageNum: 1,
     pageSize: 10
   })
   const eventType = [
-    { text: '全部', value: '全部' },
+    { text: '全部', value: '' },
     { text: '局长信箱', value: '局长信箱' },
     { text: '在线诉求', value: '在线诉求' },
     { text: '人民建议征集', value: '人民建议征集' }
   ]
   const eventStatus = [
-    { text: '全部', value: '全部' },
+    { text: '全部', value: '' },
     { text: '待办理', value: '待办理' },
     { text: '已完成', value: '已完成' }
   ]
