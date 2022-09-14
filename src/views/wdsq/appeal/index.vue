@@ -170,7 +170,8 @@
     address: '',
     appealType: '',
     description: '',
-    filePath: []
+    filePath: [],
+    orderType: 1
   })
 
   const rules = reactive({
