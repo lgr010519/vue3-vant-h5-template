@@ -15,7 +15,7 @@
     <!-- 选择事项 -->
     <van-dropdown-menu active-color="#1989fa">
       <van-dropdown-item
-        v-model="mySelf.type"
+        v-model="mySelf.variety"
         :options="eventType" />
       <van-dropdown-item
         v-model="mySelf.status"
@@ -39,17 +39,18 @@
           </div>
           <div class="tw-flex tw-justify-between tw-mt-[8px]">
             <div class="tw-text-[11px] tw-font-normal tw-text-[#858585]">
-              {{ item.time }}
+              {{ item.createdAt }}
             </div>
             <div
               class="tw-text-[13px] tw-font-medium"
               :class="item.status === '已完成' ? 'green' : 'orange'">
-              <span>{{ item.status }}</span>
+              <span>{{ item.status === '1' ? '待办理' : '已完成' }}</span>
             </div>
           </div>
         </div>
       </van-pull-refresh>
     </div>
+    <!-- <p v-if="isFinish" class="tw-text">到底啦</p> -->
     <van-loading
       class="tw-mx-auto"
       v-if="bottomLoading">
@@ -67,21 +68,21 @@
   const router = useRouter()
   const mySelf = reactive({
     keyWord: '',
-    type: '1',
-    status: '1',
+    variety: '',
+    status: '',
     pageNum: 1,
     pageSize: 10
   })
   const eventType = [
-    { text: '全部', value: '全部' },
-    { text: '局长信箱', value: '局长信箱' },
-    { text: '在线诉求', value: '在线诉求' },
-    { text: '人民建议征集', value: '人民建议征集' }
+    { text: '全部', value: '' },
+    { text: '局长信箱', value: '3' },
+    { text: '在线诉求', value: '1' },
+    { text: '人民建议征集', value: '2' }
   ]
   const eventStatus = [
-    { text: '全部', value: '全部' },
-    { text: '待办理', value: '待办理' },
-    { text: '已完成', value: '已完成' }
+    { text: '全部', value: '' },
+    { text: '待办理', value: '1' },
+    { text: '已完成', value: '2' }
   ]
   const go = (item) => {
     item.type === '局长信箱'
@@ -91,16 +92,18 @@
 
   const list = ref([])
   const el = ref(null)
+  const isFinish = ref(false)
   useInfiniteScroll(
     el,
     () => {
       // load more
       // 开启loading
-      bottomLoading.value = true
-      setTimeout(() => {
-        Toast('更新成功')
-        bottomLoading.value = false
-      }, 1000)
+      if (!isFinish.value) {
+        bottomLoading.value = true
+        setTimeout(() => {
+          bottomLoading.value = false
+        }, 1000)
+      }
     },
     { distance: 40 }
   )
@@ -108,7 +111,6 @@
   const onRefresh = () => {
     isLoading.value = true
     setTimeout(() => {
-      Toast('刷新成功')
       isLoading.value = false
     }, 1000)
   }
@@ -119,9 +121,18 @@
     getMyOrderList(mySelf)
       .then((res) => {
         if (res.data.code === 0) {
-          // 加载成功
-          mySelf.pageNum + 1
-          //用list接收
+          if (res.data.data.list.length < 10) {
+            // 数据全部请求完成
+            isFinish.value = true
+            res.data.data.list.map((item) => {
+              list.value.push(item)
+            })
+          } else {
+            // 加载成功
+            mySelf.pageNum + 1
+            //用list接收
+            list.value = res.data.data.list
+          }
         } else {
           Toast(res.data.msg)
         }
@@ -146,6 +157,7 @@
   .green {
     color: #f5754e;
   }
+
   .orange {
     color: #57d3a2;
   }

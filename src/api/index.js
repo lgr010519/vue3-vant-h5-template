@@ -102,6 +102,6 @@ export const getPetitionDetail = (orderId) => {
 /**
  * 查询我的事项
  */
-export const getMyOrderList = () => {
-  return get('/api/v1/order/list')
+export const getMyOrderList = (mySelf) => {
+  return get('/api/v1/order/list', mySelf)
 }
