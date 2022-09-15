@@ -129,6 +129,7 @@
                 list.value = res.data.data.list
               }
               //数据获取完毕
+              console.log('数据获取完毕')
               mySelf.pageNum = res.data.data.lastPage
               isFinish.value = true
             } else {
@@ -140,6 +141,7 @@
                 list.value = res.data.data.list
               }
             }
+            mySelf.pageNum++
             bottomLoading.value = false
             isLoading.value = false
           } else {
@@ -159,7 +161,6 @@
       // 开启loading
       if (!isFinish.value) {
         bottomLoading.value = true
-        mySelf.pageNum = mySelf.pageNum + 1
         getList('next')
       }
     },
