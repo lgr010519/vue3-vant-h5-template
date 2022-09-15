@@ -1,0 +1,20 @@
+replicaCount: 1
+service:
+  port: 80
+ingress:
+  enabled: true
+  hosts:
+    - host: szee-appeal-service-h5.youpin-k8s.net
+      paths:
+        - path: /
+configMap:
+  env:
+    ENV_DEF: VITE_API_BASE_URL
+    VITE_API_BASE_URL: http://szee-appeal-service-h5.youpin-k8s.net
+resources:
+  limits:
+    cpu: 50m
+    memory: 50Mi
+  requests:
+    cpu: 50m
+    memory: 50Mi

@@ -1,0 +1,11 @@
+name: szee-appeal-service-h5
+version: 0.1.0
+description: 深圳市生态环境群众诉求服务平台h5
+group: js-repos
+programLanguage: javascript
+pipeline: web-spec
+build:
+  image: node:16.15.0-slim
+  commands:
+    - npm install --registry=http://maven.youpin-k8s.net/repository/npm/
+    - npm run build

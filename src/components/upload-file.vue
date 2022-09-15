@@ -2,12 +2,13 @@
   <div class="tw-my-[12px]">
     <div class="file_list">
       <div
-        class="file_list_item"
         v-for="(item, index) in props.modelValue"
-        :key="item.id">
+        :key="item.id"
+        class="file_list_item">
         <div
           class="file_list_item-icon"
-          :class="item.fileIcon"></div>
+          :class="item.fileIcon">
+</div>
         <p
           class="file_list_item-name"
           :title="item.name">
