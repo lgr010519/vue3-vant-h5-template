@@ -75,6 +75,7 @@
   import { useInfiniteScroll } from '@vueuse/core'
   import { Toast } from 'vant'
   import { getMyOrderList } from '@/api/index'
+  import throttle from 'lodash/throttle'
   const router = useRouter()
   const mySelf = reactive({
     //关键字
@@ -156,14 +157,14 @@
   //无限滚动
   useInfiniteScroll(
     el,
-    () => {
+    throttle(() => {
       // load more
       // 开启loading
       if (!isFinish.value) {
         bottomLoading.value = true
         getList('next')
       }
-    },
+    }, 200),
     { distance: 40 }
   )
 
