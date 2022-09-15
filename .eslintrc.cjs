@@ -3,32 +3,29 @@ require('@rushstack/eslint-patch/modern-module-resolution')
 
 module.exports = {
   root: true,
-  env: {
-    node: true
-  },
-  extends: ['plugin:vue/vue3-recommended', 'eslint:recommended', '@vue/eslint-config-prettier'],
-  parserOptions: {
-    ecmaVersion: 'latest'
-  },
+  env: { node: true },
+  extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', '@vue/eslint-config-prettier'],
+  parserOptions: { ecmaVersion: 'latest' },
   rules: {
-    'vue/multi-word-component-names': 'off',
-    'prettier/prettier': 'error',
+    'prettier/prettier': ['error'],
+    'vue/multi-word-component-names': ['error', { ignores: ['index'] }],
+    'vue/multiline-html-element-content-newline': ['error', { ignoreWhenEmpty: false }],
+    'vue/html-closing-bracket-newline': ['error', { multiline: 'never' }],
     'vue/html-self-closing': [
       'error',
       {
         html: {
-          void: 'any',
+          void: 'always',
           normal: 'never',
           component: 'never'
         }
       }
-    ],
-    'vue/object-curly-newline': [
-      'error',
-      {
-        multiline: true,
-        minProperties: 1
-      }
     ]
-  }
+  },
+  overrides: [
+    {
+      files: ['*.vue'],
+      rules: { indent: 'off' }
+    }
+  ]
 }
