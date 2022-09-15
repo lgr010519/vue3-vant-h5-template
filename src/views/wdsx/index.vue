@@ -9,8 +9,8 @@
         label-width="1px"
         left-icon="search"
         placeholder="请输入关键字进行搜索"
-        @click-left-icon="clickIcon"
-        @keyup.enter="keyUp">
+        @click-left-icon="search"
+        @keyup.enter="search">
       </van-field>
     </div>
     <!-- 选择事项 -->
@@ -18,12 +18,12 @@
       <van-dropdown-item
         v-model="mySelf.orderType"
         :options="eventType"
-        @change="varietyChange">
+        @change="search">
       </van-dropdown-item>
       <van-dropdown-item
         v-model="mySelf.processStatus"
         :options="eventStatus"
-        @change="statusChange">
+        @change="search">
       </van-dropdown-item>
     </van-dropdown-menu>
     <!-- list -->
@@ -56,9 +56,9 @@
         </div>
       </van-pull-refresh>
       <p
-        v-if="isFinish"
+        v-if="!isMerge"
         class="tw-text-center tw-text-[#999999] tw-text-[12px] tw-mt-[10px] tw-pb-[20px]">
-        到底了
+        {{ isMerge ? '加载中' : '到底了' }}
       </p>
     </div>
     <van-loading
@@ -69,13 +69,12 @@
 </template>
 
 <script setup>
-  import { onMounted, reactive, ref } from 'vue' //reactive
+  import { computed, onMounted, reactive, ref } from 'vue' //reactive
   import NavBar from '@/components/nav-bar.vue'
   import { useRouter } from 'vue-router'
   import { useInfiniteScroll } from '@vueuse/core'
   import { Toast } from 'vant'
-  import { getMyOrderList } from '@/api/index'
-  import throttle from 'lodash/throttle'
+  import * as api from '@/api/index'
   const router = useRouter()
   const mySelf = reactive({
     //关键字
@@ -84,9 +83,14 @@
     orderType: '0',
     //诉求状态
     processStatus: '0',
+
     pageNum: 1,
-    pageSize: 10
+    pageSize: 10,
+    lastPage: 0,
+    //刷新类型(默认刷新)
+    loading: ''
   })
+
   const eventType = [
     { text: '全部', value: '0' },
     { text: '局长信箱', value: '3' },
@@ -109,99 +113,72 @@
 
   const list = ref([])
   const el = ref(null)
-  // 是否完成
-  const isFinish = ref(false)
+
   // 加载效果
   const isLoading = ref(false)
   // 底部是否出现加载
   const bottomLoading = ref(false)
+  // 是否有更多数据
+  const isMerge = computed(() => mySelf.pageNum < mySelf.lastPage)
 
-  const getList = (keepLoading) => {
-    if (!isFinish.value) {
-      getMyOrderList(mySelf)
-        .then((res) => {
-          if (res.data.code === 0) {
-            if (mySelf.pageNum == res.data.data.lastPage) {
-              if (keepLoading && keepLoading == 'next') {
-                res.data.data.list.map((item) => {
-                  list.value.push(item)
-                })
-              } else {
-                list.value = res.data.data.list
-              }
-              //数据获取完毕
-              console.log('数据获取完毕')
-              mySelf.pageNum = res.data.data.lastPage
-              isFinish.value = true
-            } else {
-              if (keepLoading && keepLoading == 'next') {
-                res.data.data.list.map((item) => {
-                  list.value.push(item)
-                })
-              } else {
-                list.value = res.data.data.list
-              }
-            }
-            mySelf.pageNum++
-            bottomLoading.value = false
-            isLoading.value = false
+  // 顶部加载或者底部加载
+  // const loading = computed()
+
+  // 获取数据
+  const getList = () => {
+    api
+      .getMyOrderList(mySelf)
+      .then((res) => {
+        if (res.data.code === 0) {
+          const { list: listData, lastPage, currentPage } = res.data.data
+          // 无限滚动
+          if (mySelf.pageNum !== 1) {
+            list.value = list.value.concat(listData)
           } else {
-            Toast(res.data.msg)
+            // 刷新
+            list.value = listData
           }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    }
+          mySelf.pageNum = currentPage
+          mySelf.lastPage = lastPage
+        } else {
+          Toast(res.data.msg)
+        }
+        isLoading.value = false
+        bottomLoading.value = false
+      })
+      .catch((err) => {
+        bottomLoading.value = false
+        isLoading.value = false
+        console.log(err)
+        Toast('服务器错误')
+      })
   }
   //无限滚动
   useInfiniteScroll(
     el,
-    throttle(() => {
-      // load more
-      // 开启loading
-      if (!isFinish.value) {
+    // 开启loading
+    () => {
+      // 1、有更多的數據
+      // 2、當前沒有請求
+      if (isMerge.value && !bottomLoading.value) {
+        mySelf.pageNum++
         bottomLoading.value = true
-        getList('next')
+        getList()
       }
-    }, 200),
-    { distance: 40 }
+    },
+    { distance: 20 }
   )
 
   onMounted(() => {
     getList()
   })
+
   // 下拉刷新
   const onRefresh = () => {
-    // 开启加载
     isLoading.value = true
-    isFinish.value = false
-    mySelf.pageNum = 1
-    getList('flash')
+    search()
   }
-  // 点击放大镜搜索
-  const clickIcon = () => {
-    isFinish.value = false
-    mySelf.pageNum = 1
-    getList()
-  }
-  // 回车搜索
-  const keyUp = () => {
-    isFinish.value = false
-    mySelf.pageNum = 1
-    getList()
-  }
-  // 切换类型
-  const varietyChange = (val) => {
-    isFinish.value = false
-    mySelf.orderType = val
-    mySelf.pageNum = 1
-    getList()
-  }
-  // 切换状态
-  const statusChange = (val) => {
-    isFinish.value = false
-    mySelf.processStatus = val
+  const search = () => {
     mySelf.pageNum = 1
     getList()
   }
