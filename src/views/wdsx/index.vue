@@ -106,7 +106,50 @@
 
   const list = ref([])
   const el = ref(null)
+  // 是否完成
   const isFinish = ref(false)
+  // 加载效果
+  const isLoading = ref(false)
+  // 底部是否出现加载
+  const bottomLoading = ref(false)
+
+  const getList = (keepLoading) => {
+    if (!isFinish.value) {
+      getMyOrderList(mySelf)
+        .then((res) => {
+          if (res.data.code === 0) {
+            if (mySelf.pageNum == res.data.data.lastPage) {
+              if (keepLoading && keepLoading == 'next') {
+                res.data.data.list.map((item) => {
+                  list.value.push(item)
+                })
+              } else {
+                list.value = res.data.data.list
+              }
+              //数据获取完毕
+              mySelf.pageNum = res.data.data.lastPage
+              isFinish.value = true
+            } else {
+              if (keepLoading && keepLoading == 'next') {
+                res.data.data.list.map((item) => {
+                  list.value.push(item)
+                })
+              } else {
+                list.value = res.data.data.list
+              }
+            }
+            bottomLoading.value = false
+            isLoading.value = false
+          } else {
+            Toast(res.data.msg)
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  }
+  //无限滚动
   useInfiniteScroll(
     el,
     () => {
@@ -118,9 +161,13 @@
         getList('next')
       }
     },
-    { distance: 30 }
+    { distance: 40 }
   )
-  const isLoading = ref(false)
+
+  onMounted(() => {
+    getList()
+  })
+  // 下拉刷新
   const onRefresh = () => {
     // 开启加载
     isLoading.value = true
@@ -128,72 +175,26 @@
     mySelf.pageNum = 1
     getList('flash')
   }
-  // 底部是否出现加载
-  const bottomLoading = ref(false)
-
-  const getList = (keeploading) => {
-    if (!isFinish.value) {
-      getMyOrderList(mySelf)
-        .then((res) => {
-          if (res.data.code === 0) {
-            if (mySelf.pageNum == res.data.data.lastPage) {
-              if (keeploading && keeploading == 'next') {
-                res.data.data.list.map((item) => {
-                  list.value.push(item)
-                })
-              } else {
-                list.value = []
-                res.data.data.list.map((item) => {
-                  list.value.push(item)
-                })
-              }
-              //数据获取完毕
-              isFinish.value = true
-              isLoading.value = false
-              bottomLoading.value = false
-            } else {
-              if (keeploading && keeploading == 'next') {
-                res.data.data.list.map((item) => {
-                  list.value.push(item)
-                })
-              } else {
-                list.value = []
-                res.data.data.list.map((item) => {
-                  list.value.push(item)
-                })
-              }
-              isLoading.value = false
-              bottomLoading.value = false
-            }
-          } else {
-            Toast(res.data.msg)
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    }
-  }
-  onMounted(() => {
-    getList()
-  })
   // 点击放大镜搜索
   const clickIcon = () => {
     isFinish.value = false
     mySelf.pageNum = 1
     getList()
   }
+  // 回车搜索
   const keyUp = () => {
     isFinish.value = false
     mySelf.pageNum = 1
     getList()
   }
+  // 切换类型
   const varietyChange = (val) => {
     isFinish.value = false
     mySelf.orderType = val
     mySelf.pageNum = 1
     getList()
   }
+  // 切换状态
   const statusChange = (val) => {
     isFinish.value = false
     mySelf.processStatus = val

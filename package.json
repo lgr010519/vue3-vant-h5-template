@@ -13,6 +13,7 @@
     "crypto-js": "^4.1.1",
     "file-saver": "^2.0.5",
     "hammerjs": "^2.0.8",
+    "lodash": "^4.17.21",
     "pinia": "^2.0.21",
     "qr-code-styling": "1.6.0-rc.1",
     "vant": "^3.6.2",
