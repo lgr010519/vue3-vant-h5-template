@@ -120,8 +120,7 @@
   //获取用户信息
   const getUserData = async () => {
     const result = await getUserInformation()
-    console.log(result.data.data)
-    if (result.data.data) {
+    if (result.data.code === 0) {
       userInfo.value = result.data.data
     } else {
       Toast('用户信息不存在')
