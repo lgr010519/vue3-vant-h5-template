@@ -18,11 +18,13 @@
       <van-dropdown-item
         v-model="mySelf.orderType"
         :options="eventType"
-        @change="varietyChange"></van-dropdown-item>
+        @change="varietyChange">
+      </van-dropdown-item>
       <van-dropdown-item
         v-model="mySelf.processStatus"
         :options="eventStatus"
-        @change="statusChange"></van-dropdown-item>
+        @change="statusChange">
+      </van-dropdown-item>
     </van-dropdown-menu>
     <!-- list -->
     <div
