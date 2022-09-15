@@ -7,8 +7,7 @@
         class="file_list_item">
         <div
           class="file_list_item-icon"
-          :class="item.fileIcon">
-</div>
+          :class="item.fileIcon"></div>
         <p
           class="file_list_item-name"
           :title="item.name">
