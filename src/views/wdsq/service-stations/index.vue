@@ -15,13 +15,13 @@
       </div>
 
       <div
-        class="stations_item"
         v-for="(value, key) in stations"
-        :key="key">
+        :key="key"
+        class="stations_item">
         <div
-          class="stations_item_info"
           v-for="station in value"
-          :key="station.pid">
+          :key="station.pid"
+          class="stations_item_info">
           <p class="tw-text-[17px] tw-text-[#4A4A4A] tw-font-semibold">{{ station.pname }}</p>
           <div class="tw-flex tw-mt-[6px]">
             <img

@@ -3,9 +3,9 @@
     <nav-bar title="系统二维码"></nav-bar>
     <div class="tw-flex-1 appeal">
       <router-link
+        v-slot="{ navigate }"
         to="/wdsq/service-note"
-        custom
-        v-slot="{ navigate }">
+        custom>
         <div
           class="appeal_part"
           @click="navigate">
@@ -21,9 +21,9 @@
         </div>
       </router-link>
       <router-link
+        v-slot="{ navigate }"
         to="/wdsq/service-stations"
-        custom
-        v-slot="{ navigate }">
+        custom>
         <div
           class="appeal_part"
           @click="navigate">
@@ -42,9 +42,9 @@
         </div>
       </router-link>
       <router-link
+        v-slot="{ navigate }"
         to="/wdsq/appeal/create"
-        custom
-        v-slot="{ navigate }">
+        custom>
         <div
           class="appeal_part"
           @click="navigate">

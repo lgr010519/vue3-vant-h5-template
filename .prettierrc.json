@@ -6,5 +6,6 @@
   "bracketSameLine": true,
   "vueIndentScriptAndStyle": true,
   "endOfLine": "auto",
-  "singleAttributePerLine": true
+  "singleAttributePerLine": true,
+  "htmlWhitespaceSensitivity": "strict"
 }

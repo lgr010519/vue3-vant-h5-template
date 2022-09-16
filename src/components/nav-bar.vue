@@ -18,7 +18,12 @@
 
 <script setup>
   import { useRouter } from 'vue-router'
-  const props = defineProps(['title'])
+  const props = defineProps({
+    title: {
+      type: String,
+      default: ''
+    }
+  })
   const router = useRouter()
   const back = () => {
     router.back()
