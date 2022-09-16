@@ -13,7 +13,8 @@
           name="realName"
           label="姓名"
           placeholder="请输入真实姓名"
-          :rules="nameCheck"></van-field>
+          :rules="nameCheck">
+        </van-field>
         <!-- 性别 -->
         <van-field
           name="gender"
@@ -34,7 +35,8 @@
           name="idCard"
           label="身份证号"
           placeholder="请输入身份证号"
-          :rules="idCard" />
+          :rules="idCard">
+        </van-field>
         <!-- 手机号 -->
         <van-field
           v-model="user.telPhone"
@@ -54,8 +56,8 @@
               size="mini"
               type="default"
               :disabled="isSend"
-              @click="send"
-              style="border: none; color: #3189ff; background-color: #f9f9f9">
+              style="border: none; color: #3189ff; background-color: #f9f9f9"
+              @click="send">
               {{ sendSmsBtnText }}
             </van-button>
           </template>
@@ -85,13 +87,13 @@
           round
           position="bottom">
           <van-cascader
+            v-model="cascaderValue"
             :closeable="false"
             :show-header="false"
-            :fieldNames="fieldNames"
-            v-model="cascaderValue"
+            :field-names="fieldNames"
             :options="options"
-            @close="show = false"
             active-color="#1989fa"
+            @close="show = false"
             @finish="onFinish">
           </van-cascader>
         </van-popup>
@@ -103,6 +105,7 @@
           label=""
           type="textarea"
           placeholder="请输入详细地址"
+          :rules="userAddress"
           show-word-limit>
         </van-field>
 
@@ -131,7 +134,8 @@
     idCard,
     nameCheck,
     smsCard,
-    userObjAddress
+    userObjAddress,
+    userAddress
   } from '@/configs/globalvar'
   import { Toast } from 'vant'
   import sha256 from 'crypto-js/sha256'

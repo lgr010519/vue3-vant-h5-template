@@ -28,6 +28,8 @@ export const idCard = [
   }
 ]
 
+// 注册时输入详细地址
+export const userAddress = [{ required: true, message: '请输入您的详细地址' }]
 // 姓名校验
 export const nameCheck = [{ required: true, message: '请填写您的真实姓名' }]
 

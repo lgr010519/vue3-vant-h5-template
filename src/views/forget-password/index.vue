@@ -3,11 +3,9 @@
     <nav-bar title="修改密码"></nav-bar>
     <div
       class="tw-w-[100%] tw-h-[32px] tw-bg-opacity-[0.12] tw-bg-[#F5754E] tw-flex tw-items-center">
-      <div class="tw-w-[16px] tw-h-[16px] tw-ml-[14px]">
-        <img
-          src="../../assets/images/login/icon_warn.png"
-          style="width: 100%; height: 100%" />
-      </div>
+      <img
+        src="../../assets/images/login/icon_warn.png"
+        class="tw-w-[16px] tw-h-[16px] tw-ml-[14px]" />
       <p class="tw-h-[18px] tw-ml-[8px] tw-text-[13px] tw-leading-[18px] tw-text-[#F5754E]">
         身份证号和手机号均验证通过才能进行密码修改
       </p>
@@ -21,7 +19,8 @@
           name="idCard"
           label="身份证号"
           placeholder="请输入身份证号"
-          :rules="idCard"></van-field>
+          :rules="idCard">
+        </van-field>
         <van-field
           v-model="user.account"
           name="account"
