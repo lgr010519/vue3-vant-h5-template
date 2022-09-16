@@ -97,7 +97,7 @@
       Toast('登录成功')
       router.push('/index')
     } else {
-      Toast(result.data.msg)
+      Toast('验证失败,请重新核对您的手机号和密码')
     }
   }
   const forget = () => {

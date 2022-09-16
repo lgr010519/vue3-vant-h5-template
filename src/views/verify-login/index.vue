@@ -101,12 +101,13 @@
       smscode: user.smscode,
       username: user.username
     })
-    if (result.data.data) {
+    console.log(result)
+    if (result.data.code === 0) {
       localStorage.setItem('token', result.data.data.token)
       Toast('登录成功')
       router.push('/index')
     } else {
-      Toast(result.data.msg)
+      Toast('验证失败,请稍后尝试')
     }
   }
   const forget = () => {
@@ -127,7 +128,7 @@
       if (result.data.code === 0) {
         isSend.value = true
         Toast('发送成功,请检查您的手机短信')
-        let count = 30
+        let count = 60
         sendSmsBtnText.value = `已发送${count}s`
         const interval = setInterval(() => {
           if (count <= 0) {

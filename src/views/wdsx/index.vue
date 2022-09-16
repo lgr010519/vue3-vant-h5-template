@@ -17,11 +17,13 @@
     <van-dropdown-menu active-color="#1989fa">
       <van-dropdown-item
         v-model="mySelf.orderType"
+        title="事项类型"
         :options="eventType"
         @change="search">
       </van-dropdown-item>
       <van-dropdown-item
         v-model="mySelf.processStatus"
+        title="事项状态"
         :options="eventStatus"
         @change="search">
       </van-dropdown-item>
@@ -38,7 +40,7 @@
         <div
           v-for="(item, index) in list"
           :key="index"
-          class="tw-mx-auto tw-px-[14px] tw-h-[88px] tw-my-[16px]"
+          class="tw-mx-auto tw-px-[14px] tw-h-[76px] tw-mt-[16px]"
           @click="go(item)">
           <div class="tw-text-[17px] tw-font-semibold">
             <span>{{ item.title }}</span>
@@ -53,12 +55,13 @@
               <span>{{ item.processStatus === 1 ? '待办理' : '已完成' }}</span>
             </div>
           </div>
+          <div class="list_item"></div>
         </div>
       </van-pull-refresh>
       <p
         v-if="!isMerge"
         class="tw-text-center tw-text-[#999999] tw-text-[12px] tw-mt-[10px] tw-pb-[20px]">
-        {{ isMerge ? '加载中' : '到底了' }}
+        {{ isMerge ? '加载中' : '没有啦' }}
       </p>
     </div>
     <van-loading
@@ -191,5 +194,11 @@
 
   .orange {
     color: #57d3a2;
+  }
+  .list_item {
+    width: 100%;
+    height: 1px;
+    margin-top: 14px;
+    background-color: #f4f4f4;
   }
 </style>
