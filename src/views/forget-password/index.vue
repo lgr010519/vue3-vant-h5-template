@@ -21,7 +21,8 @@
           name="idCard"
           label="身份证号"
           placeholder="请输入身份证号"
-          :rules="idCard"></van-field>
+          :rules="idCard">
+        </van-field>
         <van-field
           v-model="user.account"
           name="account"

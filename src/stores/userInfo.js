@@ -7,7 +7,7 @@ export const userInfo = defineStore('userInfo', {
     }
   },
   actions: {
-    updataUserInfo(data) {
+    updateUserInfo(data) {
       this.userInformation = data
     }
   },

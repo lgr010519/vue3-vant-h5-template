@@ -100,7 +100,7 @@
     if (result.data.code === 0) {
       localStorage.setItem('token', result.data.data.token)
       // 将数据传入store
-      store.updataUserInfo(result.data.data)
+      store.updateUserInfo(result.data.data)
       Toast('登录成功')
       router.push('/index')
     } else {

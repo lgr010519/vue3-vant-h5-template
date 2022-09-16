@@ -7,11 +7,12 @@
           class="system_code_panel-img"
           @click="onClick">
           <div
-            class="tw-w-full tw-h-full"
-            ref="qrCodeCanvas"></div>
+            ref="qrCodeCanvas"
+            class="tw-w-full tw-h-full">
+          </div>
           <img
-            class="tw-absolute tw-inset-0"
             ref="qrCodeImg"
+            class="tw-absolute tw-inset-0"
             :src="imgSrc"
             alt="" />
         </div>
@@ -36,7 +37,6 @@
   import qrCodeOptions from './options'
   import logo from '@/assets/images/login/logo.png'
   // import Hammer from 'hammerjs'
-  // import { downloadFile } from '@/utils'
   import { saveAs } from 'file-saver'
 
   const qrCode = new QRCodeStyling(qrCodeOptions)

@@ -5,7 +5,8 @@
       <p class="service_note_title">深圳生态环境群众诉求服务平台反映问题说明</p>
       <div
         class="service_note_body mce-content-body"
-        v-html="content"></div>
+        v-html="content">
+      </div>
     </div>
   </div>
 </template>

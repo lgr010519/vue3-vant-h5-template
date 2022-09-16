@@ -30,7 +30,8 @@
           placeholder="点击选择"
           value="hahaha"
           :rules="userObjAddress"
-          @click="show = true"></van-field>
+          @click="show = true">
+        </van-field>
         <van-popup
           v-if="isCreate"
           v-model:show="show"
@@ -45,7 +46,8 @@
             :field-names="streesNames"
             active-color="#3189FF"
             @close="show = false"
-            @finish="onFinish"></van-cascader>
+            @finish="onFinish">
+          </van-cascader>
         </van-popup>
         <!-- 详细地址 -->
         <van-field
@@ -65,7 +67,8 @@
           label="诉求类型"
           placeholder="点击选择"
           :rules="userObjType"
-          @click="showType = true"></van-field>
+          @click="showType = true">
+        </van-field>
         <van-popup
           v-if="isCreate"
           v-model:show="showType"
@@ -80,7 +83,8 @@
             :field-names="fieldNames"
             :options="TypeList"
             @close="showType = false"
-            @finish="typeFinish"></van-cascader>
+            @finish="typeFinish">
+          </van-cascader>
         </van-popup>
         <!-- 诉求描述 -->
         <p class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">诉求描述</p>
