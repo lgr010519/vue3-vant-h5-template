@@ -1,14 +1,10 @@
 <template>
   <div class="tw-w-[100%] tw-h-[100%] tw-overflow-auto">
-    <div class="tw-w-[65px] tw-h-[60px] tw-mt-[70px] tw-mx-auto">
-      <img
-        src="../../assets/images/login/logo.png"
-        class="width:100%;height:100%"
-        alt="" />
-    </div>
-
+    <img
+      src="../../assets/images/login/logo.png"
+      class="tw-w-[65px] tw-h-[60px] tw-mt-[70px] tw-mx-auto"
+      alt="" />
     <h1 class="title tw-mt-[20px] tw-text-center">深圳生态环境群众诉求服务</h1>
-
     <van-form
       class="login_form tw-mt-[48px]"
       @submit="onSubmit">
@@ -47,7 +43,6 @@
       <p class="forget tw-w-[100%] tw-mt-[16px] tw-pr-[14px]">
         <span @click="forget">忘记密码</span>
       </p>
-
       <div class="tw-mx-[14px] tw-mt-[36px]">
         <van-button
           block
@@ -58,11 +53,9 @@
         </van-button>
       </div>
     </van-form>
-
     <p class="tw-text-center tw-text-[16px] tw-text-[#666666] tw-mt-[12px]">
       <span @click="verify">验证码登录</span>
     </p>
-
     <p class="tw-text-center tw-text-[13px] tw-text-[#666666] tw-mt-[138px] tw-pb-[50px]">
       <span @click="register">用户注册</span>
     </p>

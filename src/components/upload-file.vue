@@ -26,6 +26,7 @@
     <van-uploader
       v-if="!readonly"
       accept="*"
+      class="tw-mt-[12px]"
       :preview-image="false"
       :show-upload="!readonly"
       :before-read="handleBeforeRead"

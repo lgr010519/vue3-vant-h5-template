@@ -105,6 +105,7 @@
           label=""
           type="textarea"
           placeholder="请输入详细地址"
+          :rules="userAddress"
           show-word-limit>
         </van-field>
 
@@ -133,7 +134,8 @@
     idCard,
     nameCheck,
     smsCard,
-    userObjAddress
+    userObjAddress,
+    userAddress
   } from '@/configs/globalvar'
   import { Toast } from 'vant'
   import sha256 from 'crypto-js/sha256'
