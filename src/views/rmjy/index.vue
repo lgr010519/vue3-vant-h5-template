@@ -45,12 +45,12 @@
             block
             type="primary"
             native-type="submit">
-            确认修改
+            提交
           </van-button>
         </div>
       </van-form>
       <!-- 办理结果 -->
-      <div v-if="!isCreate">
+      <div v-if="!isCreate && form.processStatus != 1">
         <p class="tw-text-[16px] tw-font-semibold tw-text-[#666666]">办理结果</p>
         <div
           class="tw-w-[100%] tw-mt-[12px] tw-flex tw-items-center tw-h-[94px] tw-bg-[#E5EFFB] tw-rounded-[6px]">
@@ -94,10 +94,11 @@
       getAppealDetail(route.params.id)
         .then((res) => {
           if (res.data.code === 0) {
-            const { description, title, filePath } = res.data.data
+            const { description, title, filePath, processStatus } = res.data.data
             form.description = description
             form.title = title
             form.filePath = JSON.parse(filePath)
+            form.processStatus = processStatus
           } else {
             Toast(res.data.msg)
           }

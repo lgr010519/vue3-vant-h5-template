@@ -115,7 +115,7 @@
         </div>
       </van-form>
       <!-- 办理结果 -->
-      <div v-if="!isCreate">
+      <div v-if="!isCreate && form.processStatus != 1">
         <p class="tw-text-[16px] tw-font-semibold tw-text-[#666666]">办理结果</p>
         <div
           class="tw-w-[100%] tw-mt-[12px] tw-flex tw-items-center tw-h-[94px] tw-bg-[#E5EFFB] tw-rounded-[6px]">
@@ -269,7 +269,8 @@
       getAppealDetail(route.params.id)
         .then((res) => {
           if (res.data.code === 0) {
-            const { title, areaCode, description, filePath, orderType, address } = res.data.data
+            const { title, areaCode, description, filePath, orderType, address, processStatus } =
+              res.data.data
             form.address = address
             form.title = title
             form.areaCode = areaCode
@@ -278,6 +279,7 @@
             form.orderType = orderType
             typeValue.value = getOrderType(orderType)
             form.spaceValue = streetCasText
+            form.processStatus = processStatus
           } else {
             Toast(res.data.msg)
           }
