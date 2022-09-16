@@ -111,7 +111,7 @@
         </div>
       </van-form>
 
-      <template v-if="readonly">
+      <template v-if="readonly && formData.processStatus === 2">
         <p class="tw-text-[16px] tw-text-[#666666] tw-font-semibold tw-mt-[22px] tw-mb-[12px]">
           办理结果
         </p>
@@ -171,7 +171,8 @@
     appealType: '',
     description: '',
     filePath: [],
-    orderType: 1
+    orderType: 1,
+    processStatus: 1
   })
 
   const rules = reactive({

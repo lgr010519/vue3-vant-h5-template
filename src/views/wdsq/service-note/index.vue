@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <div class="tw-w-full tw-h-full tw-flex tw-flex-col">
     <nav-bar title="服务说明"></nav-bar>
