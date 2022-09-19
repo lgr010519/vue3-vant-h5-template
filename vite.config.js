@@ -32,10 +32,10 @@ export default defineConfig(({ mode }) => {
           additionalData: `@use "~/assets/styles/custom-var.scss" as *;`
         }
       }
+    },
+    esbuild: {
+      pure: ['console.log'],
+      minify: true
     }
-    // esbuild: {
-    //   pure: ['console.log'],
-    //   minify: true
-    // }
   }
 })
