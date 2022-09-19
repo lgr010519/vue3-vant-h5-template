@@ -8,4 +8,4 @@ build:
   image: node:16.15.0-slim
   commands:
     - npm install --registry=http://maven.youpin-k8s.net/repository/npm/
-    - npm run build
+    - npm run staging

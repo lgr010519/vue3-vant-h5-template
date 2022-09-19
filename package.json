@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "staging": "vite build --mode staging",
     "preview": "vite preview --port 4173",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
@@ -11,6 +12,7 @@
     "@vueuse/core": "^9.2.0",
     "axios": "^0.27.2",
     "crypto-js": "^4.1.1",
+    "esbuild": "^0.15.8",
     "file-saver": "^2.0.5",
     "hammerjs": "^2.0.8",
     "lodash": "^4.17.21",
