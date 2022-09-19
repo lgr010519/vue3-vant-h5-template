@@ -106,7 +106,6 @@
     { text: '已完成', value: '2' }
   ]
   const go = (item) => {
-    console.log(item)
     item.orderType === 3
       ? router.push(`/jzxx/detail/${item.id}`)
       : item.orderType === 2

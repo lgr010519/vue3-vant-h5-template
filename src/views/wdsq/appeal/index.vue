@@ -145,7 +145,6 @@
 
   const route = useRoute()
   const router = useRouter()
-  console.log(route.params.mode)
   /**
    * 创建 、详情
    */

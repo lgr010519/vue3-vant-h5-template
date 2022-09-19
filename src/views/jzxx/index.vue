@@ -273,32 +273,28 @@
   onMounted(() => {
     getAppeal()
     getstreet()
-    try {
-      if (route.params.mode === 'detail') {
-        getAppealDetail(route.params.id)
-          .then((res) => {
-            if (res.data.code === 0) {
-              const { title, areaCode, description, filePath, orderType, address, processStatus } =
-                res.data.data
-              form.address = address
-              form.title = title
-              form.areaCode = areaCode
-              form.description = description
-              form.filePath = JSON.parse(filePath)
-              form.orderType = orderType
-              typeValue.value = getOrderType(orderType)
-              form.spaceValue = streetCasText
-              form.processStatus = processStatus
-            } else {
-              Toast(res.data.msg)
-            }
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      }
-    } catch (e) {
-      Toast('服务器出错,获取详情失败')
+    if (route.params.mode === 'detail') {
+      getAppealDetail(route.params.id)
+        .then((res) => {
+          if (res.data.code === 0) {
+            const { title, areaCode, description, filePath, orderType, address, processStatus } =
+              res.data.data
+            form.address = address
+            form.title = title
+            form.areaCode = areaCode
+            form.description = description
+            form.filePath = JSON.parse(filePath)
+            form.orderType = orderType
+            typeValue.value = getOrderType(orderType)
+            form.spaceValue = streetCasText
+            form.processStatus = processStatus
+          } else {
+            Toast(res.data.msg)
+          }
+        })
+        .catch(() => {
+          Toast('服务器出错,获取详情失败')
+        })
     }
   })
 
@@ -318,7 +314,7 @@
         }
       })
       .catch(() => {
-        console.log('服务器出错,提交失败,请稍后尝试')
+        Toast('服务器出错,提交失败,请稍后尝试')
       })
       .finally(() => {
         router.push('/index')

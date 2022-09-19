@@ -86,7 +86,6 @@
   const showActionSheet = ref(false)
   const actionSheetOptions = [{ name: '保存到本地' }]
   function onSelectAction(action, index) {
-    console.log(action, index)
     switch (index) {
       case 0:
         qrCode.getRawData().then((buffer) => {

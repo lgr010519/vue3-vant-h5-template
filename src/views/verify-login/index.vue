@@ -120,7 +120,6 @@
   const sendSmsBtnText = ref('获取验证码')
   // 手机号正则校验
   const RegExpPhone = (val) => {
-    console.log(val)
     return /^1\d{10}$/.test(val)
   }
 
