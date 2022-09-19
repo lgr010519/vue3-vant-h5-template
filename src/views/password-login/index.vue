@@ -84,20 +84,23 @@
     router.push({ path: '/register' })
   }
   const onSubmit = async () => {
-    console.log(123321)
-    const result = await passwordLogin({
-      auth_type: '1',
-      password: SHA256(user.password).toString(),
-      username: user.username
-    })
-    if (result.data.code === 0) {
-      localStorage.setItem('token', result.data.data.token)
-      // 将数据传入store
-      store.updateUserInfo(result.data.data)
-      Toast('登录成功')
-      router.push('/index')
-    } else {
-      Toast('验证失败,请重新核对您的手机号和密码')
+    try {
+      const result = await passwordLogin({
+        auth_type: '1',
+        password: SHA256(user.password).toString(),
+        username: user.username
+      })
+      if (result.data.code === 0) {
+        localStorage.setItem('token', result.data.data.token)
+        // 将数据传入store
+        store.updateUserInfo(result.data.data)
+        Toast('登录成功')
+        router.push('/index')
+      } else {
+        Toast('验证失败,请重新核对您的手机号和密码')
+      }
+    } catch (e) {
+      Toast('服务器出错,登录失败')
     }
   }
   const forget = () => {

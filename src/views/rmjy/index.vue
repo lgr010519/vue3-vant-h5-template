@@ -103,8 +103,8 @@
             Toast(res.data.msg)
           }
         })
-        .catch((err) => {
-          console.log(err)
+        .catch(() => {
+          Toast('服务器出错,获取详情失败')
         })
     }
   })
@@ -123,8 +123,8 @@
           Toast(res.data.msg)
         }
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
+        Toast('服务器出错,提交失败')
       })
   }
 

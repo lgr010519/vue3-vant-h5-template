@@ -210,20 +210,28 @@
   }
   //获取诉求类型
   const getAppeal = async () => {
-    const result = await getAppealType()
-    if (result.data.code === 0) {
-      TypeList.value = result.data.data
-    } else {
-      Toast('获取诉求类型失败')
+    try {
+      const result = await getAppealType()
+      if (result.data.code === 0) {
+        TypeList.value = result.data.data
+      } else {
+        Toast('获取诉求类型失败')
+      }
+    } catch (e) {
+      Toast('服务器出错,获取诉求类型失败')
     }
   }
   //获取街道类型
   const getstreet = async () => {
-    const result = await getStreet()
-    if (result.data.code == 0) {
-      options.value = result.data.data
-    } else {
-      Toast(result.data.msg)
+    try {
+      const result = await getStreet()
+      if (result.data.code == 0) {
+        options.value = result.data.data
+      } else {
+        Toast(result.data.msg)
+      }
+    } catch (e) {
+      Toast('服务器出错,获取街道信息失败')
     }
   }
   const getOrderType = (orderType) => {
@@ -265,28 +273,32 @@
   onMounted(() => {
     getAppeal()
     getstreet()
-    if (route.params.mode === 'detail') {
-      getAppealDetail(route.params.id)
-        .then((res) => {
-          if (res.data.code === 0) {
-            const { title, areaCode, description, filePath, orderType, address, processStatus } =
-              res.data.data
-            form.address = address
-            form.title = title
-            form.areaCode = areaCode
-            form.description = description
-            form.filePath = JSON.parse(filePath)
-            form.orderType = orderType
-            typeValue.value = getOrderType(orderType)
-            form.spaceValue = streetCasText
-            form.processStatus = processStatus
-          } else {
-            Toast(res.data.msg)
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+    try {
+      if (route.params.mode === 'detail') {
+        getAppealDetail(route.params.id)
+          .then((res) => {
+            if (res.data.code === 0) {
+              const { title, areaCode, description, filePath, orderType, address, processStatus } =
+                res.data.data
+              form.address = address
+              form.title = title
+              form.areaCode = areaCode
+              form.description = description
+              form.filePath = JSON.parse(filePath)
+              form.orderType = orderType
+              typeValue.value = getOrderType(orderType)
+              form.spaceValue = streetCasText
+              form.processStatus = processStatus
+            } else {
+              Toast(res.data.msg)
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
+    } catch (e) {
+      Toast('服务器出错,获取详情失败')
     }
   })
 
@@ -300,14 +312,16 @@
       .then((res) => {
         if (res.data.code === 0) {
           Toast('提交成功，感谢您对我们工作的支持！')
-          console.log(res.data)
           router.push('/index')
         } else {
           Toast(res.data.msg)
         }
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
+        console.log('服务器出错,提交失败,请稍后尝试')
+      })
+      .finally(() => {
+        router.push('/index')
       })
   }
   const onSubmit = () => {

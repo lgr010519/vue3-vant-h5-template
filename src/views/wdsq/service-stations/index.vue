@@ -3,7 +3,7 @@
     <nav-bar title="服务站点地址"></nav-bar>
     <div class="tw-flex-1 stations">
       <div class="stations_top">
-        <p class="tw-font-semibold tw-mb-[12px]">工作时间</p>
+        <p class="tw-font-semibold tw-mb-[12px]">工作时间工作日:</p>
         <p class="tw-font-medium tw-mb-[5px]">
           上午
           <span class="tw-ml-[12px]">09 : 00 - 12 : 00</span>

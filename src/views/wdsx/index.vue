@@ -149,11 +149,10 @@
         isLoading.value = false
         bottomLoading.value = false
       })
-      .catch((err) => {
+      .catch(() => {
         bottomLoading.value = false
         isLoading.value = false
-        console.log(err)
-        Toast('服务器错误')
+        Toast('服务器错误,获取列表失败')
       })
   }
   //无限滚动

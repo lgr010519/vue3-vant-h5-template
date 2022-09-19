@@ -96,18 +96,21 @@
     router.push('/register')
   }
   const onSubmit = async () => {
-    const result = await passwordLogin({
-      auth_type: 'sms',
-      smscode: user.smscode,
-      username: user.username
-    })
-    console.log(result)
-    if (result.data.code === 0) {
-      localStorage.setItem('token', result.data.data.token)
-      Toast('登录成功')
-      router.push('/index')
-    } else {
-      Toast('验证失败,请稍后尝试')
+    try {
+      const result = await passwordLogin({
+        auth_type: 'sms',
+        smscode: user.smscode,
+        username: user.username
+      })
+      if (result.data.code === 0) {
+        localStorage.setItem('token', result.data.data.token)
+        Toast('登录成功')
+        router.push('/index')
+      } else {
+        Toast('验证失败,请稍后尝试')
+      }
+    } catch (e) {
+      Toast('服务器出错,验证失败')
     }
   }
   const forget = () => {
@@ -123,29 +126,33 @@
 
   const send = async () => {
     //发送验证请求
-    if (user.username && RegExpPhone(user.username)) {
-      const result = await mobileCode({ mobile: user.username })
-      if (result.data.code === 0) {
-        isSend.value = true
-        Toast('发送成功,请检查您的手机短信')
-        let count = 60
-        sendSmsBtnText.value = `已发送${count}s`
-        const interval = setInterval(() => {
-          if (count <= 0) {
-            clearInterval(interval)
-            sendSmsBtnText.value = '发送验证码'
-            isSend.value = false
-          } else {
-            count--
-            sendSmsBtnText.value = `已发送${count}s`
-          }
-        }, 1000)
+    try {
+      if (user.username && RegExpPhone(user.username)) {
+        const result = await mobileCode({ mobile: user.username })
+        if (result.data.code === 0) {
+          isSend.value = true
+          Toast('发送成功,请检查您的手机短信')
+          let count = 60
+          sendSmsBtnText.value = `已发送${count}s`
+          const interval = setInterval(() => {
+            if (count <= 0) {
+              clearInterval(interval)
+              sendSmsBtnText.value = '发送验证码'
+              isSend.value = false
+            } else {
+              count--
+              sendSmsBtnText.value = `已发送${count}s`
+            }
+          }, 1000)
+        } else {
+          Toast(result.data.msg)
+        }
       } else {
-        Toast(result.data.msg)
+        // 弹出提示
+        Toast('验证码发送失败,请检查你的手机号')
       }
-    } else {
-      // 弹出提示
-      Toast('验证码发送失败,请检查你的手机号')
+    } catch (e) {
+      Toast('服务器出错,发送失败')
     }
   }
 </script>

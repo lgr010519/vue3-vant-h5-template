@@ -181,15 +181,19 @@
   //提交表单
   const onSubmit = async () => {
     user.password = sha256(user.password).toString()
-    const result = await userRegister(user)
-    if (result.data.msg == 'ok') {
-      Toast('注册成功')
-      // 注册成功
-      router.back()
-    } else {
-      Toast('注册失败,请稍等一会儿再尝试')
-      // 注册成功
-      router.back()
+    try {
+      const result = await userRegister(user)
+      if (result.data.code === 0) {
+        Toast('注册成功')
+        // 注册成功
+        router.back()
+      } else {
+        Toast('注册失败,请稍等一会儿再尝试')
+        // 注册成功
+        router.back()
+      }
+    } catch (e) {
+      Toast('服务器出错,请稍后尝试')
     }
   }
   const sendSmsBtnText = ref('获取验证码')
@@ -197,40 +201,47 @@
   // 发送验证码
   const send = async () => {
     //发送验证请求
-    if (user.telPhone && RegExpPhone(user.telPhone)) {
-      const result = await mobileCode({ mobile: user.telPhone })
-      if (result.data.code === 0) {
-        isSend.value = true
-        Toast('发送成功,请检查您的手机短信')
-        let count = 30
-        sendSmsBtnText.value = `已发送${count}s`
-        const interval = setInterval(() => {
-          if (count <= 0) {
-            clearInterval(interval)
-            sendSmsBtnText.value = '发送验证码'
-            isSend.value = false
-          } else {
-            count--
-            sendSmsBtnText.value = `已发送${count}s`
-          }
-        }, 1000)
+    try {
+      if (user.telPhone && RegExpPhone(user.telPhone)) {
+        const result = await mobileCode({ mobile: user.telPhone })
+        if (result.data.code === 0) {
+          isSend.value = true
+          Toast('发送成功,请检查您的手机短信')
+          let count = 30
+          sendSmsBtnText.value = `已发送${count}s`
+          const interval = setInterval(() => {
+            if (count <= 0) {
+              clearInterval(interval)
+              sendSmsBtnText.value = '发送验证码'
+              isSend.value = false
+            } else {
+              count--
+              sendSmsBtnText.value = `已发送${count}s`
+            }
+          }, 1000)
+        } else {
+          Toast(result.data.msg)
+        }
       } else {
-        Toast(result.data.msg)
+        // 弹出提示
+        Toast('验证码发送失败,请检查你的手机号')
       }
-    } else {
-      // 弹出提示
-      Toast('验证码发送失败,请检查你的手机号')
+    } catch (e) {
+      Toast('服务器出错,请稍后尝试')
     }
   }
   const cascaderValue = ref('')
 
   const getaddress = async () => {
-    const result = await getStreet()
-    console.log('街道', result)
-    if (result.data.data) {
-      options.value = result.data.data
-    } else {
-      Toast('获取街道信息失败')
+    try {
+      const result = await getStreet()
+      if (result.data.code === 0) {
+        options.value = result.data.data
+      } else {
+        Toast('获取街道信息失败')
+      }
+    } catch (e) {
+      Toast('服务器出错,请稍后尝试')
     }
   }
   onMounted(() => {
