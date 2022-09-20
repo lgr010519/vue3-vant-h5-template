@@ -180,9 +180,8 @@
   }
   //提交表单
   const onSubmit = async () => {
-    user.password = sha256(user.password).toString()
     try {
-      const result = await userRegister(user)
+      const result = await userRegister({ ...user, password: sha256(user.password).toString() })
       if (result.data.code === 0) {
         Toast('注册成功')
         // 注册成功
