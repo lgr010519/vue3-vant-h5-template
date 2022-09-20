@@ -1,18 +1,19 @@
 import { baseUrl, post, get, upload } from './config'
 
-export const uploadUrl = baseUrl + '/common/uploads'
+export const uploadUrl = baseUrl + '/api/common/uploads'
 
 /**
  * 文件上传
  * @param {*} data
+ * TODO
  */
-export const uploadFile = (data) => upload('/common/uploads', data)
+export const uploadFile = (data) => upload('/api/v1/file/uploads', data)
 
 //用户注册
 export const userRegister = (data) => post('/api/v1/auth/register', data)
 
 //发送验证码接口
-export const mobileCode = (data) => post('/api/v1/send/code', data)
+export const mobileCode = (data) => post('/api/v1/code', data)
 
 //登录接口
 export const passwordLogin = (data) => post('/api/v1/auth/login', data)
@@ -21,12 +22,13 @@ export const passwordLogin = (data) => post('/api/v1/auth/login', data)
 export const updatePassword = (data) => post('/api/v1/auth/forget', data)
 
 //获取街道
-export const getStreet = () => get('/api/v1/district')
+export const getStreet = () => get('/api/v1/district/list')
 
 /**
  * 获取诉求类型
+ * TODO
  */
-export const getAppealType = () => get('/down_list/workOrder/appealType')
+export const getAppealType = () => get('/api/v1/down_list/workOrder/appealType')
 
 //获取个人信息
 export const getUserInformation = () => get('/api/v1/me')

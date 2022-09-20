@@ -10,7 +10,7 @@ import { VantResolver } from 'unplugin-vue-components/resolvers'
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   return {
-    base: mode === 'production' ? '/qzsq_h5/' : '/',
+    base: mode === 'production' ? '/qzsq/h5' : '/',
     server: {
       host: '0.0.0.0'
     },
