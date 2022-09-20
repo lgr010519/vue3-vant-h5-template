@@ -47,7 +47,7 @@
   function initQrCode() {
     qrCodeOptions.width = qrCodeCanvas.value.offsetWidth
     qrCodeOptions.height = qrCodeCanvas.value.offsetHeight
-    qrCodeOptions.data = location.origin + '/system-code'
+    qrCodeOptions.data = location.origin + '/'
     qrCodeOptions.image = logo
 
     qrCode.append(qrCodeCanvas.value)
