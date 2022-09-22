@@ -5,6 +5,12 @@
  * For commercial licenses see https://www.tiny.cloud/
  */
 
+/* https://github.com/tinymce/tinymce/issues/6100#issuecomment-708571713 */
+.tox.tox-tinymce-aux,
+.tox-fullscreen .tox.tox-tinymce-aux {
+  z-index: 4000;
+}
+
 table {
   border-collapse: collapse
 }
@@ -65,6 +71,153 @@ code {
   padding-right: 1rem
 }
 
-img {
-  max-width: 100%;
+.mce-content-body.unreset {
+  img {
+    max-width: 100%;
+  }
+  a {
+    @apply tw-text-blue-700 tw-underline;
+  }
+  p {
+    @apply tw-my-4;
+  }
+
+  blockquote,
+  figure {
+    @apply tw-my-4 tw-mx-10;
+  }
+
+  hr {
+    @apply tw-border;
+  }
+
+  h1 {
+    @apply tw-text-4xl tw-font-bold tw-my-2;
+  }
+
+  h2 {
+    @apply tw-text-2xl tw-font-bold tw-my-3;
+  }
+
+  h3 {
+    @apply tw-text-lg tw-font-bold tw-my-4;
+  }
+
+  h4 {
+    @apply tw-text-base tw-font-bold tw-my-5;
+  }
+
+  h5 {
+    @apply tw-text-sm tw-font-bold tw-my-6;
+  }
+
+  h6 {
+    @apply tw-text-xs tw-font-bold tw-my-10;
+  }
+
+  article,
+  aside,
+  nav,
+  section {
+    h1 {
+      @apply tw-text-2xl tw-font-bold tw-my-3;
+    }
+
+    article,
+    aside,
+    nav,
+    section {
+      h1 {
+        @apply tw-text-lg tw-font-bold tw-my-4;
+      }
+
+      article,
+      aside,
+      nav,
+      section {
+        h1 {
+          @apply tw-text-base tw-font-bold tw-my-5;
+        }
+
+        article,
+        aside,
+        nav,
+        section {
+          h1 {
+            @apply tw-text-sm tw-font-bold tw-my-6;
+          }
+
+          article,
+          aside,
+          nav,
+          section {
+            h1 {
+              @apply tw-text-xs tw-font-bold tw-my-10;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  ul,
+  menu {
+    /*should be my-4 for proper reset, but thats ugly af*/
+    @apply tw-list-disc tw-my-1 tw-pl-10;
+  }
+
+  ol {
+    @apply tw-list-decimal tw-my-4 tw-pl-10;
+  }
+
+  ul,
+  ol {
+    ul {
+      list-style-type: circle;
+    }
+
+    ul,
+    ol {
+      ul {
+        list-style-type: square;
+      }
+    }
+  }
+
+  dd {
+    @apply tw-pl-10;
+  }
+
+  dl {
+    @apply tw-my-4;
+  }
+
+  ul,
+  ol,
+  menu,
+  dl {
+    ul,
+    ol,
+    menu,
+    dl {
+      margin: 0;
+    }
+  }
+
+  legend {
+    @apply tw-py-0 tw-px-1;
+  }
+
+  fieldset {
+    @apply tw-my-0 tw-mx-1 tw-pt-0 tw-px-1 tw-pb-2;
+  }
+
+  b,
+  strong {
+    font-weight: bold;
+  }
+
+  pre {
+    @apply tw-my-4;
+  }
 }

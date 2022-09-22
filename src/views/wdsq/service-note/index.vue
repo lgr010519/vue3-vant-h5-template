@@ -5,7 +5,7 @@
     <div class="service_note tw-flex-1">
       <p class="service_note_title">深圳生态环境群众诉求服务平台反映问题说明</p>
       <div
-        class="service_note_body mce-content-body"
+        class="service_note_body mce-content-body unreset"
         v-html="content">
       </div>
     </div>
