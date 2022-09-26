@@ -140,7 +140,7 @@
     userObjType,
     userObjChinese
   } from '@/configs/globalvar'
-  import { createAppeal, getAppealDetail, getAppealType, getStreet } from '@/api'
+  import { createAppeal, getAppealDetail, getAppealType, getStreet } from '@/apis'
   import { Toast } from 'vant'
 
   const route = useRoute()

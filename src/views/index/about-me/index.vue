@@ -82,7 +82,7 @@
   import { Toast } from 'vant'
   import { ref, onMounted } from 'vue'
   import { useRouter } from 'vue-router'
-  import { getUserInformation } from '@/api/index'
+  import { getUserInformation } from '@/apis/index'
   const router = useRouter()
 
   const userInfo = ref({

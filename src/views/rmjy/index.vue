@@ -79,7 +79,7 @@
   import { useRoute, useRouter } from 'vue-router'
   import { reactive, computed, onMounted } from 'vue'
   import { peopleOpinionTitle, peopleOpinionMessage } from '@/configs/globalvar'
-  import { createAppeal, getAppealDetail } from '@/api/index'
+  import { createAppeal, getAppealDetail } from '@/apis/index'
   import { Toast } from 'vant'
   const route = useRoute()
   const router = useRouter()
