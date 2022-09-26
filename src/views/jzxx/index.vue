@@ -256,7 +256,7 @@
     for (let i = 0; i < options.value.length; i++) {
       const item = options.value[i]
       for (let j = 0; j < item.streets.length; j++) {
-        if (item.streets[j].name === form.areaCode) {
+        if (item.streets[j].name === form.area) {
           district = item.name
           street = item.streets[j].name
           break
@@ -267,7 +267,7 @@
       }
     }
 
-    return form.areaCode ? `${district} ${street}` : ''
+    return form.area ? `${district} ${street}` : ''
   })
 
   onMounted(() => {
@@ -277,11 +277,20 @@
       getAppealDetail(route.params.id)
         .then((res) => {
           if (res.data.code === 0) {
-            const { title, areaCode, description, filePath, orderType, address, processStatus } =
-              res.data.data
+            const {
+              title,
+              areaCode,
+              description,
+              filePath,
+              orderType,
+              address,
+              processStatus,
+              area
+            } = res.data.data
             form.address = address
             form.title = title
             form.areaCode = areaCode
+            form.area = area
             form.description = description
             form.filePath = JSON.parse(filePath)
             form.orderType = orderType

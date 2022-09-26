@@ -29,7 +29,7 @@
           v-model:show="showStreetPicker"
           position="bottom">
           <van-cascader
-            v-model="formData.areaCode"
+            v-model="formData.area"
             :options="streetCasOptions"
             :field-names="streetFiledNames"
             active-color="#3189FF"
@@ -166,6 +166,7 @@
   const formData = reactive({
     title: '',
     areaCode: '',
+    area: '',
     address: '',
     appealType: '',
     description: '',
@@ -181,7 +182,6 @@
     typeCasText: userObjType,
     description: userObjChinese
   })
-
   /**
    * 选择器字段对应
    */
@@ -236,7 +236,7 @@
     for (let i = 0; i < streetCasOptions.value.length; i++) {
       const item = streetCasOptions.value[i]
       for (let j = 0; j < item.streets.length; j++) {
-        if (item.streets[j].name === formData.areaCode) {
+        if (item.streets[j].name === formData.area) {
           district = item.name
           street = item.streets[j].name
           break
@@ -247,13 +247,16 @@
       }
     }
 
-    return formData.areaCode ? `${district} ${street}` : ''
+    return formData.area ? `${district} ${street}` : ''
   })
   /**
    * 赋值区，街道
    */
   // eslint-disable-next-line no-unused-vars
   function onStreetCasFinish({ selectedOptions }) {
+    console.log(selectedOptions)
+    formData.areaCode = selectedOptions[1].code
+    formData.area = selectedOptions[1].name
     showStreetPicker.value = false
   }
 
