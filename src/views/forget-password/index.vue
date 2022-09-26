@@ -71,7 +71,7 @@
 <script setup>
   import NavBar from '@/components/nav-bar.vue'
   import { passwordCheck, telPhoneCheck, idCard } from '@/configs/globalvar'
-  import { updatePassword, mobileCode } from '@/api/index'
+  import { updatePassword, mobileCode } from '@/apis/index'
   import { reactive, ref } from 'vue'
   import { smsCard } from '@/configs/globalvar'
   import { useRouter } from 'vue-router'

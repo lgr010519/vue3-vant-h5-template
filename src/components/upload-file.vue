@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-  import { uploadFile } from '@/api'
+  import { uploadFile } from '@/apis'
   import { Dialog, Toast } from 'vant'
 
   const props = defineProps({

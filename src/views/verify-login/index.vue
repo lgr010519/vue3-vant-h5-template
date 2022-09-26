@@ -81,7 +81,7 @@
   import { reactive, ref } from 'vue'
   import { useRouter } from 'vue-router'
   import { Toast } from 'vant'
-  import { mobileCode, passwordLogin } from '@/api/index'
+  import { mobileCode, passwordLogin } from '@/apis/index'
   import { telPhoneCheck, smsCard } from '@/configs/globalvar'
   const router = useRouter()
   const user = reactive({

@@ -127,7 +127,7 @@
   import NavBar from '@/components/nav-bar.vue'
   import { reactive, ref, onMounted } from 'vue'
   import { useRouter } from 'vue-router'
-  import { mobileCode, userRegister, getStreet } from '@/api/index'
+  import { mobileCode, userRegister, getStreet } from '@/apis/index'
   import {
     passwordCheck,
     telPhoneCheck,

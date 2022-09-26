@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-  import { getRangeDetail } from '@/api'
+  import { getRangeDetail } from '@/apis'
   import { Toast } from 'vant'
   import { onMounted, ref } from 'vue'
 

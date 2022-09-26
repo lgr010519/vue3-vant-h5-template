@@ -142,7 +142,7 @@
   import navBar from '@/components/nav-bar.vue'
   import { computed, onMounted, reactive, ref } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
-  import { getAppealType, getStreet, createAppeal, getAppealDetail } from '@/api/index'
+  import { getAppealType, getStreet, createAppeal, getAppealDetail } from '@/apis/index'
   import { Toast } from 'vant'
   import {
     userObjName,

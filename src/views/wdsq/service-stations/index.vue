@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-  import { getStationList } from '@/api'
+  import { getStationList } from '@/apis'
   import { Toast } from 'vant'
   import { onMounted, ref } from 'vue'
 

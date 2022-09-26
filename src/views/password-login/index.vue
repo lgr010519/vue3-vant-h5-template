@@ -65,7 +65,7 @@
 <script setup>
   import { reactive } from 'vue'
   import { useRouter } from 'vue-router'
-  import { passwordLogin } from '@/api/index'
+  import { passwordLogin } from '@/apis/index'
   import SHA256 from 'crypto-js/sha256'
   import { passwordCheck, telPhoneCheck } from '@/configs/globalvar'
   import { Toast } from 'vant'

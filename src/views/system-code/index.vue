@@ -47,13 +47,7 @@
   function initQrCode() {
     qrCodeOptions.width = qrCodeCanvas.value.offsetWidth
     qrCodeOptions.height = qrCodeCanvas.value.offsetHeight
-    qrCodeOptions.data =
-      location.origin +
-      {
-        dev: '/',
-        staging: '/',
-        production: '/qzsq/h5/'
-      }[import.meta.env.MODE]
+    qrCodeOptions.data = location.origin + import.meta.env.VITE_BASE_URL
     qrCodeOptions.image = logo
 
     qrCode.append(qrCodeCanvas.value)

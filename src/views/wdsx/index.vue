@@ -77,7 +77,7 @@
   import { useRouter } from 'vue-router'
   import { useInfiniteScroll } from '@vueuse/core'
   import { Toast } from 'vant'
-  import * as api from '@/api/index'
+  import * as api from '@/apis/index'
   const router = useRouter()
   const mySelf = reactive({
     //关键字
