@@ -118,7 +118,7 @@
       })
   }
   function handleOversize() {
-    Toast('文件大小不能超过10M')
+    Toast('文件大小不能超过100M')
   }
 
   function handleDelete(file, index) {
