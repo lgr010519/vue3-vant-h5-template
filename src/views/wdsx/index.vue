@@ -51,8 +51,8 @@
             </div>
             <div
               class="tw-text-[13px] tw-font-medium"
-              :class="item.processStatus === 1 ? 'green' : 'orange'">
-              <span>{{ item.processStatus === 1 ? '待办理' : '已完成' }}</span>
+              :class="item.processStatus === 3 ? 'orange' : 'green'">
+              <span>{{ item.processStatus === 3 ? '已完成' : '待办理' }}</span>
             </div>
           </div>
           <div class="list_item"></div>

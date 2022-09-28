@@ -202,7 +202,7 @@
     //发送验证请求
     try {
       if (user.telPhone && RegExpPhone(user.telPhone)) {
-        const result = await mobileCode({ mobile: user.telPhone })
+        const result = await mobileCode({ mobile: user.telPhone, type: 0 })
         if (result.data.code === 0) {
           isSend.value = true
           Toast('发送成功,请检查您的手机短信')
@@ -218,6 +218,9 @@
               sendSmsBtnText.value = `已发送${count}s`
             }
           }, 1000)
+        } else if (result.data.code === -1) {
+          Toast('该手机号已经注册过,请直接登录')
+          router.push('/verify')
         } else {
           Toast(result.data.msg)
         }

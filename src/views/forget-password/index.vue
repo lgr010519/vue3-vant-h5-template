@@ -111,7 +111,7 @@
 
     try {
       if (user.account && RegExpPhone(user.account)) {
-        const result = await mobileCode({ mobile: user.account })
+        const result = await mobileCode({ mobile: user.account, type: 1 })
         if (result.data.code === 0) {
           isSend.value = true
           Toast('发送成功,请检查您的手机短信')

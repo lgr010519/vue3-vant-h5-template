@@ -96,7 +96,11 @@
         store.updateUserInfo(result.data.data)
         Toast('登录成功')
         router.push('/index')
+      } else if (result.data.code === 20002) {
+        Toast('该手机号还未注册,请注册后登录')
+        router.push('/register')
       } else {
+        //判断用户是否还未注册
         Toast('验证失败,请重新核对您的手机号和密码')
       }
     } catch (e) {
