@@ -161,8 +161,7 @@
     title: '',
     // 诉求类型
     appealType: '',
-    // 区级地址
-    district: '',
+    area: '',
     // 街道地址
     areaCode: '',
     // 区域地址
@@ -187,12 +186,13 @@
   }
   const options = ref([])
   const onFinish = ({ selectedOptions }) => {
+    console.log(selectedOptions)
     show.value = false
     if (selectedOptions[0].name) {
-      form.district = selectedOptions[0].name
+      form.area = selectedOptions[0].name
     }
     if (selectedOptions[1].code) {
-      form.areaCode = selectedOptions[1].name
+      form.areaCode = selectedOptions[1].code
     }
     form.spaceValue = selectedOptions.map((option) => option.name).join(' ')
   }
