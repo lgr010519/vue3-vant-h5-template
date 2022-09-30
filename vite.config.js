@@ -36,6 +36,7 @@ export default defineConfig(({ mode }) => {
       }
     },
     esbuild: {
+      // or rollup/plugin-strip ?
       pure: ['console.log'],
       minify: true
     }
