@@ -188,8 +188,8 @@
   const onFinish = ({ selectedOptions }) => {
     console.log(selectedOptions)
     show.value = false
-    if (selectedOptions[0].name) {
-      form.area = selectedOptions[0].name
+    if (selectedOptions[1].name) {
+      form.area = selectedOptions[1].name
     }
     if (selectedOptions[1].code) {
       form.areaCode = selectedOptions[1].code
