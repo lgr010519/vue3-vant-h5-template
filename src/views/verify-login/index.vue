@@ -1,12 +1,12 @@
 <template>
-  <div class="tw-w-[100%] tw-h-[100%] tw-overflow-auto">
-    <div class="tw-w-[65px] tw-h-[60px] tw-mt-[70px] tw-mx-auto">
+  <div class="tw-h-[100%] tw-w-[100%] tw-overflow-auto">
+    <div class="tw-mx-auto tw-mt-[70px] tw-h-[60px] tw-w-[65px]">
       <img
         src="../../assets/images/login/logo.png"
         class="width:100%;height:100%"
         alt="" />
     </div>
-    <h1 class="title tw-h-[18px] tw-mt-[20px] tw-mx-auto tw-text-center">
+    <h1 class="title tw-mx-auto tw-mt-[20px] tw-h-[18px] tw-text-center">
       深圳生态环境群众诉求服务
     </h1>
     <van-form
@@ -18,7 +18,7 @@
         placeholder="请输入手机号"
         :rules="telPhoneCheck">
         <template #label>
-          <div class="tw-h-[24px] tw-flex tw-items-center">
+          <div class="tw-flex tw-h-[24px] tw-items-center">
             <img
               class=""
               src="../../assets/images/login/icon_phone.png"
@@ -33,7 +33,7 @@
         placeholder="请输入验证码"
         :rules="smsCard">
         <template #label>
-          <div class="tw-h-[33px] tw-flex tw-items-center">
+          <div class="tw-flex tw-h-[33px] tw-items-center">
             <img
               class=""
               src="../../assets/images/login/icon_password.png"
@@ -54,7 +54,7 @@
           </van-button>
         </template>
       </van-field>
-      <p class="forget tw-w-[100%] tw-mt-[16px] tw-pr-[14px]">
+      <p class="forget tw-mt-[16px] tw-w-[100%] tw-pr-[14px]">
         <span @click="forget">忘记密码</span>
       </p>
       <div class="tw-mx-[14px] tw-mt-[36px]">
@@ -67,10 +67,10 @@
         </van-button>
       </div>
 
-      <p class="tw-mx-auto tw-text-center tw-text-[16px] tw-text-[#666666] tw-mt-[12px]">
+      <p class="tw-mx-auto tw-mt-[12px] tw-text-center tw-text-[16px] tw-text-[#666666]">
         <span @click="login">密码登录</span>
       </p>
-      <p class="tw-text-center tw-text-[13px] tw-mt-[138px] tw-text-[#666666] tw-pb-[50px]">
+      <p class="tw-mt-[138px] tw-pb-[50px] tw-text-center tw-text-[13px] tw-text-[#666666]">
         <span @click="register">用户注册</span>
       </p>
     </van-form>

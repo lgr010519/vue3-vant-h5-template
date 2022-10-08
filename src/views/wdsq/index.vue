@@ -1,7 +1,7 @@
 <template>
-  <div class="tw-w-full tw-h-full tw-flex tw-flex-col">
+  <div class="tw-flex tw-h-full tw-w-full tw-flex-col">
     <nav-bar title="系统二维码"></nav-bar>
-    <div class="tw-flex-1 appeal">
+    <div class="appeal tw-flex-1">
       <router-link
         v-slot="{ navigate }"
         to="/wdsq/service-note"
@@ -11,10 +11,10 @@
           @click="navigate">
           <div class="tw-flex">
             <img
-              class="tw-w-[20px] tw-h-[20px] tw-mt-[3px]"
+              class="tw-mt-[3px] tw-h-[20px] tw-w-[20px]"
               src="@/assets/images/wdsq/icon_warn.png"
               alt="" />
-            <p class="tw-text-[17px] tw-text-[#0062E5] tw-font-semibold tw-ml-[14px]">
+            <p class="tw-ml-[14px] tw-text-[17px] tw-font-semibold tw-text-[#0062E5]">
               深圳生态环境群众诉求服务平台反映问题说明
             </p>
           </div>
@@ -29,14 +29,14 @@
           @click="navigate">
           <div class="tw-flex">
             <img
-              class="tw-w-[20px] tw-h-[20px] tw-mt-[3px]"
+              class="tw-mt-[3px] tw-h-[20px] tw-w-[20px]"
               src="@/assets/images/wdsq/icon_address.png"
               alt="" />
-            <p class="tw-text-[17px] tw-text-[#4A4A4A] tw-font-semibold tw-ml-[14px]">
+            <p class="tw-ml-[14px] tw-text-[17px] tw-font-semibold tw-text-[#4A4A4A]">
               服务站点地址查看
             </p>
           </div>
-          <p class="tw-text-[11px] tw-text-[#999999] tw-font-medium tw-ml-[34px]">
+          <p class="tw-ml-[34px] tw-text-[11px] tw-font-medium tw-text-[#999999]">
             如有诉求也可直接到已开设的深圳生态环境群众服务站点反映
           </p>
         </div>
@@ -50,10 +50,10 @@
           @click="navigate">
           <div class="tw-flex">
             <img
-              class="tw-w-[20px] tw-h-[20px] tw-mt-[3px]"
+              class="tw-mt-[3px] tw-h-[20px] tw-w-[20px]"
               src="@/assets/images/wdsq/icon_reflect.png"
               alt="" />
-            <p class="tw-text-[17px] tw-text-[#4A4A4A] tw-font-semibold tw-ml-[14px]">
+            <p class="tw-ml-[14px] tw-text-[17px] tw-font-semibold tw-text-[#4A4A4A]">
               在线反映诉求
             </p>
           </div>

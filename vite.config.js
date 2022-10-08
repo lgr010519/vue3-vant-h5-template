@@ -39,6 +39,14 @@ export default defineConfig(({ mode }) => {
       // or rollup/plugin-strip ?
       pure: ['console.log'],
       minify: true
+    },
+    build: {
+      rollupOptions: {}
     }
   }
 })
+
+//  prettier-plugin-tailwindcss
+//  stylelint
+//  stylelint-order
+//  editorconfig
