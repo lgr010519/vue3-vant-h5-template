@@ -1,7 +1,7 @@
 <template>
-  <div class="tw-w-full tw-h-full tw-flex tw-flex-col">
+  <div class="tw-flex tw-h-full tw-w-full tw-flex-col">
     <nav-bar title="在线诉求反映"></nav-bar>
-    <div class="tw-flex-1 appeal">
+    <div class="appeal tw-flex-1">
       <p class="appeal_title">事项内容</p>
       <van-form
         :readonly="readonly"
@@ -75,7 +75,7 @@
           </van-cascader>
         </van-popup>
 
-        <p class="tw-text-[16px] tw-text-[#666666] tw-font-semibold tw-mt-[22px] tw-mb-[2px]">
+        <p class="tw-mt-[22px] tw-mb-[2px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
           诉求描述
         </p>
         <van-field
@@ -92,7 +92,7 @@
           :show-word-limit="false">
         </van-field>
 
-        <p class="tw-text-[16px] tw-text-[#666666] tw-font-semibold tw-mt-[22px]">附件说明</p>
+        <p class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">附件说明</p>
         <upload-file
           v-model="formData.filePath"
           :readonly="readonly">
@@ -112,15 +112,15 @@
       </van-form>
 
       <template v-if="readonly && formData.processStatus === 2">
-        <p class="tw-text-[16px] tw-text-[#666666] tw-font-semibold tw-mt-[22px] tw-mb-[12px]">
+        <p class="tw-mt-[22px] tw-mb-[12px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
           办理结果
         </p>
-        <div class="tw-flex tw-h-[94px] tw-bg-[#E5EFFB] tw-rounded-[6px] tw-p-[14px]">
+        <div class="tw-flex tw-h-[94px] tw-rounded-[6px] tw-bg-[#E5EFFB] tw-p-[14px]">
           <img
-            class="tw-w-[18px] tw-h-[18px] tw-mt-[5px] tw-mr-[8px]"
+            class="tw-mt-[5px] tw-mr-[8px] tw-h-[18px] tw-w-[18px]"
             src="@/assets/images/jzxx/icon_handle.png"
             alt="" />
-          <p class="tw-flex-1 tw-font-medium tw-text-[15px] tw-text-[#5591E0]">
+          <p class="tw-flex-1 tw-text-[15px] tw-font-medium tw-text-[#5591E0]">
             您反映的问题，责任单位已处理。责任单位将通过您所留的方式答复结果，感谢您对我们工作的理解与支持！
           </p>
         </div>

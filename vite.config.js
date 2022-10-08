@@ -7,6 +7,8 @@ import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
 import { VantResolver } from 'unplugin-vue-components/resolvers'
 
+import removeConsole from 'vite-plugin-remove-console'
+// import strip from '@rollup/plugin-strip'
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
@@ -20,7 +22,14 @@ export default defineConfig(({ mode }) => {
       vue(),
       Components({
         resolvers: [VantResolver()]
-      })
+      }),
+      /**
+       * removeConsole({
+       *  //数组当中填写路径文件,被访问的文件不会删除console.log
+       *  external:['src/components/nav-bar.vue','src/assets/styles/index.scss']
+       * })
+       */
+      removeConsole()
     ],
     resolve: {
       alias: {
@@ -34,11 +43,11 @@ export default defineConfig(({ mode }) => {
           additionalData: `@use "~/assets/styles/custom-var.scss" as *;`
         }
       }
-    },
-    esbuild: {
-      // or rollup/plugin-strip ?
-      pure: ['console.log'],
-      minify: true
     }
+    // esbuild: {
+    //   // or rollup/plugin-strip ?
+    //   pure: ['console.log'],
+    //   minify: true
+    // }
   }
 })
