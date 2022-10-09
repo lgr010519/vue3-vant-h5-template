@@ -103,7 +103,7 @@
   const eventStatus = [
     { text: '全部', value: '0' },
     { text: '待办理', value: '1' },
-    { text: '已完成', value: '2' }
+    { text: '已完成', value: '3' }
   ]
   const go = (item) => {
     item.orderType === 3

@@ -111,7 +111,7 @@
         </div>
       </van-form>
 
-      <template v-if="readonly && formData.processStatus === 2">
+      <template v-if="readonly && formData.processStatus === 3">
         <p class="tw-mt-[22px] tw-mb-[12px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
           办理结果
         </p>
