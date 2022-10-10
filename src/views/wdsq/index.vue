@@ -1,6 +1,6 @@
 <template>
   <div class="tw-flex tw-h-full tw-w-full tw-flex-col">
-    <nav-bar title="系统二维码"></nav-bar>
+    <nav-bar title="我有诉求"></nav-bar>
     <div class="appeal tw-flex-1">
       <router-link
         v-slot="{ navigate }"
