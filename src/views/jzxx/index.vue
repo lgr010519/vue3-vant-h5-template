@@ -115,7 +115,7 @@
         </div>
       </van-form>
       <!-- 办理结果 -->
-      <div v-if="!isCreate && form.processStatus != 1">
+      <div v-if="!isCreate && form.processStatus === 3">
         <p class="tw-text-[16px] tw-font-semibold tw-text-[#666666]">办理结果</p>
         <div
           class="tw-mt-[12px] tw-flex tw-h-[94px] tw-w-[100%] tw-items-center tw-rounded-[6px] tw-bg-[#E5EFFB]">

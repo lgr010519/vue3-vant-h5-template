@@ -1,6 +1,6 @@
 <template>
   <div class="tw-flex tw-h-full tw-w-full tw-flex-col">
-    <nav-bar title="系统二维码"></nav-bar>
+    <nav-bar title="我有诉求"></nav-bar>
     <div class="appeal tw-flex-1">
       <router-link
         v-slot="{ navigate }"
@@ -69,10 +69,10 @@
   .appeal {
     padding: 22px 14px;
     &_part {
-      padding: 12px 20px;
-      margin-bottom: 20px;
       background: #ffffff;
+      margin-bottom: 20px;
       box-shadow: 0px 0px 13px 1px rgba(0, 0, 0, 0.03);
+      padding: 12px 20px;
       border-radius: 6px;
     }
   }

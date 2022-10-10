@@ -163,15 +163,15 @@
   .title {
     font-size: 18px;
     font-weight: 600;
-    color: #0084bd;
     line-height: 18px;
+    color: #0084bd;
   }
   .forget {
     font-size: 13px;
-    font-weight: 400;
     color: #666666;
     line-height: 13px;
     text-align: right;
+    font-weight: 400;
   }
 
   .login_form.van-form {

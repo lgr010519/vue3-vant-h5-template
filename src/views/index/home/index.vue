@@ -45,7 +45,7 @@
       <p
         class="home_item_text"
         style="color: #007b7b">
-        我的诉求
+        我有诉求
       </p>
       <img
         class="home_item_img"

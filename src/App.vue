@@ -2,6 +2,11 @@
   <router-view></router-view>
 </template>
 
-<script setup></script>
+<script setup>
+  import { onMounted } from 'vue'
+  onMounted(() => {
+    console.log('我是傻逼')
+  })
+</script>
 
 <style scoped></style>
