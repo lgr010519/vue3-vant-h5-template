@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-w-[100%] tw-h-[100%] tw-flex tw-flex-col">
+  <div class="tw-flex tw-h-[100%] tw-w-[100%] tw-flex-col">
     <Nav-bar title="我的事项"></Nav-bar>
     <div class="tw-p-[16px] tw-pb-[12px]">
       <van-field
@@ -40,12 +40,12 @@
         <div
           v-for="(item, index) in list"
           :key="index"
-          class="tw-mx-auto tw-px-[14px] tw-h-[76px] tw-mt-[16px]"
+          class="tw-mx-auto tw-mt-[16px] tw-h-[76px] tw-px-[14px]"
           @click="go(item)">
           <div class="tw-text-[17px] tw-font-semibold">
             <span>{{ item.title }}</span>
           </div>
-          <div class="tw-flex tw-justify-between tw-mt-[8px]">
+          <div class="tw-mt-[8px] tw-flex tw-justify-between">
             <div class="tw-text-[11px] tw-font-normal tw-text-[#858585]">
               {{ item.createdAt }}
             </div>
@@ -60,7 +60,7 @@
       </van-pull-refresh>
       <p
         v-if="!isMerge"
-        class="tw-text-center tw-text-[#999999] tw-text-[12px] tw-mt-[10px] tw-pb-[20px]">
+        class="tw-mt-[10px] tw-pb-[20px] tw-text-center tw-text-[12px] tw-text-[#999999]">
         {{ isMerge ? '加载中' : '没有啦' }}
       </p>
     </div>
@@ -194,9 +194,9 @@
     color: #57d3a2;
   }
   .list_item {
-    width: 100%;
-    height: 1px;
     margin-top: 14px;
     background-color: #f4f4f4;
+    height: 1px;
+    width: 100%;
   }
 </style>
