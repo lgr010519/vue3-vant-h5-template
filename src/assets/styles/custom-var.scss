@@ -1,36 +1,35 @@
 :root {
-  --van-tabbar-background-color: #f9f9f9 !important;
-  --van-tabbar-item-active-background-color: #f9f9f9 !important;
-  --van-cell-background-color: '#f9f9f9' !important;
-  --van-dropdown-menu-background-color:'#f9f9f9' !important;
-  --van-button-border-radius: 6px !important;
+    --van-tabbar-background-color: #f9f9f9 !important;
+    --van-tabbar-item-active-background-color: #f9f9f9 !important;
+    --van-cell-background-color: "#f9f9f9" !important;
+    --van-dropdown-menu-background-color: "#f9f9f9" !important;
+    --van-button-border-radius: 6px !important;
 }
-
 .custom_van_form {
-  --van-field-label-color: #666666;
-  --van-cell-horizontal-padding: 0px;
-  --van-field-placeholder-text-color: #999999;
-  --van-cell-background-color: #f9f9f9;
-  :deep(.van-cell.van-field) {
-    &+.van-field {
-      margin-top: 10px;
+    --van-field-label-color: #666666;
+    --van-cell-horizontal-padding: 0;
+    --van-field-placeholder-text-color: #999999;
+    --van-cell-background-color: #f9f9f9;
+    :deep(.van-cell.van-field) {
+        & + .van-field {
+            margin-top: 10px;
+        }
+        .van-field__label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #666666;
+        }
+        textarea {
+            padding: 10px 14px;
+            border: 1px solid #e0e0e0;
+        }
+        .van-field__control::placeholder {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        &::after {
+            right: 0;
+            left: 0;
+        }
     }
-    .van-field__label {
-      font-size: 16px;
-      color: #666666;
-      font-weight: 600;
-    }
-    textarea {
-      padding: 10px 14px;
-      border: 1px solid #e0e0e0;
-    }
-    .van-field__control::placeholder {
-      font-size: 16px;
-      font-weight: 500;
-    }
-    &::after {
-      left: 0;
-      right: 0;
-    }
-  }
 }
