@@ -25,7 +25,7 @@
     </div>
     <van-uploader
       v-if="!readonly"
-      accept="*"
+      accept=".png,.jpeg,.jpg"
       class="tw-mt-[12px]"
       :preview-image="false"
       :show-upload="!readonly"
@@ -63,7 +63,7 @@
   const emit = defineEmits(['update:modelValue'])
 
   function handleBeforeRead(file) {
-    if (file.type !== 'image/jpeg') {
+    if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
       Toast('仅支持jpg/png格式文件')
       return false
     }
