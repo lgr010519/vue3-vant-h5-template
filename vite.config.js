@@ -22,13 +22,6 @@ export default defineConfig(({ mode }) => {
       Components({
         resolvers: [VantResolver()]
       })
-      /**
-       * removeConsole({
-       *  //数组当中填写路径文件,被访问的文件不会删除console.log
-       *  external:['src/components/nav-bar.vue','src/assets/styles/index.scss']
-       * })
-       */
-      // removeConsole()
     ],
     resolve: {
       alias: {
@@ -50,8 +43,3 @@ export default defineConfig(({ mode }) => {
     }
   }
 })
-
-//  prettier-plugin-tailwindcss
-//  stylelint
-//  stylelint-order
-//  editorconfig
