@@ -10,6 +10,5 @@
   "vueIndentScriptAndStyle": true,
   "endOfLine": "auto",
   "singleAttributePerLine": true,
-  "htmlWhitespaceSensitivity": "strict",
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "htmlWhitespaceSensitivity": "strict"
 }

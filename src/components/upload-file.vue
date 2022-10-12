@@ -39,6 +39,7 @@
         src="@/assets/images/upload-file/button_add.png"
         alt="" />
     </van-uploader>
+    <p class="tip">#仅支持jpg/png格式文件</p>
   </div>
 </template>
 
@@ -61,7 +62,11 @@
 
   const emit = defineEmits(['update:modelValue'])
 
-  function handleBeforeRead() {
+  function handleBeforeRead(file) {
+    if (file.type !== 'image/jpeg') {
+      Toast('仅支持jpg/png格式文件')
+      return false
+    }
     return true
   }
 
@@ -143,6 +148,13 @@
 </script>
 
 <style lang="scss" scoped>
+  .tip {
+    font-size: 14px;
+    margin-top: 10px;
+    letter-spacing: 1px;
+    font-weight: 400px;
+    color: red;
+  }
   .file_list {
     &_item {
       position: relative;

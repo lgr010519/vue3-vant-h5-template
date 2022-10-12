@@ -8,7 +8,7 @@ import Components from 'unplugin-vue-components/vite'
 import { VantResolver } from 'unplugin-vue-components/resolvers'
 
 // import removeConsole from 'vite-plugin-remove-console'
-// import strip from '@rollup/plugin-strip'
+import strip from '@rollup/plugin-strip'
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
@@ -44,42 +44,33 @@ export default defineConfig(({ mode }) => {
         }
       }
     },
-    esbuild: {
-      // or rollup/plugin-strip ?
-      pure: ['console.log'],
-      minify: true
-    },
-    build: {
-      rollupOptions: {}
-    }
-    // build: {
-    //   rollupOptions: {
-    //     input: 'src/main.js',
-    //     output: {
-    //       file: './dist/bundle.js',
-    //       format: 'cjs',
-    //       name: 'bundleName'
-    //     },
-    //     plugins: [
-    //       strip({
-    //         //如果不想执行该配置项时 设置为false即可
-    //         // set this to `false` if you don't want to
-    //         // remove debugger statements
-    //         //去除debugger
-    //         debugger: true,
-
-    //         // defaults to `[ 'console.*', 'assert.*' ]`
-    //         //去除文件中指定的语句
-    //         functions: ['console.log', 'assert.*', 'debug', 'alert'],
-
-    //         // set this to `false` if you're not using sourcemaps –
-    //         // defaults to `true`
-    //         // 代码映射信息
-    //         sourceMap: true
-    //       })
-    //     ]
-    //   }
+    // esbuild: {
+    //   // or rollup/plugin-strip ?
+    //   pure: ['console.log'],
+    //   minify: true
     // },
+    build: {
+      rollupOptions: {
+        plugins: [
+          strip({
+            //如果不想执行该配置项时 设置为false即可
+            // set this to `false` if you don't want to
+            // remove debugger statements
+            //去除debugger
+            debugger: true,
+
+            // defaults to `[ 'console.*', 'assert.*' ]`
+            //去除文件中指定的语句
+            functions: ['console.log', 'assert.*', 'debug', 'alert'],
+
+            // set this to `false` if you're not using sourcemaps –
+            // defaults to `true`
+            // 代码映射信息
+            sourceMap: true
+          })
+        ]
+      }
+    }
   }
 })
 
