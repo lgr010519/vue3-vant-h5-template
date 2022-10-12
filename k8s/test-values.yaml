@@ -10,7 +10,7 @@ ingress:
 configMap:
   env:
     ENV_DEF:  VITE_API_BASE_URL VITE_BASE_URL
-    VITE_BASE_URL: /
+    VITE_BASE_URL: /1/
     VITE_API_BASE_URL: http://sz-appeal-svc.youpin-k8s.net
 resources:
   limits:
