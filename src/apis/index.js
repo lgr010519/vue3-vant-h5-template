@@ -49,7 +49,7 @@ export const getRangeDetail = (data) => get(`/api/v1/description/query`, data)
  * 获取站点列表
  * @param {*} data
  */
-export const getStationList = (data) => get(`/api/v1/station/getAll`, data)
+export const getStationList = (data) => get(`/api/v1/station/getStations`, data)
 
 /**
  * 获取在线诉求详情

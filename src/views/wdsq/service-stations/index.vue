@@ -1,10 +1,10 @@
 <template>
-  <div class="tw-w-full tw-h-full tw-flex tw-flex-col">
+  <div class="tw-flex tw-h-full tw-w-full tw-flex-col">
     <nav-bar title="服务站点地址"></nav-bar>
-    <div class="tw-flex-1 stations">
+    <div class="stations tw-flex-1">
       <div class="stations_top">
-        <p class="tw-font-semibold tw-mb-[12px]">工作时间工作日:</p>
-        <p class="tw-font-medium tw-mb-[5px]">
+        <p class="tw-mb-[12px] tw-font-semibold">工作时间工作日:</p>
+        <p class="tw-mb-[5px] tw-font-medium">
           上午
           <span class="tw-ml-[12px]">09 : 00 - 12 : 00</span>
         </p>
@@ -16,24 +16,78 @@
 
       <div
         v-for="(value, key) in stations"
+        ref="el"
         :key="key"
-        class="stations_item">
-        <div
-          v-for="station in value"
-          :key="station.pid"
-          class="stations_item_info">
-          <p class="tw-text-[17px] tw-text-[#4A4A4A] tw-font-semibold">{{ station.pname }}</p>
-          <div class="tw-flex tw-mt-[6px]">
+        class="stations_item tw-pt-[10px]">
+        <div class="tw-ml-[10px]">
+          <p class="tw-text-[17px] tw-font-semibold tw-text-[#4A4A4A]">
+            {{ value.serviceStationVo.pname }}
+          </p>
+          <div class="tw-mt-[6px] tw-flex">
             <img
-              class="tw-w-[16px] tw-h-[16px] tw-mr-[4px]"
+              class="tw-mr-[4px] tw-h-[16px] tw-w-[16px]"
               src="@/assets/images/wdsq/icon_address_blue.png"
               alt="" />
-            <p class="tw-text-[11px] tw-text-[#999999] tw-font-medium">
+            <p class="tw-text-[11px] tw-font-medium tw-text-[#999999]">
+              {{ value.serviceStationVo.address }}
+            </p>
+          </div>
+          <div class="tw-mt-[6px] tw-flex">
+            <img
+              class="tw-mr-[4px] tw-h-[16px] tw-w-[16px]"
+              src="@/assets/images/login/icon_phone.png"
+              alt="" />
+            <p class="tw-text-[11px] tw-font-medium tw-text-[#999999]">
+              {{ value.serviceStationVo.phone }}
+            </p>
+          </div>
+        </div>
+
+        <div
+          v-for="station in value.children"
+          :key="station.pid"
+          class="stations_item_info">
+          <p class="tw-text-[17px] tw-font-semibold tw-text-[#4A4A4A]">{{ station.ename }}</p>
+          <div class="tw-mt-[6px] tw-flex">
+            <img
+              class="tw-mr-[4px] tw-h-[16px] tw-w-[16px]"
+              src="@/assets/images/wdsq/icon_address_blue.png"
+              alt="" />
+            <p class="tw-text-[11px] tw-font-medium tw-text-[#999999]">
               {{ station.address }}
+            </p>
+          </div>
+          <div class="tw-mt-[6px] tw-flex">
+            <img
+              class="tw-mr-[4px] tw-h-[16px] tw-w-[16px]"
+              src="@/assets/images/login/icon_phone.png"
+              alt="" />
+            <p class="tw-text-[11px] tw-font-medium tw-text-[#999999]">
+              {{ station.phone }}
             </p>
           </div>
         </div>
       </div>
+      <!-- <div>
+        <div
+          v-for="(item, index) in stations"
+          :key="index"
+          class="stations_item tw-p-[10px]">
+          <div class="tw-flex tw-justify-between">
+            <p class="tw-text-[17px] tw-font-semibold tw-text-[#4A4A4A]">{{ item.pname }}</p>
+            <p class="tw-text-[14px] tw-font-semibold tw-text-[#4A4A4A]">{{ item.phone }}</p>
+          </div>
+          <div class="tw-mt-[6px] tw-flex">
+            <img
+              class="tw-mr-[4px] tw-h-[16px] tw-w-[16px]"
+              src="@/assets/images/wdsq/icon_address_blue.png"
+              alt="" />
+            <p class="tw-text-[11px] tw-font-medium tw-text-[#999999]">
+              {{ item.address }}
+            </p>
+          </div>
+        </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -42,16 +96,15 @@
   import { getStationList } from '@/apis'
   import { Toast } from 'vant'
   import { onMounted, ref } from 'vue'
-
   onMounted(() => {
     getStations()
   })
-
   const stations = ref([])
-  function getStations() {
+  const getStations = () => {
     getStationList()
       .then((res) => {
         if (res.data.code === 0) {
+          // 刷新
           stations.value = res.data.data
         } else {
           Toast(res.data.msg)

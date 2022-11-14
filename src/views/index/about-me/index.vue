@@ -4,10 +4,10 @@
     <div class="about_me_part">
       <div class="about_me_part-title">
         <img
-          class="tw-w-[20px] tw-h-[20px]"
+          class="tw-h-[20px] tw-w-[20px]"
           src="@/assets/images/about-me/icon_information.png"
           alt="" />
-        <p class="tw-text-[17px] tw-font-semibold tw-ml-[8px]">基本信息</p>
+        <p class="tw-ml-[8px] tw-text-[17px] tw-font-semibold">基本信息</p>
       </div>
       <div class="about_me_part-info info">
         <div class="info_item">
@@ -33,7 +33,7 @@
             <span class="tw-ml-[10px]">{{ userInfo.community }}</span>
           </p>
         </div>
-        <div class="!tw-mb-0 info_item">
+        <div class="info_item !tw-mb-0">
           <p class="info_item_label"></p>
           <p class="info_item_value">{{ userInfo.address }}</p>
         </div>
@@ -44,27 +44,27 @@
       @click="onSignOut">
       <div class="about_me_part-title">
         <img
-          class="tw-w-[20px] tw-h-[20px]"
+          class="tw-h-[20px] tw-w-[20px]"
           src="@/assets/images/about-me/icon_quit.png"
           alt="" />
-        <p class="tw-text-[17px] tw-font-semibold tw-ml-[8px]">退出系统</p>
+        <p class="tw-ml-[8px] tw-text-[17px] tw-font-semibold">退出系统</p>
       </div>
     </div>
-    <div
-      class="about_me_part tw-flex tw-justify-between tw-items-center"
+    <!-- <div
+      class="about_me_part tw-flex tw-items-center tw-justify-between"
       @click="router.push('/system-code')">
       <div class="about_me_part-title">
         <img
-          class="tw-w-[20px] tw-h-[20px]"
+          class="tw-h-[20px] tw-w-[20px]"
           src="@/assets/images/about-me/icon_code.png"
           alt="" />
-        <p class="tw-text-[17px] tw-font-semibold tw-ml-[8px]">系统二维码</p>
+        <p class="tw-ml-[8px] tw-text-[17px] tw-font-semibold">系统二维码</p>
       </div>
       <img
-        class="tw-w-[16px] tw-h-[16px]"
+        class="tw-h-[16px] tw-w-[16px]"
         src="@/assets/images/about-me/icon_right.png"
         alt="" />
-    </div>
+    </div> -->
 
     <van-action-sheet
       v-model:show="showActionSheet"
