@@ -19,11 +19,11 @@
         ref="el"
         :key="key"
         class="stations_item tw-pt-[10px]">
-        <div class="tw-ml-[10px]">
+        <div class="tw-ml-[10px] tw-pb-[10px]">
           <p class="tw-text-[17px] tw-font-semibold tw-text-[#4A4A4A]">
             {{ value.serviceStationVo.pname }}
           </p>
-          <div class="tw-mt-[6px] tw-flex">
+          <div class="tw-my-[5px] tw-mt-[6px] tw-flex">
             <img
               class="tw-mr-[4px] tw-h-[16px] tw-w-[16px]"
               src="@/assets/images/wdsq/icon_address_blue.png"
@@ -32,11 +32,11 @@
               {{ value.serviceStationVo.address }}
             </p>
           </div>
-          <div class="tw-mt-[6px] tw-flex">
-            <img
-              class="tw-mr-[4px] tw-h-[16px] tw-w-[16px]"
-              src="@/assets/images/login/icon_phone.png"
-              alt="" />
+          <div class="tw-my-[5px] tw-mt-[6px] tw-flex">
+            <van-icon
+              name="phone"
+              class="tw-mr-[4px] tw-h-[16px] tw-w-[16px]">
+            </van-icon>
             <p class="tw-text-[11px] tw-font-medium tw-text-[#999999]">
               {{ value.serviceStationVo.phone }}
             </p>
@@ -58,10 +58,10 @@
             </p>
           </div>
           <div class="tw-mt-[6px] tw-flex">
-            <img
-              class="tw-mr-[4px] tw-h-[16px] tw-w-[16px]"
-              src="@/assets/images/login/icon_phone.png"
-              alt="" />
+            <van-icon
+              name="phone"
+              class="tw-mr-[4px] tw-h-[16px] tw-w-[16px]">
+            </van-icon>
             <p class="tw-text-[11px] tw-font-medium tw-text-[#999999]">
               {{ station.phone }}
             </p>
