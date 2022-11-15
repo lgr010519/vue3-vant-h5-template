@@ -33,10 +33,10 @@
             </p>
           </div>
           <div class="tw-my-[5px] tw-mt-[6px] tw-flex">
-            <van-icon
-              name="phone"
-              class="tw-mr-[4px] tw-h-[16px] tw-w-[16px]">
-            </van-icon>
+            <img
+              class="tw-mr-[4px] tw-h-[16px] tw-w-[16px]"
+              src="@/assets/images/wdsq/icon_phone.png"
+              alt="" />
             <p class="tw-text-[11px] tw-font-medium tw-text-[#999999]">
               {{ value.serviceStationVo.phone }}
             </p>
@@ -58,10 +58,10 @@
             </p>
           </div>
           <div class="tw-mt-[6px] tw-flex">
-            <van-icon
-              name="phone"
-              class="tw-mr-[4px] tw-h-[16px] tw-w-[16px]">
-            </van-icon>
+            <img
+              class="tw-mr-[4px] tw-h-[16px] tw-w-[16px]"
+              src="@/assets/images/wdsq/icon_phone.png"
+              alt="" />
             <p class="tw-text-[11px] tw-font-medium tw-text-[#999999]">
               {{ station.phone }}
             </p>
