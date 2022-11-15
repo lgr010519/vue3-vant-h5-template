@@ -19,7 +19,9 @@
         ref="el"
         :key="key"
         class="stations_item tw-pt-[10px]">
-        <div class="tw-ml-[10px] tw-pb-[10px]">
+        <div
+          class="tw-ml-[12px] tw-pb-[5px]"
+          style="border-bottom: 1px solid #f4f4f4">
           <p class="tw-text-[17px] tw-font-semibold tw-text-[#4A4A4A]">
             {{ value.serviceStationVo.pname }}
           </p>
@@ -48,7 +50,7 @@
           :key="station.pid"
           class="stations_item_info">
           <p class="tw-text-[17px] tw-font-semibold tw-text-[#4A4A4A]">{{ station.ename }}</p>
-          <div class="tw-mt-[6px] tw-flex">
+          <div class="tw-mt-[8px] tw-flex">
             <img
               class="tw-mr-[4px] tw-h-[16px] tw-w-[16px]"
               src="@/assets/images/wdsq/icon_address_blue.png"
@@ -57,7 +59,7 @@
               {{ station.address }}
             </p>
           </div>
-          <div class="tw-mt-[6px] tw-flex">
+          <div class="tw-mt-[8px] tw-flex">
             <img
               class="tw-mr-[4px] tw-h-[16px] tw-w-[16px]"
               src="@/assets/images/wdsq/icon_phone.png"
