@@ -62,3 +62,6 @@ export const peopleOpinionTitle = [{ required: true, message: '请填写建议�
 
 //建议描述
 export const peopleOpinionMessage = [{ required: true, message: '请填写建议名称' }]
+
+// 行业类型
+export const userObjIndustry = [{ required: true, message: '请选择行业类型' }]

@@ -86,6 +86,32 @@
             @finish="typeFinish">
           </van-cascader>
         </van-popup>
+
+        <!-- 行业类型 -->
+        <van-field
+          v-model="industryValue"
+          :is-link="isCreate"
+          label="行业类型"
+          placeholder="点击选择"
+          :rules="userObjIndustry"
+          @click="industry = true">
+        </van-field>
+        <van-popup
+          v-if="isCreate"
+          v-model:show="industry"
+          round
+          position="bottom">
+          <van-cascader
+            v-model="form.industry"
+            :closeable="false"
+            :show-header="false"
+            title="请选择诉求类型"
+            active-color="#3189FF"
+            :options="industryList"
+            @close="industry = false"
+            @finish="industryFinish">
+          </van-cascader>
+        </van-popup>
         <div
           v-if="Number.isInteger(rangeNumber) || !isCreate"
           class="tw-flex tw-h-[70px] tw-justify-between">
@@ -153,18 +179,19 @@
   import { computed, onMounted, reactive, ref } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
   import { getAppealType, getStreet, createAppeal, getAppealDetail } from '@/apis/index'
-  import { Toast } from 'vant'
+  import { Toast, Dialog } from 'vant'
   import {
     userObjName,
     userObjAddress,
     userObjMessageAddress,
     userObjType,
-    userObjChinese
+    userObjChinese,
+    userObjIndustry
   } from '@/configs/globalvar'
-  // import { showConfirmDialog } from 'vant'
   const route = useRoute()
   const router = useRouter()
   const show = ref(false)
+  const industry = ref(false)
   const form = reactive({
     //局长信箱默认类型
     orderType: 3,
@@ -181,6 +208,8 @@
     address: '',
     // 诉求描述
     description: '',
+    // 行业类型
+    industry: '',
     filePath: []
   })
   const cascaderValue = ref('')
@@ -212,12 +241,38 @@
   const typeValue = ref('')
   //诉求列表
   const TypeList = ref([])
+  // 行业列表
+  const industryList = ref([
+    {
+      text: '建筑施工类',
+      value: '0'
+    },
+    {
+      text: '工业类',
+      value: '1'
+    },
+    {
+      text: '三产类（餐饮、文化娱乐、汽修等营业性活动类）',
+      value: '2'
+    },
+    {
+      text: '其他类',
+      value: '3'
+    }
+  ])
+  const industryValue = ref('')
   // 诉求表单回调
   const typeFinish = ({ selectedOptions, value }) => {
     rangeNumber.value = value
     showType.value = false
     typeValue.value = selectedOptions.map((option) => option.label).join('/')
     form.appealType = selectedOptions.map((option) => option.index).join('/')
+  }
+  // 行业类型回调
+  const industryFinish = ({ selectedOptions }) => {
+    industry.value = false
+    industryValue.value = selectedOptions.map((option) => option.text).join('/')
+    form.industry = selectedOptions.map((option) => option.value).join('/')
   }
   //诉求范围展示
   const rangeText = reactive([
@@ -257,6 +312,43 @@
       Toast('服务器出错,获取街道信息失败')
     }
   }
+  const getAppealDetails = (id) => {
+    getAppealDetail(id)
+      .then((res) => {
+        if (res.data.code === 0) {
+          const {
+            title,
+            areaCode,
+            description,
+            filePath,
+            orderType,
+            address,
+            processStatus,
+            area,
+            appealType,
+            industry
+          } = res.data.data
+          form.address = address
+          form.title = title
+          form.areaCode = areaCode
+          form.area = area
+          form.description = description
+          form.filePath = JSON.parse(filePath)
+          form.orderType = orderType
+          typeValue.value = getOrderType(orderType)
+          form.spaceValue = streetCasText
+          form.processStatus = processStatus
+          form.industry = industry
+          industryValue.value = getIndustryType(parseInt(industry))
+          rangeNumber.value = appealType
+        } else {
+          Toast(res.data.msg)
+        }
+      })
+      .catch(() => {
+        Toast('服务器出错,获取详情失败')
+      })
+  }
   const getOrderType = (orderType) => {
     switch (orderType) {
       case 0:
@@ -271,7 +363,18 @@
         return '其他'
     }
   }
-
+  const getIndustryType = (industryType) => {
+    switch (industryType) {
+      case 0:
+        return '建筑施工类'
+      case 1:
+        return '工业类'
+      case 2:
+        return '三产类（餐饮、文化娱乐、汽修等营业性活动类）'
+      case 3:
+        return '其他类'
+    }
+  }
   const streetCasText = computed(() => {
     let district = ''
     let street = ''
@@ -293,40 +396,32 @@
     return form.area ? `${district} ${street}` : ''
   })
 
+  const region = computed(() => {
+    let district = ''
+    let street = ''
+
+    for (let i = 0; i < options.value.length; i++) {
+      const item = options.value[i]
+      for (let j = 0; j < item.streets.length; j++) {
+        if (item.streets[j].name === form.area) {
+          district = item.name
+          street = item.streets[j].name
+          break
+        }
+      }
+      if (district && street) {
+        break
+      }
+    }
+
+    return form.area ? `${district}` : ''
+  })
+
   onMounted(() => {
     getAppeal()
     getstreet()
     if (route.params.mode === 'detail') {
-      getAppealDetail(route.params.id)
-        .then((res) => {
-          if (res.data.code === 0) {
-            const {
-              title,
-              areaCode,
-              description,
-              filePath,
-              orderType,
-              address,
-              processStatus,
-              area
-            } = res.data.data
-            form.address = address
-            form.title = title
-            form.areaCode = areaCode
-            form.area = area
-            form.description = description
-            form.filePath = JSON.parse(filePath)
-            form.orderType = orderType
-            typeValue.value = getOrderType(orderType)
-            form.spaceValue = streetCasText
-            form.processStatus = processStatus
-          } else {
-            Toast(res.data.msg)
-          }
-        })
-        .catch(() => {
-          Toast('服务器出错,获取详情失败')
-        })
+      getAppealDetails(route.params.id)
     }
   })
 
@@ -353,17 +448,20 @@
       })
   }
   const onSubmit = () => {
-    submitForm()
-    // showConfirmDialog({
-    //   title: '标题',
-    //   message: '如果解决方法是丑陋的，那就肯定还有更好的解决方法，只是还没有发现而已。'
-    // })
-    //   .then(() => {
-    //     // on confirm
-    //   })
-    //   .catch(() => {
-    //     // on cancel
-    //   })
+    Dialog.confirm({
+      message: `您反映的是位于${region.value}的${form.title}问题，建议阅知生态环境部门受理事项范围，如不属于生态环境部门职责事项，可另行拔打深圳便民热线12345反映。`,
+      confirmButtonColor: '#337ECC',
+      confirmButtonText: '是',
+      cancelButtonText: '否'
+    })
+      .then(() => {
+        // on confirm
+        submitForm()
+      })
+      .catch(() => {
+        // on cancel
+        console.log('取消')
+      })
   }
 </script>
 

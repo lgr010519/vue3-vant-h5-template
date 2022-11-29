@@ -74,6 +74,32 @@
             @finish="onTypeCasFinish">
           </van-cascader>
         </van-popup>
+
+        <!-- 行业类型 -->
+        <van-field
+          v-model="industryValue"
+          :is-link="!readonly"
+          label="行业类型"
+          :placeholder="readonly ? '' : '点击选择'"
+          :rules="rules.industry"
+          @click="onSelectIndustry">
+        </van-field>
+        <van-popup
+          v-model:show="industry"
+          round
+          position="bottom">
+          <van-cascader
+            v-model="formData.industry"
+            :closeable="false"
+            :show-header="false"
+            title="请选择诉求类型"
+            active-color="#3189FF"
+            :options="industryList"
+            @close="industry = false"
+            @finish="industryFinish">
+          </van-cascader>
+        </van-popup>
+
         <div
           v-if="readonly || Number.isInteger(rangeNumber)"
           class="tw-flex tw-h-[70px] tw-justify-between">
@@ -147,10 +173,11 @@
     userObjAddress,
     userObjMessageAddress,
     userObjType,
-    userObjChinese
+    userObjChinese,
+    userObjIndustry
   } from '@/configs/globalvar'
   import { createAppeal, getAppealDetail, getAppealType, getStreet } from '@/apis'
-  import { Toast } from 'vant'
+  import { Toast, Dialog } from 'vant'
 
   const route = useRoute()
   const router = useRouter()
@@ -181,7 +208,8 @@
     description: '',
     filePath: [],
     orderType: 1,
-    processStatus: 1
+    processStatus: 1,
+    industry: ''
   })
 
   const rules = reactive({
@@ -189,7 +217,8 @@
     streetCasText: userObjAddress,
     address: userObjMessageAddress,
     typeCasText: userObjType,
-    description: userObjChinese
+    description: userObjChinese,
+    industry: userObjIndustry
   })
 
   //诉求范围展示
@@ -336,23 +365,37 @@
     showTypePicker.value = false
   }
 
-  function onSubmit(values) {
-    console.log(values)
-    createAppeal({
-      ...formData,
-      appealType: JSON.stringify(formData.appealType),
-      filePath: JSON.stringify(formData.filePath)
+  function onSubmit() {
+    Dialog.confirm({
+      message: `您反映的是位于${streetCasText.value.slice(0, 3)}的${
+        formData.title
+      }问题，建议阅知生态环境部门受理事项范围，如不属于生态环境部门职责事项，可另行拔打深圳便民热线12345反映。`,
+      confirmButtonColor: '#337ECC',
+      confirmButtonText: '是',
+      cancelButtonText: '否'
     })
-      .then((res) => {
-        if (res.data.code === 0) {
-          Toast('提交成功，感谢您对我们工作的支持！')
-          router.push('/')
-        } else {
-          Toast(res.data.msg)
-        }
+      .then(() => {
+        // on confirm
+        createAppeal({
+          ...formData,
+          appealType: JSON.stringify(formData.appealType),
+          filePath: JSON.stringify(formData.filePath)
+        })
+          .then((res) => {
+            if (res.data.code === 0) {
+              Toast('提交成功，感谢您对我们工作的支持！')
+              router.push('/')
+            } else {
+              Toast(res.data.msg)
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
+        // on cancel
+        console.log('取消')
       })
   }
 
@@ -361,6 +404,7 @@
       .then((res) => {
         if (res.data.code === 0) {
           rangeNumber.value = res.data.data.appealType
+          industryValue.value = getIndustryType(parseInt(res.data.data.industry))
           for (const key in formData) {
             if (Object.hasOwnProperty.call(formData, key)) {
               if (key === 'filePath') {
@@ -379,6 +423,52 @@
       .catch((err) => {
         console.log(err)
       })
+  }
+
+  const industryValue = ref('')
+  const industry = ref(false)
+  // 行业列表
+  const industryList = ref([
+    {
+      text: '建筑施工类',
+      value: '0'
+    },
+    {
+      text: '工业类',
+      value: '1'
+    },
+    {
+      text: '三产类（餐饮、文化娱乐、汽修等营业性活动类）',
+      value: '2'
+    },
+    {
+      text: '其他类',
+      value: '3'
+    }
+  ])
+  // 行业类型回调
+  const industryFinish = ({ selectedOptions }) => {
+    industry.value = false
+    industryValue.value = selectedOptions.map((option) => option.text).join('/')
+    formData.industry = selectedOptions.map((option) => option.value).join('/')
+  }
+  const getIndustryType = (industryType) => {
+    switch (industryType) {
+      case 0:
+        return '建筑施工类'
+      case 1:
+        return '工业类'
+      case 2:
+        return '三产类（餐饮、文化娱乐、汽修等营业性活动类）'
+      case 3:
+        return '其他类'
+    }
+  }
+  function onSelectIndustry() {
+    if (readonly.value) {
+      return
+    }
+    industry.value = true
   }
 </script>
 

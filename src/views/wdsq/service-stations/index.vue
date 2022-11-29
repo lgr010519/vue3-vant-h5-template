@@ -2,7 +2,7 @@
   <div class="tw-flex tw-h-full tw-w-full tw-flex-col">
     <nav-bar title="服务站点地址"></nav-bar>
     <div class="stations tw-flex-1">
-      <div class="stations_top">
+      <!-- <div class="stations_top">
         <p class="tw-mb-[12px] tw-font-semibold">工作时间工作日:</p>
         <p class="tw-mb-[5px] tw-font-medium">
           上午
@@ -12,7 +12,7 @@
           下午
           <span class="tw-ml-[12px]">14 : 00 - 18 : 00</span>
         </p>
-      </div>
+      </div> -->
 
       <div
         v-for="(value, key) in stations"
