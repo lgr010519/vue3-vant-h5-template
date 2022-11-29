@@ -1,10 +1,10 @@
 <template>
-  <div class="tw-w-[100%] tw-h-[100%] tw-flex tw-flex-col">
+  <div class="tw-flex tw-h-[100%] tw-w-[100%] tw-flex-col">
     <nav-bar title="人民建议征集"></nav-bar>
 
-    <div class="tw-mt-[24px] tw-px-[14px] tw-w-[100%] tw-flex-1 tw-overflow-auto">
+    <div class="tw-mt-[24px] tw-w-[100%] tw-flex-1 tw-overflow-auto tw-px-[14px]">
       <!-- 事项内容 -->
-      <p class="tw-text-[#4A4A4A] tw-text-[17px] tw-font-semibold">事项内容</p>
+      <p class="tw-text-[17px] tw-font-semibold tw-text-[#4A4A4A]">事项内容</p>
       <van-form
         :readonly="!isCreate"
         class="custom_van_form tw-pt-[14px]"
@@ -53,17 +53,17 @@
       <div v-if="!isCreate && form.processStatus === 3">
         <p class="tw-text-[16px] tw-font-semibold tw-text-[#666666]">办理结果</p>
         <div
-          class="tw-w-[100%] tw-mt-[12px] tw-flex tw-items-center tw-h-[94px] tw-bg-[#E5EFFB] tw-rounded-[6px]">
-          <div class="tw-mx-auto tw-flex tw-justify-between tw-w-[329px] tw-h-[66px]">
-            <div class="tw-w-[18px] tw-h-[18px] tw-mt-[2px]">
+          class="tw-mt-[12px] tw-flex tw-h-[94px] tw-w-[100%] tw-items-center tw-rounded-[6px] tw-bg-[#E5EFFB]">
+          <div class="tw-mx-auto tw-flex tw-h-[66px] tw-w-[329px] tw-justify-between">
+            <div class="tw-mt-[2px] tw-h-[18px] tw-w-[18px]">
               <img
                 style="width: 100%; height: 100%"
                 src="@/assets/images/jzxx/icon_handle.png"
                 alt="" />
             </div>
-            <div class="tw-w-[293px] tw-h-[100%] tw-font-medium tw-text-[15px] tw-text-[#5591E0]">
+            <div class="tw-h-[100%] tw-w-[293px] tw-text-[15px] tw-font-medium tw-text-[#5591E0]">
               <p>
-                您反映的问题，责任单位已处理。责任单位将通过您所留的方式答复结果，感谢您对我们工作的理解与支持！
+                您反映的问题，责任单位已处理，处理结果将通过电话、短信等方式及时向您反馈，感谢您对我们工作的理解和支持！
               </p>
             </div>
           </div>

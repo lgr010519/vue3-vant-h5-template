@@ -74,7 +74,16 @@
             @finish="onTypeCasFinish">
           </van-cascader>
         </van-popup>
-
+        <div
+          v-if="readonly || Number.isInteger(rangeNumber)"
+          class="tw-flex tw-h-[70px] tw-justify-between">
+          <p class="tw-mt-[22px] tw-mb-[2px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
+            诉求范围
+          </p>
+          <div class="appealRange tw-mt-[20px] tw-h-[64px] tw-w-[235px]">
+            {{ appealRange }}
+          </div>
+        </div>
         <p class="tw-mt-[22px] tw-mb-[2px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
           诉求描述
         </p>
@@ -121,7 +130,7 @@
             src="@/assets/images/jzxx/icon_handle.png"
             alt="" />
           <p class="tw-flex-1 tw-text-[15px] tw-font-medium tw-text-[#5591E0]">
-            您反映的问题，责任单位已处理。责任单位将通过您所留的方式答复结果，感谢您对我们工作的理解与支持！
+            您反映的问题，责任单位已处理，处理结果将通过电话、短信等方式及时向您反馈，感谢您对我们工作的理解和支持！
           </p>
         </div>
       </template>
@@ -182,6 +191,16 @@
     typeCasText: userObjType,
     description: userObjChinese
   })
+
+  //诉求范围展示
+  const rangeText = reactive([
+    '生态环境部门主要负责对工业噪声、建筑施工噪声以及商业经营活动、营业性文化娱乐活动中使用设备、设施产生的社会生活噪声实施监管。',
+    '生态环境部门主要负责对工业企业、餐饮服务单位和其他生产经营者在生产经营活动中产生的废气、油烟污染实施监管。',
+    '生态环境部门主要负责对工业企业在生产经营过程中产生的废水污染实施监管。',
+    '生态环境部门主要负责对工业固体废弃物、危险废物污染实施监管。',
+    '生态环境部门主要负责电磁辐射、核辐射、建筑工地光污染、机动车排放黑烟等实施监管以及承担建设项目环评审批、排污许可、碳排放交易等业务管理工作。'
+  ])
+  const rangeNumber = ref('')
   /**
    * 选择器字段对应
    */
@@ -254,7 +273,6 @@
    */
   // eslint-disable-next-line no-unused-vars
   function onStreetCasFinish({ selectedOptions }) {
-    console.log(selectedOptions)
     formData.areaCode = selectedOptions[1].code
     formData.area = selectedOptions[1].name
     showStreetPicker.value = false
@@ -308,9 +326,13 @@
 
     return result ? result.label : ''
   })
-
+  const appealRange = computed(() => {
+    return rangeText[rangeNumber.value]
+  })
   // eslint-disable-next-line no-unused-vars
-  function onTypeCasFinish({ selectedOptions }) {
+  function onTypeCasFinish({ value }) {
+    rangeNumber.value = value
+    console.log(appealRange.value)
     showTypePicker.value = false
   }
 
@@ -338,6 +360,7 @@
     getAppealDetail(id)
       .then((res) => {
         if (res.data.code === 0) {
+          rangeNumber.value = res.data.data.appealType
           for (const key in formData) {
             if (Object.hasOwnProperty.call(formData, key)) {
               if (key === 'filePath') {
@@ -368,6 +391,11 @@
       font-size: 17px;
       font-weight: 700;
       margin-bottom: 14px;
+    }
+    .appealRange {
+      color: #337ecc;
+      font-weight: 400;
+      font-size: 12px;
     }
   }
 </style>

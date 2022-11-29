@@ -2,7 +2,6 @@
 <template>
   <div class="home">
     <div
-      v-if="false"
       class="home_item"
       :style="{
         backgroundImage: `url(${imgBlue})`,

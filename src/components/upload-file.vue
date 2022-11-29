@@ -39,7 +39,11 @@
         src="@/assets/images/upload-file/button_add.png"
         alt="" />
     </van-uploader>
-    <p class="tip">#仅支持jpg/png格式文件</p>
+    <p
+      v-if="!readonly"
+      class="tip">
+      #仅支持jpg/png格式文件
+    </p>
   </div>
 </template>
 

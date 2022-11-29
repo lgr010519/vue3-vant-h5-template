@@ -86,6 +86,16 @@
             @finish="typeFinish">
           </van-cascader>
         </van-popup>
+        <div
+          v-if="Number.isInteger(rangeNumber) || !isCreate"
+          class="tw-flex tw-h-[70px] tw-justify-between">
+          <p class="tw-mt-[22px] tw-mb-[2px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
+            诉求范围
+          </p>
+          <div class="appealRange tw-mt-[20px] tw-h-[64px] tw-w-[235px]">
+            {{ appealRange }}
+          </div>
+        </div>
         <!-- 诉求描述 -->
         <p class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">诉求描述</p>
         <van-field
@@ -128,7 +138,7 @@
             </div>
             <div class="tw-h-[100%] tw-w-[293px] tw-text-[15px] tw-font-medium tw-text-[#5591E0]">
               <p>
-                您反映的问题，责任单位已处理。责任单位将通过您所留的方式答复结果，感谢您对我们工作的理解与支持！
+                您反映的问题，责任单位已处理，处理结果将通过电话、短信等方式及时向您反馈，感谢您对我们工作的理解和支持！
               </p>
             </div>
           </div>
@@ -151,6 +161,7 @@
     userObjType,
     userObjChinese
   } from '@/configs/globalvar'
+  // import { showConfirmDialog } from 'vant'
   const route = useRoute()
   const router = useRouter()
   const show = ref(false)
@@ -186,7 +197,6 @@
   }
   const options = ref([])
   const onFinish = ({ selectedOptions }) => {
-    console.log(selectedOptions)
     show.value = false
     if (selectedOptions[1].name) {
       form.area = selectedOptions[1].name
@@ -203,11 +213,24 @@
   //诉求列表
   const TypeList = ref([])
   // 诉求表单回调
-  const typeFinish = ({ selectedOptions }) => {
+  const typeFinish = ({ selectedOptions, value }) => {
+    rangeNumber.value = value
     showType.value = false
     typeValue.value = selectedOptions.map((option) => option.label).join('/')
     form.appealType = selectedOptions.map((option) => option.index).join('/')
   }
+  //诉求范围展示
+  const rangeText = reactive([
+    '生态环境部门主要负责对工业噪声、建筑施工噪声以及商业经营活动、营业性文化娱乐活动中使用设备、设施产生的社会生活噪声实施监管。',
+    '生态环境部门主要负责对工业企业、餐饮服务单位和其他生产经营者在生产经营活动中产生的废气、油烟污染实施监管。',
+    '生态环境部门主要负责对工业企业在生产经营过程中产生的废水污染实施监管。',
+    '生态环境部门主要负责对工业固体废弃物、危险废物污染实施监管。',
+    '生态环境部门主要负责电磁辐射、核辐射、建筑工地光污染、机动车排放黑烟等实施监管以及承担建设项目环评审批、排污许可、碳排放交易等业务管理工作。'
+  ])
+  const rangeNumber = ref('')
+  const appealRange = computed(() => {
+    return rangeText[rangeNumber.value]
+  })
   //获取诉求类型
   const getAppeal = async () => {
     try {
@@ -331,11 +354,26 @@
   }
   const onSubmit = () => {
     submitForm()
+    // showConfirmDialog({
+    //   title: '标题',
+    //   message: '如果解决方法是丑陋的，那就肯定还有更好的解决方法，只是还没有发现而已。'
+    // })
+    //   .then(() => {
+    //     // on confirm
+    //   })
+    //   .catch(() => {
+    //     // on cancel
+    //   })
   }
 </script>
 
 <style lang="scss" scoped>
   .custom_van_form {
     @extend .custom_van_form;
+  }
+  .appealRange {
+    color: #337ecc;
+    font-weight: 400;
+    font-size: 12px;
   }
 </style>

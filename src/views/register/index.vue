@@ -1,9 +1,9 @@
 <template>
-  <div class="tw-w-[100%] tw-h-[100%] tw-flex tw-flex-col">
+  <div class="tw-flex tw-h-[100%] tw-w-[100%] tw-flex-col">
     <!-- < 用户注册 -->
     <nav-bar title="用户注册"></nav-bar>
     <!-- 注册表单 -->
-    <div class="tw-flex-1 tw-w-[100%] tw-overflow-auto tw-px-[14px] tw-pt-[14px]">
+    <div class="tw-w-[100%] tw-flex-1 tw-overflow-auto tw-px-[14px] tw-pt-[14px]">
       <van-form
         class="custom_van_form"
         @submit="onSubmit">
@@ -34,7 +34,7 @@
           v-model="user.idCard"
           name="idCard"
           label="身份证号"
-          placeholder="请输入身份证号"
+          placeholder="请确保输入您真实的身份证号"
           :rules="idCard">
         </van-field>
         <!-- 手机号 -->
@@ -109,7 +109,7 @@
           show-word-limit>
         </van-field>
 
-        <div class="tw-mx-auto tw-w-[347px] tw-h-[44px] tw-mt-[170px] tw-mb-[14px]">
+        <div class="tw-mx-auto tw-mt-[170px] tw-mb-[14px] tw-h-[44px] tw-w-[347px]">
           <van-button
             block
             type="primary"
