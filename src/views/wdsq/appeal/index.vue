@@ -81,7 +81,7 @@
           <p class="tw-mt-[22px] tw-mb-[2px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
             诉求范围
           </p>
-          <div class="appealRange tw-mt-[20px] tw-h-[64px] tw-w-[235px] tw-pb-[10px]">
+          <div class="appealRange tw-mt-[20px] tw-w-[235px] tw-pb-[10px]">
             {{ appealRange }}
           </div>
         </div>
@@ -362,7 +362,6 @@
   // eslint-disable-next-line no-unused-vars
   function onTypeCasFinish({ value }) {
     rangeNumber.value = value
-    console.log(appealRange.value)
     showTypePicker.value = false
   }
 

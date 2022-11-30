@@ -335,7 +335,7 @@
           form.description = description
           form.filePath = JSON.parse(filePath)
           form.orderType = orderType
-          typeValue.value = getOrderType(orderType)
+          typeValue.value = getOrderType(appealType)
           form.spaceValue = streetCasText
           form.processStatus = processStatus
           form.industryType = industryType
