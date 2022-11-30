@@ -30,13 +30,16 @@
           </template>
         </van-field>
         <!-- 身份证号 -->
-        <van-field
-          v-model="user.idCard"
-          name="idCard"
-          label="身份证号"
-          placeholder="请确保输入您真实的身份证号"
-          :rules="idCard">
-        </van-field>
+        <van-config-provider :theme-vars="{ fieldPlaceholderTextColor: 'red' }">
+          <van-field
+            v-model="user.idCard"
+            class="idCard"
+            name="idCard"
+            label="身份证号"
+            placeholder="请确保输入您真实的身份证号"
+            :rules="idCard">
+          </van-field>
+        </van-config-provider>
         <!-- 手机号 -->
         <van-field
           v-model="user.telPhone"
@@ -255,5 +258,8 @@
   .custom_van_form {
     @extend .custom_van_form;
     // padding: 14px 14px 0 14px;
+  }
+  .idCard::placeholder {
+    color: red;
   }
 </style>

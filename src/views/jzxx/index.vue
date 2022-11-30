@@ -86,7 +86,16 @@
             @finish="typeFinish">
           </van-cascader>
         </van-popup>
-
+        <div
+          v-if="Number.isInteger(rangeNumber) || !isCreate"
+          class="tw-flex tw-justify-between">
+          <p class="tw-mt-[22px] tw-mb-[2px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
+            诉求范围
+          </p>
+          <div class="appealRange tw-mt-[20px] tw-w-[235px] tw-pb-[10px]">
+            {{ appealRange }}
+          </div>
+        </div>
         <!-- 行业类型 -->
         <van-field
           v-model="industryValue"
@@ -102,7 +111,7 @@
           round
           position="bottom">
           <van-cascader
-            v-model="form.industry"
+            v-model="form.industryType"
             :closeable="false"
             :show-header="false"
             title="请选择诉求类型"
@@ -112,16 +121,7 @@
             @finish="industryFinish">
           </van-cascader>
         </van-popup>
-        <div
-          v-if="Number.isInteger(rangeNumber) || !isCreate"
-          class="tw-flex tw-h-[70px] tw-justify-between">
-          <p class="tw-mt-[22px] tw-mb-[2px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
-            诉求范围
-          </p>
-          <div class="appealRange tw-mt-[20px] tw-h-[64px] tw-w-[235px]">
-            {{ appealRange }}
-          </div>
-        </div>
+
         <!-- 诉求描述 -->
         <p class="tw-mt-[22px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">诉求描述</p>
         <van-field
@@ -209,7 +209,7 @@
     // 诉求描述
     description: '',
     // 行业类型
-    industry: '',
+    industryType: '',
     filePath: []
   })
   const cascaderValue = ref('')
@@ -245,19 +245,19 @@
   const industryList = ref([
     {
       text: '建筑施工类',
-      value: '0'
+      value: '建筑施工类'
     },
     {
       text: '工业类',
-      value: '1'
+      value: '工业类'
     },
     {
       text: '三产类（餐饮、文化娱乐、汽修等营业性活动类）',
-      value: '2'
+      value: '三产类（餐饮、文化娱乐、汽修等营业性活动类）'
     },
     {
       text: '其他类',
-      value: '3'
+      value: '其他类'
     }
   ])
   const industryValue = ref('')
@@ -272,7 +272,7 @@
   const industryFinish = ({ selectedOptions }) => {
     industry.value = false
     industryValue.value = selectedOptions.map((option) => option.text).join('/')
-    form.industry = selectedOptions.map((option) => option.value).join('/')
+    form.industryType = selectedOptions.map((option) => option.value).join('/')
   }
   //诉求范围展示
   const rangeText = reactive([
@@ -326,7 +326,7 @@
             processStatus,
             area,
             appealType,
-            industry
+            industryType
           } = res.data.data
           form.address = address
           form.title = title
@@ -338,8 +338,8 @@
           typeValue.value = getOrderType(orderType)
           form.spaceValue = streetCasText
           form.processStatus = processStatus
-          form.industry = industry
-          industryValue.value = getIndustryType(parseInt(industry))
+          form.industryType = industryType
+          industryValue.value = industryType
           rangeNumber.value = appealType
         } else {
           Toast(res.data.msg)
@@ -361,18 +361,6 @@
         return '固废'
       case 4:
         return '其他'
-    }
-  }
-  const getIndustryType = (industryType) => {
-    switch (industryType) {
-      case 0:
-        return '建筑施工类'
-      case 1:
-        return '工业类'
-      case 2:
-        return '三产类（餐饮、文化娱乐、汽修等营业性活动类）'
-      case 3:
-        return '其他类'
     }
   }
   const streetCasText = computed(() => {
@@ -449,10 +437,11 @@
   }
   const onSubmit = () => {
     Dialog.confirm({
-      message: `您反映的是位于${region.value}的${form.title}问题，建议阅知生态环境部门受理事项范围，如不属于生态环境部门职责事项，可另行拔打深圳便民热线12345反映。`,
+      message: `您反映的是位于${region.value}的${form.title}问题，建议阅知生态环境部门受理事项范围，如不属于生态环境部门职责事项，可另行拔打深圳便民热线12345反映。是否继续提交诉求(是、否)`,
       confirmButtonColor: '#337ECC',
       confirmButtonText: '是',
-      cancelButtonText: '否'
+      cancelButtonText: '否',
+      messageAlign: 'left'
     })
       .then(() => {
         // on confirm

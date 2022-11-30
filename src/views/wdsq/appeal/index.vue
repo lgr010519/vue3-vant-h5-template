@@ -75,6 +75,17 @@
           </van-cascader>
         </van-popup>
 
+        <div
+          v-if="readonly || Number.isInteger(rangeNumber)"
+          class="tw-flex tw-justify-between">
+          <p class="tw-mt-[22px] tw-mb-[2px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
+            诉求范围
+          </p>
+          <div class="appealRange tw-mt-[20px] tw-h-[64px] tw-w-[235px] tw-pb-[10px]">
+            {{ appealRange }}
+          </div>
+        </div>
+
         <!-- 行业类型 -->
         <van-field
           v-model="industryValue"
@@ -89,7 +100,7 @@
           round
           position="bottom">
           <van-cascader
-            v-model="formData.industry"
+            v-model="formData.industryType"
             :closeable="false"
             :show-header="false"
             title="请选择诉求类型"
@@ -100,16 +111,6 @@
           </van-cascader>
         </van-popup>
 
-        <div
-          v-if="readonly || Number.isInteger(rangeNumber)"
-          class="tw-flex tw-h-[70px] tw-justify-between">
-          <p class="tw-mt-[22px] tw-mb-[2px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
-            诉求范围
-          </p>
-          <div class="appealRange tw-mt-[20px] tw-h-[64px] tw-w-[235px]">
-            {{ appealRange }}
-          </div>
-        </div>
         <p class="tw-mt-[22px] tw-mb-[2px] tw-text-[16px] tw-font-semibold tw-text-[#666666]">
           诉求描述
         </p>
@@ -209,7 +210,7 @@
     filePath: [],
     orderType: 1,
     processStatus: 1,
-    industry: ''
+    industryType: ''
   })
 
   const rules = reactive({
@@ -369,10 +370,11 @@
     Dialog.confirm({
       message: `您反映的是位于${streetCasText.value.slice(0, 3)}的${
         formData.title
-      }问题，建议阅知生态环境部门受理事项范围，如不属于生态环境部门职责事项，可另行拔打深圳便民热线12345反映。`,
+      }问题，建议阅知生态环境部门受理事项范围，如不属于生态环境部门职责事项，可另行拔打深圳便民热线12345反映。是否继续提交诉求(是、否)`,
       confirmButtonColor: '#337ECC',
       confirmButtonText: '是',
-      cancelButtonText: '否'
+      cancelButtonText: '否',
+      messageAlign: 'left'
     })
       .then(() => {
         // on confirm
@@ -404,7 +406,7 @@
       .then((res) => {
         if (res.data.code === 0) {
           rangeNumber.value = res.data.data.appealType
-          industryValue.value = getIndustryType(parseInt(res.data.data.industry))
+          industryValue.value = res.data.data.industryType
           for (const key in formData) {
             if (Object.hasOwnProperty.call(formData, key)) {
               if (key === 'filePath') {
@@ -431,38 +433,26 @@
   const industryList = ref([
     {
       text: '建筑施工类',
-      value: '0'
+      value: '建筑施工类'
     },
     {
       text: '工业类',
-      value: '1'
+      value: '工业类'
     },
     {
       text: '三产类（餐饮、文化娱乐、汽修等营业性活动类）',
-      value: '2'
+      value: '三产类（餐饮、文化娱乐、汽修等营业性活动类）'
     },
     {
       text: '其他类',
-      value: '3'
+      value: '其他类'
     }
   ])
   // 行业类型回调
   const industryFinish = ({ selectedOptions }) => {
     industry.value = false
     industryValue.value = selectedOptions.map((option) => option.text).join('/')
-    formData.industry = selectedOptions.map((option) => option.value).join('/')
-  }
-  const getIndustryType = (industryType) => {
-    switch (industryType) {
-      case 0:
-        return '建筑施工类'
-      case 1:
-        return '工业类'
-      case 2:
-        return '三产类（餐饮、文化娱乐、汽修等营业性活动类）'
-      case 3:
-        return '其他类'
-    }
+    formData.industryType = selectedOptions.map((option) => option.value).join('/')
   }
   function onSelectIndustry() {
     if (readonly.value) {
