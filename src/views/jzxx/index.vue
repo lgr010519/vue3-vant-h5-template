@@ -437,11 +437,11 @@
   }
   const onSubmit = () => {
     Dialog.confirm({
-      message: `您反映的是位于${region.value}的${form.title}问题，建议阅知生态环境部门受理事项范围，如不属于生态环境部门职责事项，可另行拔打深圳便民热线12345反映。是否继续提交诉求(是、否)`,
+      message: `您反映的是位于${region.value}的${form.title}问题，建议阅知生态环境部门受理事项范围，如不属于生态环境部门职责事项，可另行拔打深圳便民热线12345反映。\n是否继续提交诉求(是、否)`,
       confirmButtonColor: '#337ECC',
       confirmButtonText: '是',
-      cancelButtonText: '否',
-      messageAlign: 'left'
+      cancelButtonText: '否'
+      // messageAlign: 'left'
     })
       .then(() => {
         // on confirm
