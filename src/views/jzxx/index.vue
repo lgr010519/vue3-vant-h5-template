@@ -65,6 +65,7 @@
           v-model="typeValue"
           :is-link="isCreate"
           label="诉求类型"
+          readonly
           placeholder="点击选择"
           :rules="userObjType"
           @click="showType = true">
@@ -101,6 +102,7 @@
           v-model="industryValue"
           :is-link="isCreate"
           label="行业类型"
+          readonly
           placeholder="点击选择"
           :rules="userObjIndustry"
           @click="industry = true">
@@ -441,7 +443,6 @@
       confirmButtonColor: '#337ECC',
       confirmButtonText: '是',
       cancelButtonText: '否'
-      // messageAlign: 'left'
     })
       .then(() => {
         // on confirm

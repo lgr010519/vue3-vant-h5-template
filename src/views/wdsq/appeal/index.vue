@@ -58,7 +58,7 @@
           name="typeCasText"
           :rules="rules.typeCasText"
           :is-link="!readonly"
-          :readonly="true"
+          readonly
           :placeholder="readonly ? '' : '点击选择'"
           @click="onSelectType">
         </van-field>
@@ -93,6 +93,7 @@
           label="行业类型"
           :placeholder="readonly ? '' : '点击选择'"
           :rules="rules.industry"
+          :readonly="true"
           @click="onSelectIndustry">
         </van-field>
         <van-popup
@@ -369,11 +370,10 @@
     Dialog.confirm({
       message: `您反映的是位于${streetCasText.value.slice(0, 3)}的${
         formData.title
-      }问题，建议阅知生态环境部门受理事项范围，如不属于生态环境部门职责事项，可另行拔打深圳便民热线12345反映。是否继续提交诉求(是、否)`,
+      }问题，建议阅知生态环境部门受理事项范围，如不属于生态环境部门职责事项，可另行拔打深圳便民热线12345反映。\n是否继续提交诉求(是、否)`,
       confirmButtonColor: '#337ECC',
       confirmButtonText: '是',
-      cancelButtonText: '否',
-      messageAlign: 'left'
+      cancelButtonText: '否'
     })
       .then(() => {
         // on confirm
