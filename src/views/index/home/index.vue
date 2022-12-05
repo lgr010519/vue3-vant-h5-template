@@ -2,7 +2,7 @@
 <template>
   <div class="home">
     <div
-      v-if="isShow"
+      v-if="proShow"
       class="home_item"
       :style="{
         backgroundImage: `url(${imgBlue})`,
@@ -78,11 +78,11 @@
   import imgYellow from '@/assets/images/home/img_yellow.png'
   import imgGreen from '@/assets/images/home/img_green.png'
   import imgPink from '@/assets/images/home/img_pink.png'
+  import { ref } from 'vue'
   import { useRouter } from 'vue-router'
-  // import { isShow } from 'public/config'
   const router = useRouter()
-
-  console.log(window.custom_show)
+  const proShow = ref(window.__isShow[import.meta.env.MODE])
+  console.log(import.meta.env.MODE)
   /**
    * 选择某一个 item
    * @param {*} path
