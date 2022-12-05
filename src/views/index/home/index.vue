@@ -82,7 +82,6 @@
   import { useRouter } from 'vue-router'
   const router = useRouter()
   const proShow = ref(window.__isShow[import.meta.env.MODE])
-  console.log(import.meta.env.MODE)
   /**
    * 选择某一个 item
    * @param {*} path
