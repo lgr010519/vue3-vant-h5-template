@@ -2,6 +2,7 @@
 <template>
   <div class="home">
     <div
+      v-if="isShow"
       class="home_item"
       :style="{
         backgroundImage: `url(${imgBlue})`,
@@ -78,7 +79,7 @@
   import imgGreen from '@/assets/images/home/img_green.png'
   import imgPink from '@/assets/images/home/img_pink.png'
   import { useRouter } from 'vue-router'
-
+  import { isShow } from 'public/config'
   const router = useRouter()
 
   /**

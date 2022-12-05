@@ -7,7 +7,6 @@ import './assets/styles/index.scss'
 
 import 'vant/es/toast/style'
 import 'vant/es/dialog/style'
-
 const app = createApp(App)
 app.use(createPinia())
 app.use(router)
