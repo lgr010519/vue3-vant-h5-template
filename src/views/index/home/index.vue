@@ -79,9 +79,10 @@
   import imgGreen from '@/assets/images/home/img_green.png'
   import imgPink from '@/assets/images/home/img_pink.png'
   import { useRouter } from 'vue-router'
-  import { isShow } from 'public/config'
+  // import { isShow } from 'public/config'
   const router = useRouter()
 
+  console.log(window.custom_show)
   /**
    * 选择某一个 item
    * @param {*} path

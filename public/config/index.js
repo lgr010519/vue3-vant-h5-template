@@ -1,3 +1,3 @@
-export const isShow = import.meta.env.MODE === 'production' ? false : true
+window.custom_show = 'asdadsad'
 
 // console.log(import.meta.env)
