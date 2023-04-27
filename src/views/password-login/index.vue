@@ -40,7 +40,7 @@
           </div>
         </template>
       </van-field>
-      <p class="forget tw-mt-[16px] tw-w-[100%] tw-pr-[14px]">
+      <!-- <p class="forget tw-mt-[16px] tw-w-[100%] tw-pr-[14px]">
         <span @click="forget">忘记密码</span>
       </p>
       <div class="tw-mx-[14px] tw-mt-[36px]">
@@ -51,14 +51,17 @@
           color="#3189FF">
           登录
         </van-button>
-      </div>
+      </div> -->
     </van-form>
-    <p class="tw-mt-[12px] tw-text-center tw-text-[16px] tw-text-[#666666]">
+    <!-- <p class="tw-mt-[12px] tw-text-center tw-text-[16px] tw-text-[#666666]">
       <span @click="verify">验证码登录</span>
     </p>
     <p class="tw-mt-[138px] tw-pb-[50px] tw-text-center tw-text-[13px] tw-text-[#666666]">
       <span @click="register">用户注册</span>
-    </p>
+    </p> -->
+    <div class="warn">
+      <p>系统下线维护中，如有环境诉求请拨打热线电话12345或12369，感谢市民理解与支持。</p>
+    </div>
   </div>
 </template>
 
@@ -145,5 +148,10 @@
       bottom: 0;
       transform: scaleY(0.5);
     }
+  }
+  .warn {
+    color: red;
+    padding: 25px;
+    margin-top: 20px;
   }
 </style>
