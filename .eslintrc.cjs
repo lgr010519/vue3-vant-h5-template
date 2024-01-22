@@ -3,29 +3,58 @@ require('@rushstack/eslint-patch/modern-module-resolution')
 
 module.exports = {
   root: true,
-  env: { node: true },
-  extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', '@vue/eslint-config-prettier'],
-  parserOptions: { ecmaVersion: 'latest' },
+  env: {
+    browser: true,
+    node: true
+  },
+  globals: {
+    BMapGL: 'writable'
+  },
+  extends: [
+    'eslint:recommended',
+    '@vue/eslint-config-prettier/skip-formatting',
+    // 这里必须要在后面
+    'plugin:vue/vue3-recommended'
+  ],
+  parserOptions: {
+    ecmaVersion: 'latest'
+  },
   rules: {
-    'prettier/prettier': ['error'],
-    'vue/multi-word-component-names': ['error', { ignores: ['index'] }],
-    'vue/multiline-html-element-content-newline': ['error', { ignoreWhenEmpty: false }],
-    'vue/html-closing-bracket-newline': ['error', { multiline: 'never' }],
-    'vue/html-self-closing': [
+    // 'prettier/prettier': 'warn',
+    // 圈复杂度
+    // complexity: ['warn', { max: 15 }],
+    // 组件名多单词
+    'vue/multi-word-component-names': [
       'error',
       {
+        ignores: ['index']
+      }
+    ],
+    // 使用组件使用 PascalCase 形式
+    'vue/component-name-in-template-casing': [
+      'error',
+      'PascalCase',
+      {
+        registeredComponentsOnly: false
+      }
+    ],
+    //
+    'vue/singleline-html-element-content-newline': 'off',
+    'vue/html-closing-bracket-newline': [
+      'warn',
+      {
+        multiline: 'never'
+      }
+    ],
+    'vue/html-self-closing': [
+      'warn',
+      {
         html: {
-          void: 'always',
-          normal: 'never',
-          component: 'never'
+          void: 'any',
+          normal: 'always',
+          component: 'always'
         }
       }
     ]
-  },
-  overrides: [
-    {
-      files: ['*.vue'],
-      rules: { indent: 'off' }
-    }
-  ]
+  }
 }

@@ -1,14 +1,30 @@
 {
-  "plugins": [
-    "prettier-plugin-tailwindcss"
-  ],
-  "printWidth": 100,
+  "$schema": "https://json.schemastore.org/prettierrc",
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "printWidth": 80,
+  "tabWidth": 2,
   "singleQuote": true,
   "semi": false,
-  "trailingComma": "none",
+  "trailingComma": "all",
   "bracketSameLine": true,
-  "vueIndentScriptAndStyle": true,
-  "endOfLine": "auto",
+  "bracketSpacing": true,
   "singleAttributePerLine": true,
-  "htmlWhitespaceSensitivity": "strict"
+  "proseWrap": "never",
+  "endOfLine": "auto",
+  "htmlWhitespaceSensitivity": "strict",
+  "vueIndentScriptAndStyle": true,
+  "overrides": [
+    {
+      "files": ".prettierrc",
+      "options": {
+        "parser": "json"
+      }
+    },
+    {
+      "files": ".lintstagedrc",
+      "options": {
+        "parser": "json"
+      }
+    }
+  ]
 }
