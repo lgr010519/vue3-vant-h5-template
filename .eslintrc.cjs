@@ -55,6 +55,37 @@ module.exports = {
           component: 'always'
         }
       }
-    ]
-  }
+    ],
+    'no-template-curly-in-string': 'off',
+    'import/no-unresolved': 'warn',
+    'import/order': [
+      'warn',
+      {
+        groups: [
+          // https://github.com/import-js/eslint-plugin-import/blob/v2.29.1/docs/rules/order.md
+          'builtin',
+          'external',
+          'internal',
+          'parent',
+          'sibling',
+          'index',
+          'object',
+          'type',
+        ],
+        'newlines-between': 'always', // 可选: 在不同组之间加空行
+      },
+    ],
+    'no-new-func': 'off',
+  },
+  settings: {
+    // 添加别名解析器
+    'import/resolver': {
+      'eslint-import-resolver-custom-alias': {
+        alias: {
+          '@': './src',
+        },
+        extensions: ['.js', '.jsx'],
+      },
+    },
+  },
 }
