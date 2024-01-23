@@ -1,16 +1,11 @@
 {
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "compilerOptions": {
     "jsx": "preserve",
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"],
-      "~/*": ["src/*"]
     },
-    "types": [
-      "vant"
-    ]
-  }
+    "types": ["vant"],
+  },
 }

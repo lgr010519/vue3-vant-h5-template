@@ -14,7 +14,8 @@ module.exports = {
     'eslint:recommended',
     '@vue/eslint-config-prettier/skip-formatting',
     // 这里必须要在后面
-    'plugin:vue/vue3-recommended'
+    'plugin:vue/vue3-recommended',
+    "plugin:import/recommended"
   ],
   parserOptions: {
     ecmaVersion: 'latest'
@@ -84,8 +85,9 @@ module.exports = {
         alias: {
           '@': './src',
         },
-        extensions: ['.js', '.jsx'],
+        extensions: ['.js', '.jsx', '.vue'],
       },
+      foo: {}
     },
   },
 }

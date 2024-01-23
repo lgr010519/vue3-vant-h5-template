@@ -1,19 +1,9 @@
 <template>
-  <button class="btn">
-    <RouterLink to="/a"> A </RouterLink>
-  </button>
-  <RouterView />
+  <LoginPage />
 </template>
 
 <script setup>
-  import { onMounted } from 'vue'
-  import { getStatisticsData } from '@/apis'
-  onMounted(() => {
-    getStatisticsData().then(
-      () => {},
-      () => {},
-    )
-  })
+  import LoginPage from './views/LoginPage.vue'
 </script>
 
 <style scoped lang="scss">
